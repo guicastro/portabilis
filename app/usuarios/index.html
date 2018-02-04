@@ -454,13 +454,13 @@
 		var ColumnDefs = [
 			{ "name":"ID", "data":"DT_RowId", "primary_key":"id", "DataType":"int", "orderable":false, "width":"6%", "responsive": { "class":"expand" }, "DT_Filter": { "hasFilter": true, "type":"input" },  },
 			{ "name":"Nome", "data":"nome", "width":"28%", "responsive": { "class":"expand" }, "DT_Filter": { "hasFilter": true, "type":"input", "searchOperator":"LIKE" },  },
-			{ "name":"Login", "data":"login", "width":"20%", "DT_Filter": { "hasFilter": true, "type":"input", "searchOperator":"LIKE" },  },
+			{ "name":"Login", "data":"login", "width":"22%", "DT_Filter": { "hasFilter": true, "type":"input", "searchOperator":"LIKE" },  },
 			{ "name":"E-mail", "data":"email", "visible":false, "DT_Filter": { "hasFilter": false, "type":"input", "searchOperator":"LIKE" }, },
 			{ "name":"Perfil", "data":"perfil_titulo", "width":"20%", "responsive": { "class":"expand", "hide":"phone" }, "DT_Filter": { "hasFilter": true, "type":"input", "searchOperator":"LIKE" }, "otherTable":{ "Table":"Perfis", "Alias":"Perfis", "Prefix":"Perf_", "Join":"INNER", "FieldKey":"perfis_perf_id", "FieldKeyOtherTable":"Perf_id", "View":"Perf_Titulo"} },
 			{ "name":"Status", "data":"status_nome", "width":"12%", "DT_Filter": { "hasFilter": true, "type":"input", "searchOperator":"LIKE" }, "otherTable":{ "DynamicTable":"STATUS", "Join":"INNER", "FieldKey":"Status", "FieldKeyOtherTable":"Codigo", "View":"Descricao"} },
 			{ "name":"perfil", "data":"perfis_perf_id", "DataType":"int", "noPrefix":true, "visible":false },
 			{ "name":"status", "data":"status", "DataType":"int", "visible":false },
-			{ "name":"actions", "data":"acoes", "width":"14%", "orderable":false, "searchable":false, "defaultContent":'<button type="button" data-id="parceiros" title="Parceiros do Usuário" class="btn btn-primary btn-xs"><i class="fa fa-briefcase"></i></button>&nbsp;<button type="button" data-id="permissoes" title="Permissões de acesso" class="btn btn-default btn-xs"><i class="fa fa-lock"></i></button>&nbsp;<button type="button" data-id="alterar" title="Alterar" class="btn btn-success btn-xs"><i class="fa fa-edit"></i></button>&nbsp;<button type="button" data-id="excluir" title="Excluir" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></button>' },
+			{ "name":"actions", "data":"acoes", "width":"12%", "orderable":false, "searchable":false, "defaultContent":'<button type="button" data-id="permissoes" title="Permissões de acesso" class="btn btn-default btn-xs"><i class="fa fa-lock"></i></button>&nbsp;<button type="button" data-id="alterar" title="Alterar" class="btn btn-success btn-xs"><i class="fa fa-edit"></i></button>&nbsp;<button type="button" data-id="excluir" title="Excluir" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></button>' },
 		];
 		/*### DEFINIÇÕES DAS COLUNAS DO GRID (PRIMEIRA COLUNA É ZERO) ###*/
 

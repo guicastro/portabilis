@@ -25,10 +25,9 @@ require_once("../../config/config.php");
 require_once("../Service/Service.php");
 
 
-$CryptClass = $container['CryptDecrypt'];
+$MaskValue = $container['MaskValue'];
 
-echo "<br>senha digitada: ".$CryptClass->CryptMD5("102030");
-echo "<br>senha DB: a925db37fd52fc2188df708fdb5c85df";
+var_dump($MaskValue->ValidarCPF('00706944194','validate'));
 
 // // Creating the new document...
 // $phpWord = new \PhpOffice\PhpWord\PhpWord();

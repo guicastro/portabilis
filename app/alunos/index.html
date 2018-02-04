@@ -10,7 +10,7 @@
 			<i class="fa-fw fa fa-home"></i>
 				Alunos
 			<span>>
-				Cadastro de pessoas
+				Cadastro de alunos
 			</span>
 		</h1>
 	</div> -->
@@ -141,7 +141,7 @@
 									<div class="col-md-2">
 										<div class="form-group">
 											<label for="alun_rg" class="control-label">RG</label>
-											<input name="alun_rg" id="alun_rg" type="text" class="form-control" placeholder="RG" />
+											<input name="alun_rg" id="alun_rg" type="text" class="form-control" placeholder="RG" required data-msg="Preencha o RG" />
 										</div>
 									</div>
 									<div class="col-md-2">
@@ -159,7 +159,7 @@
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="alun_estado_civil" class="control-label">Estado Civl</label>
-											<select name="alun_estado_civil" id="alun_estado_civil" style="width:100%" class="select2" required data-msg="Escolha o estado civil"></select>
+											<select name="alun_estado_civil" id="alun_estado_civil" style="width:100%" class="select2" data-msg="Escolha o estado civil"></select>
 										</div>
 									</div>
 									<div class="col-md-4">
@@ -175,7 +175,7 @@
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="alun_endereco_bairro" class="control-label">Bairro</label>
-											<input name="alun_endereco_bairro" id="alun_endereco_bairro" type="text" class="form-control" placeholder="Bairro" required data-msg="Digite o bairro" />
+											<input name="alun_endereco_bairro" id="alun_endereco_bairro" type="text" class="form-control" placeholder="Bairro" />
 										</div>
 									</div>
 									<div class="col-md-4">
@@ -222,7 +222,7 @@
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="alun_celular" class="control-label">Celular</label>
-											<input name="alun_celular" id="alun_celular" type="tel" class="form-control" placeholder="Celular" maxlength="15" onkeyup="MaskTel(this, event)"  onblur="MaskTel(this, event)" />
+											<input name="alun_celular" id="alun_celular" type="tel" class="form-control" placeholder="Celular" maxlength="15" onkeyup="MaskTel(this, event)"  onblur="MaskTel(this, event)" required data-msg="Digite o celular" />
 										</div>
 									</div>
 									<div class="col-md-3">
@@ -307,8 +307,8 @@
 
 		if(action=='novo') {
 
-			$("#"+IdElementForm+" :input[id=alun_endereco_cidade]").val('CUIABÁ');
-			$("#"+IdElementForm+" :input[id=alun_endereco_uf]").val('MT').select2().trigger('change');
+			$("#"+IdElementForm+" :input[id=alun_endereco_cidade]").val('IÇARA');
+			$("#"+IdElementForm+" :input[id=alun_endereco_uf]").val('SC').select2().trigger('change');
 		}
 
 
@@ -363,7 +363,7 @@
 			{ "name":"ID","data":"DT_RowId", "primary_key":"id", "DataType":"int", "width":"4%", "orderable":false, "minSearchValue":1, "width":"6%", "responsive": { "class":"expand" }, "DT_Filter": { "hasFilter": true, "type":"input" },  },
 			{ "name":"Nome", "data":"nome", "width":"20%", "responsive": { "class":"expand" }, "DT_Filter": { "hasFilter": true, "type":"input", "searchOperator":"LIKE" },  },
 			{ "name":"CPF", "data":"cpf", "width":"13%", "DT_Filter": { "hasFilter": true, "type":"input", "searchOperator":"LIKE" }, "mask": {"name":"Cpf", "View":"add", "Database":"remove" }  },
-			{ "name":"Bairro", "data":"endereco_bairro", "width":"18%", "responsive": { "class":"expand", "hide":"phone" }, "DT_Filter": { "hasFilter": true, "type":"input", "searchOperator":"LIKE" },  },
+			{ "name":"Celular", "data":"celular", "width":"18%", "responsive": { "class":"expand", "hide":"phone" }, "DT_Filter": { "hasFilter": true, "type":"input", "searchOperator":"LIKE" }, "mask": {"name":"Telefone", "View":"add", "Database":"remove" } },
 			{ "name":"Cidade", "data":"endereco_cidade", "width":"20%", "responsive": { "class":"expand", "hide":"phone" }, "DT_Filter": { "hasFilter": true, "type":"input", "searchOperator":"LIKE" },  },
 			{ "name":"Estado", "data":"endereco_uf", "minSearchValue":2, "width":"10%", "responsive": { "hide":"phone" }, "DT_Filter": { "hasFilter": true, "type":"input" },  },
 			{ "name":"Cód Barras", "data":"alun_barcode", "width":"15%", "noPrefix":true, "otherTable":{ "View":"CAST('10000' AS VARCHAR)||CAST(lpad(CAST(Alunos.alun_id AS VARCHAR),7,'0') AS VARCHAR)||CAST('0' AS VARCHAR)" }, "mask": {"name":"Substr", "View":"13", "Database":"13" }, },

@@ -56,28 +56,6 @@ class Usuario extends \Database\Crud {
 	/*### ARMAZENA AS DEFINIÇÕES DO MÓDULO ###*/
 
 
-	/*### ARMAZENA A CHAVE PRIMÁRIA DO REGISTRO (ALTERAR/EXCLUIR) ###*/
-	public function setPrimaryKey ($PrimaryKey) {
-
-
-		if((($this->Action=="selecionar")||($this->Action=="alterar")||($this->Action=="excluir"))
-			&&($this->ModuleDefs->Name=="ParceiroUsuario"))
-			{
-				$SQLUsuario = "SELECT Usuarios_Usua_id FROM ParceirosUsuarios WHERE ParcUsua_id = ".$PrimaryKey." AND ParcUsua_Delete = 0";
-
-				$ExecuteSQLUsuario = $this->db->query($SQLUsuario);
-				$ResultSQLUsuario = $ExecuteSQLUsuario->fetch(\PDO::FETCH_OBJ);
-				$this->PrimaryKey = $ResultSQLUsuario->usuarios_usua_id;
-			}
-		else
-			{
-				$this->PrimaryKey = $PrimaryKey;
-			}
-
-		return $this->PrimaryKey;
-	}
-	/*### ARMAZENA A CHAVE PRIMÁRIA DO REGISTRO (ALTERAR/EXCLUIR) ###*/
-
 
 
 
@@ -107,48 +85,6 @@ class Usuario extends \Database\Crud {
 						$ResultSQLAction[0]->permissoes[$PermissionData->usuaperm_modulo][$PermissionData->usuaperm_operacao] = $PermissionData->usuaperm_valor;
 					}
 					/*### GERA O OBJETO JSON COM AS PERMISSÕES ###*/
-
-					/*### RETORNA TODOS OS PARCEIROS DO USUÁRIO, SE EXISTIR ###*/
-					$SQLParceiros = "SELECT Parceiros_Parc_id FROM ParceirosUsuarios WHERE Usuarios_Usua_id = ".$this->PrimaryKey." AND ParcUsua_Delete = 0";
-					$ExecuteSQLParceiros = $this->db->query($SQLParceiros);
-					$ResultSQLParceiros = $ExecuteSQLParceiros->fetchAll(\PDO::FETCH_OBJ);
-					if(count($ResultSQLParceiros)>0)
-						{
-							foreach ($ResultSQLParceiros as $id => $ParcData) {
-
-								$Parceiros[] = $ParcData->parceiros_parc_id;
-							}
-						}
-					$ResultSQLAction[0]->parceiros = $Parceiros;
-					/*### RETORNA TODOS OS PARCEIROS DO USUÁRIO, SE EXISTIR ###*/
-
-
-					/*### AÇÕES QUANDO A CHAMADA VIR DO MÓDULO ParceiroUsuario ###*/
-					if($this->ModuleDefs->Name=="ParceiroUsuario")
-						{
-							$SQLParceiro = "SELECT Parceiros_Parc_id,
-													USUA_CREATED.Usua_Nome AS ParcUsua_RecCreatedbyName,
-													ParcUsua_RecCreatedon,
-													USUA_MODIFIED.Usua_Nome,
-													ParcUsua_RecModifiedon AS ParcUsua_RecModifiedbyName
-												FROM
-													ParceirosUsuarios
-												INNER JOIN
-													Usuarios USUA_CREATED ON USUA_CREATED.Usua_id = ParceirosUsuarios.ParcUsua_RecCreatedby
-												LEFT JOIN
-													Usuarios USUA_MODIFIED ON USUA_MODIFIED.Usua_id = ParceirosUsuarios.ParcUsua_RecModifiedby
-												WHERE
-													ParcUsua_id = ".$this->Request["id_reg"]." AND ParcUsua_Delete = 0";
-
-							$ExecuteSQLParceiro = $this->db->query($SQLParceiro);
-							$ResultSQLParceiro = $ExecuteSQLParceiro->fetch(\PDO::FETCH_OBJ);
-							$ResultSQLAction[0]->parceiros_parc_id = $ResultSQLParceiro->Parceiros_Parc_id;
-							$ResultSQLAction[0]->parcusua_reccreatedon = $this->MaskValue->Data($ResultSQLParceiro->ParcUsua_RecCreatedon,'US2BR_TIME');
-							$ResultSQLAction[0]->parcusua_reccreatedbyname = $ResultSQLParceiro->ParcUsua_RecCreatedbyName;
-							$ResultSQLAction[0]->parcusua_recmodifiedon = $this->MaskValue->Data($ResultSQLParceiro->ParcUsua_RecModifiedon,'US2BR_TIME');
-							$ResultSQLAction[0]->parcusua_recmodifiedbyname = $ResultSQLParceiro->ParcUsua_RecModifiedbyName;
-						}
-					/*### AÇÕES QUANDO A CHAMADA VIR DO MÓDULO ParceiroUsuario ###*/
 				}
 
 
@@ -167,21 +103,14 @@ class Usuario extends \Database\Crud {
 
 		$Request = $this->Request;
 
-		if((($this->Action=="inserir")||($this->Action=="alterar"))&&($Request["Usua_Senha"]<>""))
+		if((($this->Action=="inserir")||($this->Action=="alterar"))&&($Request["usua_senha"]<>""))
 			{
-				$Request["Usua_Senha"] = $this->CryptDecrypt->CryptMD5($Request["Usua_Senha"]);
+				$Request["usua_senha"] = $this->CryptDecrypt->CryptMD5($Request["usua_senha"]);
 
 			}
 		else
 			{
-				unset($Request["Usua_Senha"]);
-			}
-
-		if($this->ModuleDefs->Name=="ParceiroUsuario")
-			{
-				$Request["Perfis_Perf_id"] = $this->IDPerfilParceiro;
-				$Request["perfil_antigo"] = $this->IDPerfilParceiro;
-
+				unset($Request["usua_senha"]);
 			}
 
 		$this->setRequest($Request);
@@ -196,7 +125,7 @@ class Usuario extends \Database\Crud {
 
 
 		/*### SE A ACTION FOR ALTERAR PERMISSÕES OU HOUVE MUDANÇA DE PERFIL ###*/
-		if(($this->Action=="alterar_permissoes")||(($this->Action=="alterar")&&($this->Request["perfil_antigo"]<>$this->Request["Perfis_Perf_id"])))
+		if(($this->Action=="alterar_permissoes")||(($this->Action=="alterar")&&($this->Request["perfil_antigo"]<>$this->Request["perfis_perf_id"])))
 			{
 
 				//PERPARA E EXECUTA A QUERY QUE EXCLUI TODAS AS PERMISSÕES DO USUÁRIO ATUAL
@@ -238,10 +167,10 @@ class Usuario extends \Database\Crud {
 
 
 		/*### SE HOUVE MUDANÇA DE LOGIN ###*/
-		elseif($this->Request["login_antigo"]<>$this->Request["Usua_Login"])
+		elseif($this->Request["login_antigo"]<>$this->Request["usua_login"])
 			{
 				//BUSCA SE JÁ EXISTE UM LOGIN IGUAL
-				$SQLLogin = $this->db->query("SELECT COUNT(*) AS LOGIN FROM Usuarios WHERE Usua_Login = '".$this->Request["Usua_Login"]."' AND Usua_delete = 0");
+				$SQLLogin = $this->db->query("SELECT COUNT(*) AS LOGIN FROM Usuarios WHERE Usua_Login = '".$this->Request["usua_login"]."' AND Usua_delete = 0");
 
 				//RETORNA O OBJETO DO PDO COM O TOTAL DE LOGINS EXISTENTES
 				$Login = $SQLLogin->fetch(\PDO::FETCH_OBJ);
@@ -263,27 +192,6 @@ class Usuario extends \Database\Crud {
 
 
 
-
-
-		/*### SE A ACTION FOR ALTERAR PARCEIROS ###*/
-		if($this->Action=="alterar_parceiros")
-			{
-
-				//PERPARA E EXECUTA A QUERY QUE EXCLUI TODOS OS PARCEIROS DO USUÁRIO
-				$this->SQLAction = "UPDATE
-											ParceirosUsuarios
-										SET
-											ParcUsua_Delete = 1,
-											ParcUsua_RecDeletedon = '".$this->Date["NowUS"]."',
-											ParcUsua_RecDeletedby = ".$this->TokenClass->getClaim("UserData")->Usua_id."
-										WHERE
-											ParcUsua_Delete = 0
-											AND Usuarios_Usua_id = ".$this->PrimaryKey;
-
-				//LIBERA A EXECUÇÃO DA QUERY
-				$this->BeforeExecuteAction = true;
-			}
-		/*### SE A ACTION FOR ALTERAR PARCEIROS ###*/
 
 
 
@@ -313,7 +221,7 @@ class Usuario extends \Database\Crud {
 						if($this->Action=="inserir") $this->PrimaryKey = $this->db->lastInsertId();
 
 						/*### SE A ACTION FOR INSERIR HOUVE MUDANÇA DE PERFIL ###*/
-						if(($this->Action=="inserir")||($this->Request["perfil_antigo"]<>$this->Request["Perfis_Perf_id"]))
+						if(($this->Action=="inserir")||($this->Request["perfil_antigo"]<>$this->Request["perfis_perf_id"]))
 							{
 
 								//PERPARA E EXECUTA A QUERY QUE INSERE AS PERMISSÕES DO PERFIL ESCOLHIDO
@@ -336,83 +244,11 @@ class Usuario extends \Database\Crud {
 																						PerfisPermissoes
 																					WHERE
 																						PerfPerm_Delete = 0
-																						AND Perfis_Perf_id = ".$this->Request["Perfis_Perf_id"].")");
+																						AND Perfis_Perf_id = ".$this->Request["perfis_perf_id"].")");
 							}
 						/*### SE A ACTION FOR INSERIR HOUVE MUDANÇA DE PERFIL ###*/
 					}
 				/*### SE A ACTION FOR INSERIR OU ALTERAR ###*/
-
-
-
-
-
-				/*### SE A ACTION FOR ALTERAR OS PARCEIROS ###*/
-				if($this->Action=="alterar_parceiros")
-					{
-
-						/*### EXECUTA AS AÇÕES SE FOI ESCOLHIDO PELO MENOS UM PARCEIRO ###*/
-						if(count($this->Request["parceiros"])>0) {
-
-							/*### GERA O SQL DE INSERT DOS PARCEIROS DO USUÁRIO ###*/
-							foreach($this->Request["parceiros"] as $key => $idParceiro) {
-
-									$SQLValueParceiros .= "(".$this->PrimaryKey.", '".$idParceiro."', '".$this->Date["NowUS"]."', ".$this->TokenClass->getClaim("UserData")->Usua_id."), ";
-							}
-							/*### GERA O SQL DE INSERT DOS PARCEIROS DO USUÁRIO ###*/
-
-
-							/*### PERPARA E EXECUTA A QUERY QUE INCLUI OS PARCEIROS DO USUÁRIO ###*/
-							$SQLParceiros = "INSERT INTO ParceirosUsuarios (Usuarios_Usua_id, Parceiros_Parc_id, ParcUsua_RecCreatedon, ParcUsua_RecCreatedby) VALUES ".substr($SQLValueParceiros,0,-2);
-							$ExecuteSQLParceiros = $this->db->query($SQLParceiros);
-							/*### PERPARA E EXECUTA A QUERY QUE INCLUI OS PARCEIROS DO USUÁRIO ###*/
-						}
-						/*### EXECUTA AS AÇÕES SE FOI ESCOLHIDO PELO MENOS UM PARCEIRO ###*/
-
-					}
-				/*### SE A ACTION FOR ALTERAR OS PARCEIROS ###*/
-
-
-
-				/*### AÇÕES QUANDO FOR UMA CHAMADO DO MÓDULO ParceiroUsuario ###*/
-				if($this->ModuleDefs->Name=="ParceiroUsuario")
-					{
-						if($this->Action=="inserir")
-							{
-								$SQLInsertParcUsua = "INSERT INTO ParceirosUsuarios (Usuarios_Usua_id,
-																					Parceiros_Parc_id,
-																					ParcUsua_RecCreatedby,
-																					ParcUsua_RecCreatedon)
-																				VALUES
-																					(".$this->PrimaryKey.",
-																					".$this->Request["Parceiros_Parc_id"].",
-																					".$this->TokenClass->getClaim("UserData")->Usua_id.",
-																					'".$this->Date["NowUS"]."')";
-
-								$ExecuteSQLInsertParcUsua = $this->db->query($SQLInsertParcUsua);
-							}
-
-						if($this->Action=="alterar")
-							{
-								$SQLUpdateParcUsua = "UPDATE ParceirosUsuarios SET Parceiros_Parc_id = ".$this->Request["Parceiros_Parc_id"].",
-																					ParcUsua_RecModifiedby = ".$this->TokenClass->getClaim("UserData")->Usua_id.",
-																					ParcUsua_RecModifiedon = '".$this->Date["NowUS"]."'
-																				WHERE
-																					ParcUsua_id = ".$this->Request["id_reg"];
-
-								$ExecuteSQLUpdateParcUsua = $this->db->query($SQLUpdateParcUsua);
-							}
-
-						if($this->Action=="excluir")
-							{
-								$SQLDeleteParcUsua = "UPDATE ParceirosUsuarios SET ParcUsua_Delete = 1,
-																					ParcUsua_RecDeletedby = ".$this->TokenClass->getClaim("UserData")->Usua_id.",
-																					ParcUsua_RecDeletedon = '".$this->Date["NowUS"]."'
-																				WHERE
-																					ParcUsua_id = ".$this->Request["id_reg"];
-								$ExecuteSQLDeleteParcUsua = $this->db->query($SQLDeleteParcUsua);
-							}
-					}
-				/*### AÇÕES QUANDO FOR UMA CHAMADO DO MÓDULO ParceiroUsuario ###*/
 
 
 			}

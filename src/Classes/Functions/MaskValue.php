@@ -486,6 +486,56 @@ class MaskValue {
 
 
 
+	/*### VALIDADOR DE CPF ###*/
+	public function ValidarCPF($value, $action = 'validate') {
+
+		switch($action) {
+
+			case 'validate':
+
+				$validate = true;
+				// echo "<br>1: ";var_dump($validate);
+
+				// Extrai somente os números
+				$cpf = preg_replace( '/[^0-9]/is', '', $value );
+				// echo "<br>cpf: ".$cpf;
+
+				// Verifica se foi informado todos os digitos corretamente
+				if (strlen($cpf) != 11) {
+				    $validate = false;
+				}
+				// echo "<br>2: ";var_dump($validate);
+
+				// Verifica se foi informada uma sequência de digitos repetidos. Ex: 111.111.111-11
+				if (preg_match('/(\d)\1{10}/', $cpf)) {
+				    $validate = false;
+				}
+				// echo "<br>3: ";var_dump($validate);
+
+				// Faz o calculo para validar o CPF
+				for ($t = 9; $t < 11; $t++) {
+				    for ($d = 0, $c = 0; $c < $t; $c++) {
+				        $d += $cpf{$c} * (($t + 1) - $c);
+				    }
+				    $d = ((10 * $d) % 11) % 10;
+				    if ($cpf{$c} != $d) {
+				        $validate = false;
+				    }
+				}
+				// echo "<br>4: ";var_dump($validate);
+
+				$this->value = $validate;
+
+				break;
+		}
+
+		//RETORNA A VALIDAÇÃO DO CPF
+		return $this->value;
+	}	/*### VALIDADOR DE CPF ###*/
+
+
+
+
 
 }
 /*### FUNÇÃO QUE APLICA MÁSCARA DE DADOS E VALORES ###*/

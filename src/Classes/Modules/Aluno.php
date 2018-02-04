@@ -114,14 +114,22 @@ class Aluno extends \Database\Crud {
 			{
 
 				/*### VERIFICA SE O CPF DIGITADO JÁ EXISTE NO CADASTRO ###*/
-				if(($this->Request["alun_cpf"]<>$this->Request["alun_cpf_antigo"])&&($this->Request["ChkAlunoDependente"]<>"x"))
+				if($this->Request["alun_cpf"]<>$this->Request["alun_cpf_antigo"])
 					{
 						$this->BeforeExecuteAction = false;
 
-						if(($this->Request["origem"]=="atendimento")&&($this->Request["Nova_Aluno"]=="xx")) {
+						//VALIDA O CPF
+						$ValidateCPF = $this->MaskValue->ValidarCPF($this->Request["alun_cpf"],'validate');
 
-							$this->BeforeExecuteAction = true;
+						/*### SE O CPF FOR INVÁLIDO RETORNA MENSAGEM ###*/
+						if($ValidateCPF==false) {
+
+							$this->ErrorBeforeExecuteAction = "<p>O CPF digitado não é válido.</p>";
 						}
+						/*### SE O CPF FOR INVÁLIDO RETORNA MENSAGEM ###*/
+
+
+						/*### SENÃO, CHECA SE NÃO É DUPLICADO ###*/
 						else {
 
 							$SQLChecaCPF = "SELECT COUNT(*) AS CPF FROM ".$this->ModuleDefs->Table." WHERE ".$this->ModuleDefs->Prefix."CPF = '".$this->Request["alun_cpf"]."' AND ".$this->ModuleDefs->Prefix."Delete = 0";
@@ -135,6 +143,8 @@ class Aluno extends \Database\Crud {
 								$this->BeforeExecuteAction = true;
 							}
 						}
+						/*### SENÃO, CHECA SE NÃO É DUPLICADO ###*/
+
 					}
 				/*### VERIFICA SE O CPF DIGITADO JÁ EXISTE NO CADASTRO ###*/
 			}
