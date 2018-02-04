@@ -217,6 +217,16 @@ $container['Aluno'] = function($c) {
 
 
 
+/*### INSTANCIA A CLASSE DO CADASTRO DE CURSOS ###*/
+//c = container do Pimple
+$container['Curso'] = function($c) {
+
+	return new \Modules\Curso($c);
+};
+/*### INSTANCIA A CLASSE DO CADASTRO DE CURSOS ###*/
+
+
+
 /*### INSTANCIA A CLASSE DO CADASTRO DE USUÁRIOS ###*/
 //c = container do Pimple
 $container['Usuario'] = function($c) {

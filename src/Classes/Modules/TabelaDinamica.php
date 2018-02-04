@@ -81,11 +81,11 @@ class TabelaDinamica extends \Database\Crud {
 
 		if(($this->Action=="inserir")||($this->Action=="alterar"))
 			{
-				if($this->Request["TabeDina_Tabela"]<>$this->Request["TabeDina_Tabela_Antigo"])
+				if($this->Request["tabedina_tabela"]<>$this->Request["tabedina_tabela_antigo"])
 					{
 						$this->BeforeExecuteAction = false;
 
-						$ExecuteChecaTabela = $this->db->query("SELECT COUNT(*) AS REGISTROS FROM ".$this->ModuleDefs->Table." WHERE ".$this->ModuleDefs->Prefix."Tabela = '".$this->Request["TabeDina_Tabela"]."' AND ".$this->ModuleDefs->Prefix."Delete = 0");
+						$ExecuteChecaTabela = $this->db->query("SELECT COUNT(*) AS REGISTROS FROM ".$this->ModuleDefs->Table." WHERE ".$this->ModuleDefs->Prefix."Tabela = '".$this->Request["tabedina_tabela"]."' AND ".$this->ModuleDefs->Prefix."Delete = 0");
 						$ResultChecaTabela = $ExecuteChecaTabela->fetchAll(\PDO::FETCH_OBJ);
 						if($ResultChecaTabela[0]->registros > 0) {
 
@@ -116,7 +116,7 @@ class TabelaDinamica extends \Database\Crud {
 																	TabeDinaValo_RecCreatedon = '".$this->Date["NowUS"]."',
 																	TabeDinaValo_RecModifiedby = ".$this->TokenClass->getClaim("UserData")->Usua_id."
 																WHERE
-																	TabeDinaValo_Tabela  = (SELECT TabeDina_Tabela FROM TabelasDinamicas WHERE TabeDina_id = ".$this->PrimaryKey.")
+																	TabeDinaValo_Tabela  = (SELECT tabedina_tabela FROM TabelasDinamicas WHERE tabedina_id = ".$this->PrimaryKey.")
 																	AND TabeDinaValo_Delete = 0";
 			// echo $SQLDeleteItem;
 			// exit;
@@ -133,7 +133,7 @@ class TabelaDinamica extends \Database\Crud {
 					foreach ($this->Request["opt-item-codigo"] as $itemSeq => $itemCodigo)
 						{
 
-							$SQLInsertItemValues .= "('".$this->Request["TabeDina_Tabela"]."',
+							$SQLInsertItemValues .= "('".$this->Request["tabedina_tabela"]."',
 													'".$this->Request["opt-item-codigo"][$itemSeq]."',
 													'".$this->Request["opt-item-descricao"][$itemSeq]."',
 													".$this->TokenClass->getClaim("UserData")->Usua_id.",

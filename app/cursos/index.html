@@ -8,9 +8,9 @@
 
 			PAGE HEADER
 			<i class="fa-fw fa fa-home"></i>
-				Pessoas
+				Cursos
 			<span>>
-				Cadastro de pessoas
+				Cadastro de alunos
 			</span>
 		</h1>
 	</div> -->
@@ -33,8 +33,7 @@
 			<div class="row">
 				<div class="col-md-4">
 					<div class="form-group">
-						<select id="filtro_categoria" style="width:100%" class="select2 filtro-grid" data-id='1'>
-						</select>
+						<select id="filtro_periodos" style="width:100%" class="select2 filtro-grid" data-id='4'></select>
 					</div>
 				</div>
 			</div>
@@ -109,6 +108,7 @@
 			    <div class="modal-dialog">
 			        <div class="modal-content">
 
+						<!--#### FORM DE CADASTRO ####-->
 						<form name="form-cadastro" id="form-cadastro" action="" method="post" enctype="multipart/form-data">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -122,35 +122,54 @@
 										<div class="form-group">ID <strong><span id="id_reg"></span></strong> <i id="txt_id_reg" class="fa fa-history bigger-120" rel="popover-html" data-rel="reg_user_popover" data-trigger="hover" data-placement="right" data-content="" title="Histórico do registro"></i></div>
 									</div>
 								</div>
+								<legend>Dados do Curso</legend>
 								<div class="row">
+									<div class="col-md-8">
+										<div class="form-group">
+											<label for="curs_nome" class="control-label">Nome do curso</label>
+											<input name="curs_nome" id="curs_nome" type="text" class="form-control" placeholder="Nome do curso" required data-msg="Preencha o nome do curso" />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="curs_ch" class="control-label">Carga Horária</label>
+											<input name="curs_ch" id="curs_ch" type="text" class="form-control" placeholder="CH do Curso" />
+										</div>
+									</div>
 									<div class="col-md-12">
 										<div class="form-group">
-											<label for="conf_categoria" class="control-label">Categoria</label>
-											<select id="categorias_existentes" style="width:100%" class="select2">
-											<input name="conf_categoria" id="conf_categoria" type="text" class="form-control" placeholder="Categoria" required data-msg="Preencha a categoria" />
+											<label for="curs_descricao" class="control-label">Descrição</label>
+											<textarea name="curs_descricao" id="curs_descricao" class="form-control" rows="4" placeholder="Descrição do curso" /></textarea>
 										</div>
 									</div>
 								</div>
+								<legend>Dados da Execução</legend>
 								<div class="row">
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<div class="form-group">
-											<label for="conf_titulo" class="control-label">Título</label>
-											<input name="conf_titulo" id="conf_titulo" type="text" class="form-control" placeholder="Título" required data-msg="Preencha o título" />
+											<label for="curs_duracao" class="control-label">Duração do curso (meses)</label>
+											<input name="curs_duracao" id="curs_duracao" type="text" class="form-control" placeholder="Duração do curso" required data-rule-number="true" data-rule-min="1" data-msg-number="Somente números" data-msg-min="Mínimo de 1" data-msg="Preencha a duração do curso (meses)" />
 										</div>
 									</div>
-									<div class="col-md-6">
+									<div class="col-md-8">
 										<div class="form-group">
-											<label for="conf_valor" class="control-label">Valor</label>
-											<select id="valores_existentes" style="width:100%" class="select2">
-											<input name="conf_valor" id="conf_valor" type="text" class="form-control" placeholder="Valor" required data-msg="Preencha o valor" />
+											<br/>
+											<div id="radio_curs_periodo" class="radio-group"></div>
 										</div>
 									</div>
 								</div>
+								<legend>Dados Financeiros</legend>
 								<div class="row">
-									<div class="col-md-12">
+									<div class="col-md-3">
 										<div class="form-group">
-											<label for="conf_observacoes" class="control-label">Observações</label>
-											<textarea name="conf_observacoes" id="conf_observacoes" class="form-control" rows="4" placeholder="Observações" /></textarea>
+											<label for="curs_valor_matricula" class="control-label">Matrícula</label>
+											<input name="curs_valor_matricula" id="curs_valor_matricula" type="text" class="form-control" onkeyup="MaskCurrency(this)" placeholder="Valor da matrícula" style="text-align: right;" required data-msg="Digite o valor da matrícula" />
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="curs_valor_mensalidade" class="control-label">Mensalidade</label>
+											<input name="curs_valor_mensalidade" id="curs_valor_mensalidade" type="text" class="form-control" onkeyup="MaskCurrency(this)" placeholder="Valor da mensalidade" style="text-align: right;" required data-msg="Digite o valor da mensalidade" />
 										</div>
 									</div>
 								</div>
@@ -161,11 +180,13 @@
 								<button id="btn-alterar" type="submit" class="btn btn-labeled btn-success" data-id="alterar"><span class="btn-label"><i class="fa fa-check"></i></span>Alterar</button>
 							</div>
 						</form>
+						<!--#### FORM DE CADASTRO ####-->
 
 			        </div>
 			    </div>
 			</div>
 			<!--#### MODAL DE CADASTRO ####-->
+
 
 
 
@@ -206,34 +227,6 @@
 	 * });
 	 */
 
-	/*### OBJETO OTHERTABLE PARA CATEGORIAS JÁ EXISTENTES ###*/
-	var OtherTableCategorias = {
-		"Table":"Configuracoes",
-		"Prefix":"conf_",
-		"Key":"Categoria",
-		"Desc":"Categoria",
-		"Condition":"",
-		"FieldToOrder":"Categoria",
-		"Order":"ASC",
-		"Distinct":true
-	};
-	/*### OBJETO OTHERTABLE PARA CATEGORIAS JÁ EXISTENTES ###*/
-
-
-	/*### OBJETO OTHERTABLE PARA VALORES JÁ EXISTENTES ###*/
-	var OtherTableValores = {
-		"Table":"Configuracoes",
-		"Prefix":"conf_",
-		"Key":"Valor",
-		"Desc":"Valor",
-		"Condition":"",
-		"FieldToOrder":"Valor",
-		"Order":"ASC",
-		"Distinct":true
-	};
-	/*### OBJETO OTHERTABLE PARA VALORES JÁ EXISTENTES ###*/
-
-
 	/*### FUNÇÃO QUE RESETA O FORMULÁRIO QUANDO CLICA NOS BOTÕES DE AÇÃO ###*/
 	//action = ação do formulário (novo, inserir, alterar, excluir, etc)
 	//IdElementForm = ID do elemento FORM dos cadastros principais
@@ -242,11 +235,17 @@
 		//RESETA O FORMULÁRIO (EXCETO SELECT2 E CAMPOS ESPECIAIS)
 		$("#"+IdElementForm).trigger('reset');
 
+		//RESETA CAMPOS CAMPOS ESPECIAIS
+		$("#"+IdElementForm+" :input[id=curs_cpf_antigo]").val('');
+		$("#"+IdElementForm+" :input[id=curs_endereco_uf]").val('').select2().trigger('change');
+		$("#"+IdElementForm+" :input[id=curs_estado_civil]").val('').select2().trigger('change');
+
 		if(action=='novo') {
 
-			$("#"+IdElementForm+" :input[id=categorias_existentes]").val('').select2().trigger('change');
-			$("#"+IdElementForm+" :input[id=valores_existentes]").val('').select2().trigger('change');
+			$("#"+IdElementForm+" :input[id=curs_endereco_cidade]").val('IÇARA');
+			$("#"+IdElementForm+" :input[id=curs_endereco_uf]").val('SC').select2().trigger('change');
 		}
+
 
 	}
 	/*### FUNÇÃO QUE RESETA O FORMULÁRIO QUANDO CLICA NOS BOTÕES DE AÇÃO ###*/
@@ -255,32 +254,8 @@
 	/*### FUNÇÃO PARA EXECUTAR AÇÕES ADICIONAIS AO ACTIONFORM ###*/
 	function AdditionalActionForm(IdElementForm, action, data, textStatus, jqXHR, DataTable, ModuleDefs, IdModalElement) {
 
-
-		if((action=="alterar")||(action=="inserir"))
-			{
-				//ARMAZENA AS CATEGORIAS JÁ CRIADAS EM OBJETO
-				var categorias = GetDynamicTable('','','',OtherTableCategorias);
-
-				//POPULA O SELECT2 DO FILTRO COM AS CATEGORIAS JÁ CRIADAS
-				SetSelectFromDynamicTable('filtro_categoria',categorias,'Categorias','Todas as categorias','');
-
-				//POPULA O SELECT2 AUXILIAR COM AS CATEGORIAS JÁ CRIADAS
-				SetSelectFromDynamicTable('categorias_existentes',categorias,'Categorias existentes','','');
-
-
-				//ARMAZENA OS VALORES JÁ CRIADAS EM OBJETO
-				var valores = GetDynamicTable('','','',OtherTableValores);
-
-				//POPULA O SELECT2 AUXILIAR COM OS VALORES JÁ CRIADOS
-				SetSelectFromDynamicTable('valores_existentes',valores,'Valores existentes','','');
-			}
-
-
 	}
 	/*### FUNÇÃO PARA EXECUTAR AÇÕES ADICIONAIS AO ACTIONFORM ###*/
-
-
-
 
 
 	// pagefunction
@@ -300,15 +275,16 @@
 
 		/*### DEFINIÇÕES GERAIS DO MÓDULO ###*/
 		var ModuleDefs = {
-			"Name":"Configuracao", //IDENTIFICADOR INTERNO DO MÓDULO (REFERÊNCIA PARA PERMISSÃO DE ACESSO)
-			"Prefix":"conf_", //PREFIXO DOS CAMPOS DO MÓDULO (USADOS NA TABELA DO BANCO DE DADOS)
-			"Title":"Cadastro de Configurações", //TÍTULO DO MÓDULO
-			"Entity":"Configuracao", //ENTIDADE DO MÓDULO (REFERÊNCIA PARA CLASSE)
-			"Table":"Configuracoes", //NOME DA TABELA NO BANCO DE DADOS
-			"EntitySingle":"Configuração", //ENTIDADE DO MÓDULO (SINGULAR)
-			"EntityMultiple":"Configurações" //ENTIDADE DO MÓDULO (PLURAL)
+			"Name":"Curso", //IDENTIFICADOR INTERNO DO MÓDULO (REFERÊNCIA PARA PERMISSÃO DE ACESSO)
+			"Prefix":"curs_", //PREFIXO DOS CAMPOS DO MÓDULO (USADOS NA TABELA DO BANCO DE DADOS)
+			"Title":"Cadastro de Cursos", //TÍTULO DO MÓDULO
+			"Entity":"Curso", //ENTIDADE DO MÓDULO (REFERÊNCIA PARA CLASSE)
+			"Table":"Cursos", //NOME DA TABELA NO BANCO DE DADOS
+			"EntitySingle":"Curso", //ENTIDADE DO MÓDULO (SINGULAR)
+			"EntityMultiple":"Cursos" //ENTIDADE DO MÓDULO (PLURAL)
 		};
 		/*### DEFINIÇÕES GERAIS DO MÓDULO ###*/
+
 
 		//CHAMA A FUNÇÃO QUE SETA OS DADOS BÁSICOS DO MÓDULO E ENTIDADE
 		SetModuleEntity(ModuleDefs);
@@ -316,39 +292,39 @@
 		//MARCA OS CAMPOS DO FORMULÁRIO COMO OBRIGATÓRIOS
 		MarkRequiredFields (IdElementForm);
 
+
 		/*### DEFINIÇÕES DAS COLUNAS DO GRID (PRIMEIRA COLUNA É ZERO) ###*/
 		var ColumnDefs = [
-			{ "name":"ID", "data":"DT_RowId", "primary_key":"id", "DataType":"int", "orderable":false, "width":"6%", "DT_Filter": { "hasFilter": true, "type":"input" } },
-			{ "name":"Categoria", "data":"categoria", "width":"28%", "DT_Filter": { "hasFilter": true, "type":"input" } },
-			{ "name":"Título", "data":"titulo", "width":"28%", "responsive": { "hide":"phone" }, "DT_Filter": { "hasFilter": true, "type":"input", "searchOperator":"LIKE" },  },
-			{ "name":"Valor", "data":"valor", "width":"28%", "responsive": { "hide":"phone" }, "DT_Filter": { "hasFilter": true, "type":"input", "searchOperator":"LIKE" },  },
+			{ "name":"ID","data":"DT_RowId", "primary_key":"id", "DataType":"int", "width":"4%", "orderable":false, "minSearchValue":1, "width":"6%", "responsive": { "class":"expand" }, "DT_Filter": { "hasFilter": true, "type":"input" },  },
+			{ "name":"Nome", "data":"nome", "width":"30%", "responsive": { "class":"expand" }, "DT_Filter": { "hasFilter": true, "type":"input", "searchOperator":"LIKE" },  },
+			{ "name":"Período", "data":"periodo_nome", "minSearchValue":2, "width":"20%", "responsive": { "hide":"phone" }, "DT_Filter": { "hasFilter": true, "type":"input" }, "otherTable":{ "DynamicTable":"TURNOS", "Join":"INNER", "FieldKey":"periodo", "FieldKeyOtherTable":"codigo", "View":"descricao"}  },
+			{ "name":"Mensalidade", "data":"valor_mensalidade", "width":"20%", "responsive": { "class":"expand" }, "DT_Filter": { "hasFilter": true, "type":"input", }, "mask": {"name":"Moeda", "View":"add", "Database":"remove" } },
+			{ "name":"Duração (meses)", "data":"duracao", "width":"15%", "responsive": { "class":"expand" }, "DT_Filter": { "hasFilter": true, "type":"input", },  },
+			{ "name":"periodo", "data":"periodo", "minSearchValue":2, "visible":false, },
 		];
 		/*### DEFINIÇÕES DAS COLUNAS DO GRID (PRIMEIRA COLUNA É ZERO) ###*/
+
+
+
 
 
 		/*### ORDENAÇÃO INICIAL DO GRID (PRIMEIRA COLUNA É ZERO) ###*/
 		var ColumnOrder = [
-			[1, "asc"],
-			[2, "asc"]
+			[1, "asc"]
 		];
 		/*### ORDENAÇÃO INICIAL DO GRID (PRIMEIRA COLUNA É ZERO) ###*/
 
 
-		//ARMAZENA AS CATEGORIAS JÁ CRIADAS EM OBJETO
-		var categorias = GetDynamicTable('','','',OtherTableCategorias);
-
-		//POPULA O SELECT2 DO FILTRO COM AS CATEGORIAS JÁ CRIADAS
-		SetSelectFromDynamicTable('filtro_categoria',categorias,'Categorias','Todas as categorias','');
-
-		//POPULA O SELECT2 AUXILIAR COM AS CATEGORIAS JÁ CRIADAS
-		SetSelectFromDynamicTable('categorias_existentes',categorias,'Preencher com uma categoria existente','','');
 
 
-		//ARMAZENA OS VALORES JÁ CRIADAS EM OBJETO
-		var valores = GetDynamicTable('','','',OtherTableValores);
+		//ARMAZENA OS TURNOS
+		var periodos = GetDynamicTable('TURNOS','descricao','ASC','');
 
-		//POPULA O SELECT2 AUXILIAR COM OS VALORES JÁ CRIADOS
-		SetSelectFromDynamicTable('valores_existentes',valores,'Preencher com um valor existente','','');
+		//POPULA O SELECT2 DO FILTRO COM OS PERÍODOS
+		SetSelectFromDynamicTable('filtro_periodos',periodos,'Período do Curso','Todos os períodos','');
+
+		//GERA O ELEMENTO RADIO DO PERÍODO
+		CreateCheckRadioFromDynamicTable('radio_curs_periodo', 'Período', 'curs_periodo', 'radio', periodos, 'required', 'data-msg="Escolha o período"', '');
 
 
 		/*### CHAMA O GRID ###*/
@@ -360,17 +336,7 @@
 		FormValidation(IdElementForm, IdElementDataTable, DataTable, ModuleDefs, IdModalElement)
 		/*### ATIVA A VALIDAÇÃO DO FORMULÁRIO ###*/
 
-		/*### ATUALIZA O CAMPO DE CATEGORIA COM O VALOR ESCOLHIDO NO SELECT2 ###*/
-		$("#categorias_existentes").on('change', function(event) {
-			$("#"+IdElementForm+" :input[id=conf_categoria]").val($(this).val());
-		});
-		/*### ATUALIZA O CAMPO DE CATEGORIA COM O VALOR ESCOLHIDO NO SELECT2 ###*/
 
-		/*### ATUALIZA O CAMPO DE VALOR COM O VALOR ESCOLHIDO NO SELECT2 ###*/
-		$("#valores_existentes").on('change', function(event) {
-			$("#"+IdElementForm+" :input[id=conf_valor]").val($(this).val());
-		});
-		/*### ATUALIZA O CAMPO DE VALOR COM O VALOR ESCOLHIDO NO SELECT2 ###*/
 	};
 
 	// end pagefunction
