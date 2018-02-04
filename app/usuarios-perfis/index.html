@@ -1,0 +1,421 @@
+<!-- Bread crumb is created dynamically -->
+<!-- row -->
+<!-- row -->
+<div class="row">
+	<!-- col -->
+	<!-- <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+		<h1 class="page-title txt-color-blueDark">
+
+			PAGE HEADER
+			<i class="fa-fw fa fa-home"></i>
+				Pessoas
+			<span>>
+				Cadastro de pessoas
+			</span>
+		</h1>
+	</div> -->
+	<!-- end col -->
+
+
+</div>
+<!-- end row -->
+
+
+	<!-- row -->
+
+	<div class="row">
+
+		<!-- a blank row to get started -->
+		<div class="col-sm-12">
+			<!-- your contents here -->
+
+			<legend>Filtros</legend>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<select id="filtro_status" style="width:100%" class="select2 filtro-grid" data-id='3'></select>
+					</div>
+				</div>
+			</div>
+			<p></p>
+			<ul class="list-inline">
+				<li><button id="btn-novo-cadastro" type="button" class="btn btn-sm btn-labeled btn-primary"><span class="btn-label"><i class="fa fa-plus"></i></span>Novo</button></li>
+				<li><button id="btn-atualizar" type="button" class="btn btn-sm btn-labeled bg-color-pinkDark txt-color-white" title="Atualizar listagem"><span class="btn-label"><i class="fa fa-refresh"></i></span>Atualizar</button></li>
+				<li><button id="btn-resetar-filtros" type="button" class="btn btn-sm btn-labeled btn-default" title="Resetar filtros"><span class="btn-label"><i class="fa fa-ban"></i></span>Resetar filtros</button></li>
+			</ul>
+
+			<!-- Widget ID (each widget will need unique ID)-->
+			<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1" data-widget-editbutton="false">
+				<!-- widget options:
+				usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+				data-widget-colorbutton="false"
+				data-widget-editbutton="false"
+				data-widget-togglebutton="false"
+				data-widget-deletebutton="false"
+				data-widget-fullscreenbutton="false"
+				data-widget-custombutton="false"
+				data-widget-collapsed="true"
+				data-widget-sortable="false"
+
+				-->
+				<header>
+					<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+					<h2>Listagem de <span id="txt-entity-multiple"></span></h2>
+
+				</header>
+
+				<!-- widget div-->
+				<div>
+
+					<!-- widget edit box -->
+					<div class="jarviswidget-editbox">
+						<!-- This area used as dropdown edit box -->
+
+					</div>
+					<!-- end widget edit box -->
+
+					<!-- widget content -->
+					<div class="widget-body no-padding">
+
+						<table id="datatable_fixed_column" class="table table-striped table-bordered" width="100%">
+
+					        <thead>
+								<tr class="DT_Filter"></tr> <!-- LINHA PARA DOS FILTROS POR COLUNA -->
+					            <tr class="DT_Title"></tr> <!-- LINHA DO TÍTULO DAS COLUNAS -->
+					        </thead>
+						</table>
+
+					</div>
+					<!-- end widget content -->
+
+				</div>
+				<!-- end widget div -->
+
+			</div>
+			<!-- end widget -->
+
+
+
+
+
+
+
+
+
+			<!--#### MODAL DE CADASTRO ####-->
+			<div class="modal fade" id="modal-cadastro" role="dialog" aria-hidden="true">
+			    <div class="modal-dialog">
+			        <div class="modal-content">
+
+						<form name="form-cadastro" id="form-cadastro" action="" method="post" enctype="multipart/form-data">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+									&times;
+								</button>
+								<h4 class="modal-title">Cadastro de <span id="txt-entity-single"></span></h4>
+							</div>
+							<div class="modal-body">
+								<div class="row" id="id-reg">
+									<div class="col-md-12">
+										<div class="form-group">ID <strong><span id="id_reg"></span></strong> <i id="txt_id_reg" class="fa fa-history bigger-120" rel="popover-html" data-rel="reg_user_popover" data-trigger="hover" data-placement="right" data-content="" title="Histórico do registro"></i></div>
+									</div>
+								</div>
+								<legend>Dados básicos</legend>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="perf_titulo" class="control-label">Título</label>
+											<input name="perf_titulo" id="perf_titulo" type="text" class="form-control" placeholder="Título" required data-msg="Preencha o título" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<div id="radio_perf_status" class="form-group"></div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label class="checkbox-inline" for="redefinir_permissoes">
+												  <input id="redefinir_permissoes" name="redefinir_permissoes" value="1" type="checkbox" class="checkbox style-2">
+												  <span>Redefinir as permissões de todos os usuários vinculados</span>
+											</label>
+										</div>
+									</div>
+								</div>
+								<legend>Permissões dos módulos</legend>
+								<div class="row">
+									<div class="col-md-12">
+
+										<div class="table-responsive">
+											<table id="TabelaPermissoes" class="table table-bordered table-striped table-hover">
+												<thead>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+
+
+									</div>
+								</div>
+								<legend>Permissões especiais</legend>
+								<div class="row">
+									<div class="col-md-12">
+										<div id="PermissoesEspeciais"></div>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button id="btn-fechar" type="button" class="btn btn-labeled btn-default" data-dismiss="modal"><span class="btn-label"><i class="fa fa-times"></i></span>Cancelar</button>
+								<button id="btn-inserir" type="submit" class="btn btn-labeled btn-primary" data-id="inserir"><span class="btn-label"><i class="fa fa-check"></i></span>Inserir</button>
+								<button id="btn-alterar" type="submit" class="btn btn-labeled btn-success" data-id="alterar"><span class="btn-label"><i class="fa fa-check"></i></span>Alterar</button>
+							</div>
+						</form>
+
+			        </div>
+			    </div>
+			</div>
+			<!--#### MODAL DE CADASTRO ####-->
+
+
+
+
+
+		</div>
+
+	</div>
+
+	<!-- end row -->
+
+
+
+<script type="text/javascript">
+
+	pageSetUp();
+
+	/*
+	 * ALL PAGE RELATED SCRIPTS CAN GO BELOW HERE
+	 * eg alert("my home function");
+	 *
+	 * var pagefunction = function() {
+	 *   ...
+	 * }
+	 * loadScript("js/plugin/_PLUGIN_NAME_.js", pagefunction);
+	 *
+	 * TO LOAD A SCRIPT:
+	 * var pagefunction = function (){
+	 *  loadScript(".../plugin.js", run_after_loaded);
+	 * }
+	 *
+	 * OR you can load chain scripts by doing
+	 *
+	 * loadScript(".../plugin.js", function(){
+	 * 	 loadScript("../plugin.js", function(){
+	 * 	   ...
+	 *   })
+	 * });
+	 */
+
+	/*### FUNÇÃO QUE RESETA O FORMULÁRIO QUANDO CLICA NOS BOTÕES DE AÇÃO ###*/
+	//action = ação do formulário (novo, inserir, alterar, excluir, etc)
+	//IdElementForm = ID do elemento FORM dos cadastros principais
+	function ResetForm(action, IdElementForm) {
+
+		//RESETA O FORMULÁRIO (EXCETO SELECT2 E CAMPOS ESPECIAIS)
+		$("#"+IdElementForm).trigger('reset');
+
+		$("#redefinir_permissoes").closest('label').hide();
+
+		if(action=='alterar') {
+
+			$("#redefinir_permissoes").closest('label').show();
+		}
+	}
+	/*### FUNÇÃO QUE RESETA O FORMULÁRIO QUANDO CLICA NOS BOTÕES DE AÇÃO ###*/
+
+
+
+	/*### FUNÇÃO PARA EXECUTAR AÇÕES ADICIONAIS AO ACTIONFORM ###*/
+	function AdditionalActionForm(IdElementForm, action, data, textStatus, jqXHR, DataTable, ModuleDefs, IdModalElement) {
+
+		// console.log(action);
+		// console.log(data);
+		// console.log(textStatus);
+		// console.log(jqXHR);
+
+		if((action=="excluir")&&(data.Options["hasUsersProfile"]==true)&&(data.excluir=="NOK")) {
+
+			/*#### EXIBE MENSAGEM PARA ESCOLHA DO NOVO PERFIL ####*/
+			var dialog = bootbox.dialog({
+				title: '<i class="fa fa-exclamation-triangle swing animated"></i> Atenção',
+				message: data.ErrorMsg + '<br><br><select name="novo_perfil" id="novo_perfil" style="width:100%" class="select2" required data-msg="Escolha o novo perfil"></select>',
+				buttons: {
+				    cancel: {
+				        label: "Cancelar",
+				        className: 'btn-default'
+				    },
+				    ok: {
+				        label: "Excluir perfil e transferir usuários",
+				        className: 'btn-warning',
+				        callback: function(){
+
+				        	if($("#novo_perfil").val()>0)
+					        	{
+									//CRIA O OBJETO FORMDATA COM O FORM DO GRID
+									var formData = new FormData();
+									formData.append('novo_perfil',$("#novo_perfil").val());
+
+									//CHAMA O ACTION FORM
+									ActionForm('transferir_usuarios', formData, data.Options["id_reg"], '', DataTable, IdElementForm, ModuleDefs, IdModalElement);
+					        	}
+				        }
+				    }
+				}
+			});
+			/*#### EXIBE MENSAGEM PARA ESCOLHA DO NOVO PERFIL ####*/
+
+			/*### OBJETO OTHERTABLE PARA PERFIS ###*/
+			var OtherTablePerfis = {
+				"Table":"Perfis",
+				"Prefix":"perf_",
+				"Key":"id",
+				"Desc":"Titulo",
+				"Condition":"AND perf_id <> "+data.Options["id_reg"],
+				"FieldToOrder":"Titulo",
+				"Order":"ASC"
+			};
+			/*### OBJETO OTHERTABLE PARA PERFIS ###*/
+
+			//ARMAZENA OS PERFIS EM OBJETO
+			var perfis = GetDynamicTable('','','',OtherTablePerfis);
+
+			//POPULA O SELECT2 DO FILTRO COM OS PERFIS
+			SetSelectFromDynamicTable('novo_perfil',perfis,'Novo perfil dos usuários','','');
+
+		}
+
+		if((action=="selecionar")&&(typeof data[0]!='undefined')) {
+
+			SetPermissions('TabelaPermissoes', 'PermissoesEspeciais', data[0].permissoes);
+		}
+
+
+	}
+	/*### FUNÇÃO PARA EXECUTAR AÇÕES ADICIONAIS AO ACTIONFORM ###*/
+
+
+
+
+
+	// pagefunction
+
+	var pagefunction = function() {
+
+
+		//ID DO ELEMENTO TABLE DO GRID
+		var IdElementDataTable = 'datatable_fixed_column';
+
+		//ID DO ELEMENTO FORM DE CADASTRO PRINCIPAL
+		var IdElementForm = 'form-cadastro';
+
+		//ID DO ELEMENTO MODAL DE CADASTRO PRINCIPAL
+		var IdModalElement = 'modal-cadastro';
+
+
+		/*### DEFINIÇÕES GERAIS DO MÓDULO ###*/
+		var ModuleDefs = {
+			"Name":"Perfil", //IDENTIFICADOR INTERNO DO MÓDULO (REFERÊNCIA PARA PERMISSÃO DE ACESSO)
+			"Prefix":"perf_", //PREFIXO DOS CAMPOS DO MÓDULO (USADOS NA TABELA DO BANCO DE DADOS)
+			"Title":"Cadastro de Perfis de Acesso", //TÍTULO DO MÓDULO
+			"Entity":"Perfil", //ENTIDADE DO MÓDULO (REFERÊNCIA PARA CLASSE)
+			"Table":"Perfis", //NOME DA TABELA NO BANCO DE DADOS
+			"EntitySingle":"Perfil", //ENTIDADE DO MÓDULO (SINGULAR)
+			"EntityMultiple":"Perfis" //ENTIDADE DO MÓDULO (PLURAL)
+		};
+		/*### DEFINIÇÕES GERAIS DO MÓDULO ###*/
+
+		//CHAMA A FUNÇÃO QUE SETA OS DADOS BÁSICOS DO MÓDULO E ENTIDADE
+		SetModuleEntity(ModuleDefs);
+
+		//MARCA OS CAMPOS DO FORMULÁRIO COMO OBRIGATÓRIOS
+		MarkRequiredFields (IdElementForm);
+
+		/*### DEFINIÇÕES DAS COLUNAS DO GRID (PRIMEIRA COLUNA É ZERO) ###*/
+		var ColumnDefs = [
+			{ "name":"ID", "data":"DT_RowId", "primary_key":"id", "DataType":"int", "orderable":false, "width":"6%", "DT_Filter": { "hasFilter": true, "type":"input" } },
+			{ "name":"Título", "data":"titulo", "width":"40%", "DT_Filter": { "hasFilter": true, "type":"input", "searchOperator":"LIKE" } },
+			{ "name":"Status", "data":"status_nome", "width":"20%", "DT_Filter": { "hasFilter": true, "type":"input", "searchOperator":"LIKE" }, "otherTable":{ "DynamicTable":"STATUS", "Join":"INNER", "FieldKey":"Status", "FieldKeyOtherTable":"Codigo", "View":"Descricao"} },
+			{ "name":"status", "data":"status", "DataType":"int", "visible":false },
+		];
+		/*### DEFINIÇÕES DAS COLUNAS DO GRID (PRIMEIRA COLUNA É ZERO) ###*/
+
+
+		/*### ORDENAÇÃO INICIAL DO GRID (PRIMEIRA COLUNA É ZERO) ###*/
+		var ColumnOrder = [
+			[1, "asc"]
+		];
+		/*### ORDENAÇÃO INICIAL DO GRID (PRIMEIRA COLUNA É ZERO) ###*/
+
+
+		//ARMAZENA OS STATUS EM OBJETO
+		var status = GetDynamicTable('STATUS','descricao','ASC','');
+
+		//GERA O ELEMENTO RADIO DO STATUS
+		CreateCheckRadioFromDynamicTable('radio_perf_status', 'Status', 'perf_status', 'radio', status, 'required', 'data-msg="Escolha o status"', '');
+
+		//POPULA O SELECT2 DO FILTRO COM OS STATUS
+		SetSelectFromDynamicTable('filtro_status',status,'Status do Perfil','Todos os status','');
+
+		/*### CHAMA O GRID ###*/
+		var DataTable = GenerateDataTable(IdElementDataTable, '', ModuleDefs, ColumnDefs, ColumnOrder, IdElementForm, IdModalElement);
+		/*### CHAMA O GRID ###*/
+
+
+		/*### ATIVA A VALIDAÇÃO DO FORMULÁRIO ###*/
+		FormValidation(IdElementForm, IdElementDataTable, DataTable, ModuleDefs, IdModalElement)
+		/*### ATIVA A VALIDAÇÃO DO FORMULÁRIO ###*/
+
+
+		/*### RETORNA O FORMULÁRIO DE PERMISSÕES ###*/
+		GetModulesPermissions('TabelaPermissoes','PermissoesEspeciais');
+		/*### RETORNA O FORMULÁRIO DE PERMISSÕES ###*/
+
+
+
+
+	};
+
+	// end pagefunction
+
+	// destroy generated instances
+	// pagedestroy is called automatically before loading a new page
+	// only usable in AJAX version!
+
+	var pagedestroy = function(){
+
+		/*
+		Example below:
+
+		$("#calednar").fullCalendar( 'destroy' );
+		if (debugState){
+			root.console.log("✔ Calendar destroyed");
+		}
+
+		For common instances, such as Jarviswidgets, Google maps, and Datatables, are automatically destroyed through the app.js loadURL mechanic
+
+		*/
+	}
+
+	// end destroy
+
+	// run pagefunction
+	pagefunction();
+
+	// load related plugins
+
+
+
+</script>

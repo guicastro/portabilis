@@ -1,0 +1,351 @@
+<!-- Bread crumb is created dynamically -->
+<!-- row -->
+<!-- row -->
+<div class="row">
+	<!-- col -->
+	<!-- <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+		<h1 class="page-title txt-color-blueDark">
+
+			PAGE HEADER
+			<i class="fa-fw fa fa-home"></i>
+				Pessoas
+			<span>>
+				Cadastro de pessoas
+			</span>
+		</h1>
+	</div> -->
+	<!-- end col -->
+
+
+</div>
+<!-- end row -->
+
+
+	<!-- row -->
+
+	<div class="row">
+
+		<!-- a blank row to get started -->
+		<div class="col-sm-12">
+			<!-- your contents here -->
+
+			<!-- Widget ID (each widget will need unique ID)-->
+			<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1" data-widget-editbutton="false">
+				<!-- widget options:
+				usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+				data-widget-colorbutton="false"
+				data-widget-editbutton="false"
+				data-widget-togglebutton="false"
+				data-widget-deletebutton="false"
+				data-widget-fullscreenbutton="false"
+				data-widget-custombutton="false"
+				data-widget-collapsed="true"
+				data-widget-sortable="false"
+
+				-->
+				<header>
+					<span class="widget-icon"> <i class="fa fa-share-square-o"></i> </span>
+					<h2>Exportar dados de Atendimentos</h2>
+
+				</header>
+
+				<!-- widget div-->
+				<div>
+
+					<!-- widget edit box -->
+					<div class="jarviswidget-editbox">
+						<!-- This area used as dropdown edit box -->
+
+					</div>
+					<!-- end widget edit box -->
+
+					<!-- widget content -->
+					<div class="widget-body">
+
+						<form name="form-exportar" id="form-exportar" action="src/Controller/Controller.php" method="post" target="_blank" enctype="multipart/form-data">
+							<p>Escolha abaixo os filtros desejados</p>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="evento" class="control-label">Evento: </label>
+										<select multiple id="evento" name="evento[]" class="select2 filtro"></select>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="parceiro" class="control-label">Parceiro: </label>
+										<select multiple id="parceiro" name="parceiro[]" class="select2 filtro"></select>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="servico" class="control-label">Serviço: </label>
+										<select multiple id="servico" name="servico[]" class="select2 filtro"></select>
+									</div>
+								</div>
+							</div>
+
+							<input type="hidden" name="Token" id="Token">
+							<input type="hidden" name="Route" id="Route" value="ActionForm">
+							<input type="hidden" name="action" id="action" value="selecionar">
+							<input type="hidden" name="origem" id="origem" value="dados-atendimento">
+							<input type="hidden" name="ModuleDefs" id="ModuleDefs">
+
+							<div class="form-actions">
+								<div class="row">
+									<div class="col-md-12">
+										<button id="btn-resetar-filtros" type="button" class="btn btn-sm btn-labeled btn-default" title="Resetar filtros"><span class="btn-label"><i class="fa fa-ban"></i></span>Resetar filtros</button>
+										<button id="btn-exportar" type="submit" class="btn btn-sm btn-labeled btn-primary"><span class="btn-label"><i class="fa fa-share-square-o"></i></span>Exportar dados</button>
+									</div>
+								</div>
+							</div>
+						</form>
+
+					</div>
+					<!-- end widget content -->
+
+				</div>
+				<!-- end widget div -->
+
+			</div>
+			<!-- end widget -->
+
+
+
+
+
+
+
+
+
+		</div>
+
+	</div>
+
+	<!-- end row -->
+
+
+<!--#### CARREGAR SCRIPTS ESPECÍFICOS ####-->
+<script type="text/javascript" src="src/Javascript/Functions.Exporta.js?asf"></script>
+<!--#### CARREGAR SCRIPTS ESPECÍFICOS ####-->
+
+<script type="text/javascript">
+
+	//HABILITA WIDGETS DESKTOP
+	setup_widgets_desktop();
+
+	//REALIZA O SETUP DA PÁGINA
+	pageSetUp();
+
+	/*
+	 * ALL PAGE RELATED SCRIPTS CAN GO BELOW HERE
+	 * eg alert("my home function");
+	 *
+	 * var pagefunction = function() {
+	 *   ...
+	 * }
+	 * loadScript("js/plugin/_PLUGIN_NAME_.js", pagefunction);
+	 *
+	 * TO LOAD A SCRIPT:
+	 * var pagefunction = function (){
+	 *  loadScript(".../plugin.js", run_after_loaded);
+	 * }
+	 *
+	 * OR you can load chain scripts by doing
+	 *
+	 * loadScript(".../plugin.js", function(){
+	 * 	 loadScript("../plugin.js", function(){
+	 * 	   ...
+	 *   })
+	 * });
+	 */
+
+
+
+	/*### FUNÇÃO QUE RESETA O FORMULÁRIO QUANDO CLICA NOS BOTÕES DE AÇÃO ###*/
+	//action = ação do formulário (novo, inserir, alterar, excluir, etc)
+	//IdElementForm = ID do elemento FORM dos cadastros principais
+	function ResetForm(action, IdElementForm) {
+
+		//RESETA O FORMULÁRIO (EXCETO SELECT2 E CAMPOS ESPECIAIS)
+		// $("#"+IdElementForm).trigger('reset');
+	}
+	/*### FUNÇÃO QUE RESETA O FORMULÁRIO QUANDO CLICA NOS BOTÕES DE AÇÃO ###*/
+
+
+	/*### FUNÇÃO PARA EXECUTAR AÇÕES ADICIONAIS AO ACTIONFORM ###*/
+	function AdditionalActionForm(IdElementForm, action, data, textStatus, jqXHR, DataTable, ModuleDefs, IdModalElement) {
+
+	}
+	/*### FUNÇÃO PARA EXECUTAR AÇÕES ADICIONAIS AO ACTIONFORM ###*/
+
+
+	// pagefunction
+
+	var pagefunction = function() {
+
+
+		//ID DO ELEMENTO TABLE DO GRID
+		var IdElementDataTable = 'datatable_fixed_column';
+
+		//ID DO ELEMENTO FORM DE CADASTRO PRINCIPAL
+		var IdElementForm = 'form-exportar';
+
+		//ID DO ELEMENTO MODAL DE CADASTRO PRINCIPAL
+		var IdModalElement = 'modal-cadastro';
+
+
+		/*### DEFINIÇÕES GERAIS DO MÓDULO ###*/
+		var ModuleDefs = {
+			"Name":"Exporta", //IDENTIFICADOR INTERNO DO MÓDULO (REFERÊNCIA PARA PERMISSÃO DE ACESSO)
+			"Prefix":"", //PREFIXO DOS CAMPOS DO MÓDULO (USADOS NA TABELA DO BANCO DE DADOS)
+			"Title":"Exportar dados", //TÍTULO DO MÓDULO
+			"Entity":"Exporta", //ENTIDADE DO MÓDULO (REFERÊNCIA PARA CLASSE)
+			"Table":"", //NOME DA TABELA NO BANCO DE DADOS
+			"EntitySingle":"", //ENTIDADE DO MÓDULO (SINGULAR)
+			"EntityMultiple":"" //ENTIDADE DO MÓDULO (PLURAL)
+		};
+		/*### DEFINIÇÕES GERAIS DO MÓDULO ###*/
+
+		//CHAMA A FUNÇÃO QUE SETA OS DADOS BÁSICOS DO MÓDULO E ENTIDADE
+		SetModuleEntity(ModuleDefs);
+
+		//MARCA OS CAMPOS DO FORMULÁRIO COMO OBRIGATÓRIOS
+		MarkRequiredFields (IdElementForm);
+
+
+		/*### ATIVA A VALIDAÇÃO DO FORMULÁRIO ###*/
+		FormValidation(IdElementForm, IdElementDataTable, '', ModuleDefs, IdModalElement);
+		/*### ATIVA A VALIDAÇÃO DO FORMULÁRIO ###*/
+
+
+
+
+		/*### OBJETO OTHERTABLE PARA EVENTOS JÁ EXISTENTES ###*/
+		var OtherTableEventos = {
+			"Table":"Eventos",
+			"Prefix":"Even_",
+			"Key":"id",
+			"Desc":"Titulo",
+			"Condition":"AND TBL.Even_Status = 1",
+			"FieldToOrder":"Titulo",
+			"Order":"ASC",
+			"Join":"INNER JOIN ParceirosServicos ON ParceirosServicos.Eventos_Even_id = TBL.Even_id AND ParceirosServicos.ParcServ_Delete = 0 INNER JOIN Atendimentos ON Atendimentos.ParceirosServicos_ParcServ_id = ParceirosServicos.ParcServ_id AND Atendimentos.Aten_Delete = 0",
+			"Distinct":true,
+		};
+		/*### OBJETO OTHERTABLE PARA EVENTOS JÁ EXISTENTES ###*/
+
+		//ARMAZENA OS EVENTOS EM OBJETO
+		var eventos = GetDynamicTable('','','',OtherTableEventos);
+
+		//POPULA O SELECT2 AUXILIAR COM OS EVENTOS DE SERVIÇO
+		SetSelectFromDynamicTable('evento',eventos,'Todos os Eventos','','');
+
+
+
+		/*### OBJETO OTHERTABLE PARA PARCEIROS JÁ EXISTENTES ###*/
+		var OtherTableParceiros = {
+			"Table":"Parceiros",
+			"Prefix":"Parc_",
+			"Key":"id",
+			"Desc":"Razao_Nome",
+			"Condition":"",
+			"FieldToOrder":"Razao_Nome",
+			"Order":"ASC",
+			"Join":"INNER JOIN ParceirosServicos ON ParceirosServicos.Parceiros_Parc_id = TBL.Parc_id AND ParceirosServicos.ParcServ_Delete = 0 INNER JOIN Atendimentos ON Atendimentos.ParceirosServicos_ParcServ_id = ParceirosServicos.ParcServ_id AND Atendimentos.Aten_Delete = 0",
+			"Distinct":true,
+		};
+		/*### OBJETO OTHERTABLE PARA PARCEIROS JÁ EXISTENTES ###*/
+
+		//ARMAZENA OS PARCEIROS EM OBJETO
+		var parceiros = GetDynamicTable('','','',OtherTableParceiros);
+
+		//POPULA O SELECT2 AUXILIAR COM OS PARCEIROS DE SERVIÇO
+		SetSelectFromDynamicTable('parceiro',parceiros,'Todos os Parceiros','','');
+
+
+
+
+
+		/*### OBJETO OTHERTABLE PARA SERVIÇOS JÁ EXISTENTES ###*/
+		var OtherTableServicos = {
+			"Table":"Servicos",
+			"Prefix":"Serv_",
+			"Key":"id",
+			"Desc":"Titulo",
+			/*"Condition":"AND TBL.Serv_Status = 1 AND VisaoServicosTiposStatus.ServTipoStatus_TotalStatus = 6",*/
+			"Condition":"AND TBL.Serv_Status = 1",
+			"FieldToOrder":"Titulo",
+			"Order":"ASC",
+			/*"Join":"INNER JOIN ParceirosServicos ON ParceirosServicos.Servicos_Serv_id = TBL.Serv_id AND ParceirosServicos.ParcServ_Delete = 0 INNER JOIN Atendimentos ON Atendimentos.ParceirosServicos_ParcServ_id = ParceirosServicos.ParcServ_id AND Atendimentos.Aten_Delete = 0 INNER JOIN VisaoServicosTiposStatus ON VisaoServicosTiposStatus.ServTipoStatus_id = TBL.ServicosTipos_ServTipo_id",*/
+			"Join":"INNER JOIN ParceirosServicos ON ParceirosServicos.Servicos_Serv_id = TBL.Serv_id AND ParceirosServicos.ParcServ_Delete = 0 INNER JOIN Atendimentos ON Atendimentos.ParceirosServicos_ParcServ_id = ParceirosServicos.ParcServ_id AND Atendimentos.Aten_Delete = 0",
+			"Distinct":true,
+		};
+		/*### OBJETO OTHERTABLE PARA SERVIÇOS JÁ EXISTENTES ###*/
+
+		//ARMAZENA OS SERVIÇOS EM OBJETO
+		var servicos = GetDynamicTable('','','',OtherTableServicos);
+
+		//POPULA O SELECT2 AUXILIAR COM OS SERVIÇOS DE SERVIÇO
+		SetSelectFromDynamicTable('servico',servicos,'Todos os Serviços','','');
+
+
+		//HABILITA WIDGETS DESKTOP
+		setup_widgets_desktop();
+
+		//CHAMA AS FUNÇÕES PADRÃO DO SMARTADMIN
+		runAllForms();
+
+		//CARREGA VALORES PADRÃO NOS FILTROS
+		ResetarFiltrosExport(IdElementForm);
+
+
+		$("#"+IdElementForm+" input[name=Token]").val(token);
+		$("#"+IdElementForm+" input[name=ModuleDefs]").val(JSON.stringify(ModuleDefs));
+
+
+		/*### AÇÕES QUANDO CLICA NO BOTÃO RESETAR FILTROS ###*/
+		$("#btn-resetar-filtros").on("click", function (e) {
+
+			ResetarFiltrosExport(IdElementForm);
+		});
+		/*### AÇÕES QUANDO CLICA NO BOTÃO RESETAR FILTROS ###*/
+
+	};
+
+	// end pagefunction
+
+	// destroy generated instances
+	// pagedestroy is called automatically before loading a new page
+	// only usable in AJAX version!
+
+	var pagedestroy = function(){
+
+		/*
+		Example below:
+
+		$("#calednar").fullCalendar( 'destroy' );
+		if (debugState){
+			root.console.log("✔ Calendar destroyed");
+		}
+
+		For common instances, such as Jarviswidgets, Google maps, and Datatables, are automatically destroyed through the app.js loadURL mechanic
+
+		*/
+	}
+
+	// end destroy
+
+	// run pagefunction
+	pagefunction();
+
+	// load related plugins
+
+
+
+</script>

@@ -1,0 +1,51 @@
+@media print {
+
+    body > * {
+        font-family: Arial, sans-serif;
+        display: none;
+    }
+
+    .noprint {
+        display: none !important;
+    }
+
+    body .modal-header > * {
+        display: none !important;
+    }
+
+    body .modal-footer > * {
+        display: none !important;
+    }
+
+    body div.printableArea > * {
+        display: block !important;
+    }
+
+    .imprimir-pre-cadastro {
+        width: 79mm;
+    }
+
+}
+
+@media all {
+
+    #TitEvento {
+        font-size: 1.4em !important;
+    }
+
+    #Titulo {
+        font-size: 1.4em !important;
+    }
+
+    #DadosPessoa {
+        font-size: 1.4em !important;
+    }
+
+    .AtenServico, .AtenParceiro, .AtenData, .AtenStatus {
+        font-size: 1.2em !important;
+    }
+
+    .AtenSenha {
+        font-size: 1.8em !important;
+    }
+}

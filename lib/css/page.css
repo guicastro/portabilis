@@ -1,0 +1,10 @@
+@page {
+    margin-top: 1cm;
+    margin-bottom: 1cm;
+    margin-left: 1.54cm;
+    margin-right: 1.54cm;
+	margin-header: 1cm;
+	margin-footer: 10cm;
+    header: html_headerallpages;
+    footer: html_footerallpages;
+}

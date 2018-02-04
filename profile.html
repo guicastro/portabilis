@@ -1,0 +1,264 @@
+<!--#####################################################
+|														|
+| Página de visualização e alteração do perfil do		|
+| usuário que está logado								|
+|														|
+| Data de criação: 03/02/2018							|
+| Autor: Guilherme Moreira de Castro					|
+| Cliente: Portabilis Tecnologia						|
+| E-mail: guicastro@gmail.com							|
+|														|
+######################################################-->
+<!-- Bread crumb is created dynamically -->
+<!-- row -->
+<!-- row -->
+<div class="row">
+	<!-- col -->
+	<!-- <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+		<h1 class="page-title txt-color-blueDark">
+
+			PAGE HEADER
+			<i class="fa-fw fa fa-home"></i>
+				Pessoas
+			<span>>
+				Cadastro de pessoas
+			</span>
+		</h1>
+	</div> -->
+	<!-- end col -->
+
+
+</div>
+<!-- end row -->
+
+
+	<!-- row -->
+
+	<div class="row">
+
+		<!-- a blank row to get started -->
+		<div class="col-sm-12">
+			<!-- your contents here -->
+
+
+
+
+			<!--#### MODAL DE CADASTRO ####-->
+
+						<form name="form-perfil-usuario" id="form-perfil-usuario" action="" method="post" enctype="multipart/form-data">
+							<div class="modal-header">
+								<h4 class="modal-title">Cadastro de <span id="txt-entity-single"></span></h4>
+							</div>
+							<div class="modal-body">
+								<div class="row" id="id-reg">
+									<div class="col-md-12">
+										<div class="form-group">ID <strong><span id="id_reg"></span></strong> <i id="txt_id_reg" class="fa fa-history bigger-120" rel="popover-html" data-rel="reg_user_popover" data-trigger="hover" data-placement="right" data-content="" title="Histórico do registro"></i></div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="Usua_Nome" class="control-label">Nome</label>
+											<input name="Usua_Nome" id="Usua_Nome" type="text" class="form-control" placeholder="Nome" required data-msg="Preencha o nome" />
+											<input name="alterar_perfil" id="alterar_perfil" type="hidden" />
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="Usua_Email" class="control-label">E-mail</label>
+											<input name="Usua_Email" id="Usua_Email" type="email" class="form-control" placeholder="E-mail" required data-msg="Preencha o E-mail" data-rule-email="true" data-msg-email="Digite um e-mail válido"/>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="Usua_Login" class="control-label">Login</label>
+											<input name="Usua_Login" id="Usua_Login" type="text" class="form-control" placeholder="Login" required data-msg="Preencha o login" onkeyup="MaskLogin(this)" />
+											<input type="hidden" id="login_antigo" name="login_antigo" />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="Usua_Senha" class="control-label">Senha</label>
+											<input name="Usua_Senha" id="Usua_Senha" type="password" class="form-control" data-msg="Preencha a senha"  />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="repetir_senha" class="control-label">Repita a senha</label>
+											<input name="repetir_senha" id="repetir_senha" type="password" class="form-control" data-rule-equalTo="#Usua_Senha" data-msg-equalTo="As senhas devem ser iguais"  />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<div id="Radio_Usua_Status" class="form-group"></div>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button id="btn-alterar" type="submit" class="btn btn-labeled btn-success" data-id="alterar"><span class="btn-label"><i class="fa fa-check"></i></span>Alterar</button>
+							</div>
+						</form>
+
+			<!--#### MODAL DE CADASTRO ####-->
+
+
+
+
+
+		</div>
+
+	</div>
+
+	<!-- end row -->
+
+
+
+<script type="text/javascript">
+
+	pageSetUp();
+
+	/*
+	 * ALL PAGE RELATED SCRIPTS CAN GO BELOW HERE
+	 * eg alert("my home function");
+	 *
+	 * var pagefunction = function() {
+	 *   ...
+	 * }
+	 * loadScript("js/plugin/_PLUGIN_NAME_.js", pagefunction);
+	 *
+	 * TO LOAD A SCRIPT:
+	 * var pagefunction = function (){
+	 *  loadScript(".../plugin.js", run_after_loaded);
+	 * }
+	 *
+	 * OR you can load chain scripts by doing
+	 *
+	 * loadScript(".../plugin.js", function(){
+	 * 	 loadScript("../plugin.js", function(){
+	 * 	   ...
+	 *   })
+	 * });
+	 */
+
+
+
+	/*### FUNÇÃO QUE RESETA O FORMULÁRIO QUANDO CLICA NOS BOTÕES DE AÇÃO ###*/
+	//action = ação do formulário (novo, inserir, alterar, excluir, etc)
+	//IdElementForm = ID do elemento FORM dos cadastros principais
+	function ResetForm(action, IdElementForm) {
+
+		//RESETA O FORMULÁRIO (EXCETO SELECT2 E CAMPOS ESPECIAIS)
+		$("#"+IdElementForm).trigger('reset');
+
+		//TROCA O LABEL DA SENHA SE A AÇÃO FOR ALTERAR UM CADASTRO
+		$('label[for=Usua_Senha]').text('Nova senha (em branco para não alterar)');
+
+		//ATRIBIU VALOR NA OPÇÃO DE ALTERAR_PERFIL COMO OK
+		$("#"+IdElementForm+" #alterar_perfil").val('OK');
+	}
+	/*### FUNÇÃO QUE RESETA O FORMULÁRIO QUANDO CLICA NOS BOTÕES DE AÇÃO ###*/
+
+
+	/*### FUNÇÃO PARA EXECUTAR AÇÕES ADICIONAIS AO ACTIONFORM ###*/
+	function AdditionalActionForm(IdElementForm, action, data, textStatus, jqXHR, DataTable, ModuleDefs, IdModalElement) {
+
+		if(action=='selecionar') {
+
+			//LIMPA OS DADOS DA SENHA E REPETIR AO CARREGAR UM CADASTRO
+			$('#Usua_Senha, #repetir_senha').val('');
+
+			//ATRIBIU VALOR NA OPÇÃO DE ALTERAR_PERFIL COMO OK
+			$("#"+IdElementForm+" #alterar_perfil").val('OK');
+		}
+	}
+	/*### FUNÇÃO PARA EXECUTAR AÇÕES ADICIONAIS AO ACTIONFORM ###*/
+
+
+
+
+
+	// pagefunction
+
+	var pagefunction = function() {
+
+
+		//ID DO ELEMENTO FORM DE CADASTRO PRINCIPAL
+		var IdElementForm = 'form-perfil-usuario';
+
+
+		/*### DEFINIÇÕES GERAIS DO MÓDULO ###*/
+		var ModuleDefs = {
+			"Name":"Usuarios", //IDENTIFICADOR INTERNO DO MÓDULO
+			"Prefix":"Usua_", //PREFIXO DOS CAMPOS DO MÓDULO (USADOS NA TABELA DO BANCO DE DADOS)
+			"Title":"Meu perfil", //TÍTULO DO MÓDULO
+			"Entity":"Usuario", //ENTIDADE DO MÓDULO
+			"Table":"Usuarios", //NOME DA TABELA NO BANCO DE DADOS
+			"EntitySingle":"Usuário", //ENTIDADE DO MÓDULO (SINGULAR)
+			"EntityMultiple":"Usuários" //ENTIDADE DO MÓDULO (PLURAL)
+		};
+		/*### DEFINIÇÕES GERAIS DO MÓDULO ###*/
+
+
+		//CHAMA A FUNÇÃO QUE SETA OS DADOS BÁSICOS DO MÓDULO E ENTIDADE
+		SetModuleEntity(ModuleDefs);
+
+		//MARCA OS CAMPOS DO FORMULÁRIO COMO OBRIGATÓRIOS
+		MarkRequiredFields (IdElementForm);
+
+
+		/*#### RETORNA DADOS DO USUÁRIO (TOKEN) ####*/
+		var TokenUserData = ExecutePHPFunction('TokenUserData','',token);
+		TokenUserData.success(function (data) {
+			// console.log(data);
+			ValidateToken(data.InvalidToken);
+
+			var formData = new FormData();
+		    formData.append("alterar_perfil", "OK");
+
+			/*### RETORNA OS DADOS DO USUÁRIO ###*/
+			ActionForm('selecionar', formData, data.Usua_id, '', '', IdElementForm, ModuleDefs, '');
+			/*### RETORNA OS DADOS DO USUÁRIO ###*/
+		});
+		/*#### RETORNA DADOS DO USUÁRIO (TOKEN) ####*/
+
+
+		/*### ATIVA A VALIDAÇÃO DO FORMULÁRIO ###*/
+		FormValidation(IdElementForm, '', '', ModuleDefs, '')
+		/*### ATIVA A VALIDAÇÃO DO FORMULÁRIO ###*/
+	};
+
+	// end pagefunction
+
+	// destroy generated instances
+	// pagedestroy is called automatically before loading a new page
+	// only usable in AJAX version!
+
+	var pagedestroy = function(){
+
+		/*
+		Example below:
+
+		$("#calednar").fullCalendar( 'destroy' );
+		if (debugState){
+			root.console.log("✔ Calendar destroyed");
+		}
+
+		For common instances, such as Jarviswidgets, Google maps, and Datatables, are automatically destroyed through the app.js loadURL mechanic
+
+		*/
+	}
+
+	// end destroy
+
+	// run pagefunction
+	pagefunction();
+
+	// load related plugins
+
+
+
+</script>
+

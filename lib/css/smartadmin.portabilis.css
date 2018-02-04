@@ -1,0 +1,373 @@
+/*#######################################################
+|														|
+| Estilos CSS persolizados              				|
+|														|
+| Data de criação: 03/02/2018							|
+| Autor: Guilherme Moreira de Castro					|
+| Cliente: Portabilis Tecnologia						|
+| E-mail: guicastro@gmail.com							|
+|														|
+#######################################################*/
+
+
+/*#### TAMANHO DA BARRA LATERAL DO MENU ####*/
+#header > :first-child, aside {
+    width: 230px;
+}
+/*#### TAMANHO DA BARRA LATERAL DO MENU ####*/
+
+
+
+
+/*#### MARGEM ESQUEDA DO BLOCO PRINCIPAL IGUAL AO TAMANHO DA BARRA LATERAL DO MENU ####*/
+#main {
+    margin-left: 230px;
+}
+/*#### MARGEM ESQUEDA DO BLOCO PRINCIPAL IGUAL AO TAMANHO DA BARRA LATERAL DO MENU ####*/
+
+
+
+/*#### PADDING ESQUERDO DO RODAPÉ SOMANDO 13px DO TAMANHO DA BARRA LATERAL DO MENU ####*/
+.page-footer {
+
+    padding-left: 243px;
+}
+/*#### PADDING ESQUERDO DO RODAPÉ SOMANDO 13px DO TAMANHO DA BARRA LATERAL DO MENU ####*/
+
+
+
+
+/*#### RESPONSIVIDADE DO MENU, MAIN E RODAPÉ, INCLUSIVE QUANDO ESCONDE ####*/
+@media (max-width: 979px) {
+
+    .page-footer {
+        padding: 15px 14px 0 !important;
+    }
+}
+
+@media (min-width:768px) and (max-width:880px) {
+    #left-panel {
+        left: -230px;
+    }
+
+    #main {
+        margin-left: 0px;
+    }
+
+    .hidden-menu #main {
+        left: 230px !important;
+        margin-left: 0px !important;
+    }
+}
+@media (min-width:768px) and (max-width:979px) {
+
+    #left-panel {
+        left: -230px;
+    }
+
+    #main {
+        margin-left: 0px;
+    }
+
+    .hidden-menu #main {
+        left: 230px !important;
+        margin-left: 0px !important;
+    }
+}
+
+@media (max-width:767px) {
+    #left-panel {
+        left: -230px;
+    }
+
+    #main {
+        margin-left: 0px;
+    }
+
+    .hidden-menu #main {
+        left: 230px !important;
+        margin-left: 0px !important;
+    }
+}
+
+@media only screen and (min-width:0) and (max-width:679px) {
+    #left-panel {
+        left: -230px;
+    }
+
+    #main {
+        margin-left: 0px;
+    }
+
+    .hidden-menu #main {
+        left: 230px !important;
+        margin-left: 0px !important;
+    }
+}
+
+@media only screen and (min-width:320px) and (max-width:479px) {
+    #left-panel {
+        left: -230px;
+    }
+
+    #main {
+        margin-left: 0px;
+    }
+
+    .hidden-menu #main {
+        left: 230px !important;
+        margin-left: 0px !important;
+    }
+}
+/*#### RESPONSIVIDADE DO MENU, MAIN E RODAPÉ, INCLUSIVE QUANDO ESCONDE ####*/
+
+
+
+/*#### TAMANHO DO LOGO ####*/
+.smart-style-3 #logo img {
+    width: 200px;
+}
+
+#logo {
+    width: 200px;
+    margin-top: 6px;
+}
+/*#### TAMANHO DO LOGO ####*/
+
+
+/*#### JANELA DA TELA DA MENSAGEM DE IMPRESSÃO DO DATATABLE ####*/
+.DTTT_print_info {
+    width: 500px;
+    left: 50%;
+    margin-left: -250px;
+}
+/*#### JANELA DA TELA DA MENSAGEM DE IMPRESSÃO DO DATATABLE ####*/
+
+/*#### DIV DO TEXTO DE MOSTRAR XX REGISTROS POR PÁGINA DO DATATABLE ####*/
+#datatable_fixed_column_length {
+	padding-right: 10px !important;
+}
+/*#### DIV DO TEXTO DE MOSTRAR XX REGISTROS POR PÁGINA DO DATATABLE ####*/
+
+
+/*#### DIV DA CAIXA DO MODAL ####*/
+.modal-dialog {
+	width: 90%;
+}
+/*#### DIV DA CAIXA DO MODAL ####*/
+
+/*#### Z-INDEX DO POPOVER ####*/
+.popover {
+	z-index: 9999 !important;
+}
+/*#### Z-INDEX DO POPOVER ####*/
+
+
+/*#### Z-INDEX DO DATEPICKER ####*/
+.ui-datepicker {
+	z-index: 9999 !important;
+}
+/*#### Z-INDEX DO DATEPICKER ####*/
+
+
+/*#### BARRA DE CARREGAMENTO PARA DATATABLES QUANDO PROCESSA INFORMAÇÕES ####*/
+#DataTablesProcessingBehaviour, #ActionFormProcessingBehaviour {
+    position: absolute;
+    padding: 10px;
+    z-index: 999999;
+}
+/*#### BARRA DE CARREGAMENTO PARA DATATABLES QUANDO PROCESSA INFORMAÇÕES ####*/
+
+
+
+/*#### BORDA E PREENCHIMENTO DO INPUT SELECT2 QUANDO NÃO PREENCHIDO ####*/
+.smart-style-3 .has-error .select2-selection {
+    border-color: #b94a48 !important;
+}
+
+.smart-style-3 .has-error .select2-selection__arrow {
+    background-color: #f2dede;
+    color: #b94a48;
+}
+/*#### BORDA E PREENCHIMENTO DO INPUT SELECT2 QUANDO NÃO PREENCHIDO ####*/
+
+
+
+/*#### FUNDO DE MENUS DROPDOWN ####*/
+.smart-style-3 .dropdown-menu {
+    background: #fff;
+}
+/*#### FUNDO DE MENUS DROPDOWN ####*/
+
+
+
+/*#### BOTÃO TIPO BTN-CIRCLE DENTRO DAS PERGUNTAS (FICHAS DE ATENDIMENTO), HISTÓRICO PÓS-MULTIAÇÃO E ITENS DA TABELA DINÂMICA ####*/
+.pergunta .btn-circle, .historico .btn-circle, .item .btn-circle {
+    margin:5px;
+    width: 20px;
+    height: 20px;
+    padding: 3px 0;
+    font-size: 10px;
+    line-height: 12px;
+}
+/*#### BOTÃO TIPO BTN-CIRCLE DENTRO DAS PERGUNTAS (FICHAS DE ATENDIMENTO), HISTÓRICO PÓS-MULTIAÇÃO E ITENS DA TABELA DINÂMICA ####*/
+
+
+
+/*#### MARGENS E PADDING DOS LABELS E LEGENDS DOS FORMULÁRIOS DE CADASTRO ####*/
+.bootstrap-duallistbox-container label, .form header, legend {
+    padding: 4px 0;
+    margin: 0px 0 5px;
+}
+/*#### MARGENS E PADDING DOS LABELS E LEGENDS DOS FORMULÁRIOS DE CADASTRO ####*/
+
+
+/*#### MARGEM DIREITA DO LABEL DE RADIO-GROUP ####*/
+.control-label.radio-inline.no-padding {
+    margin-right: 10px !important;
+}
+/*#### MARGEM DIREITA DO LABEL DE RADIO-GROUP ####*/
+
+
+
+
+/*#### FORMATAÇÃO DO LABEL DE CAMPOS OBRIGATÓRIOS ####*/
+.required-field {
+
+    font-weight: bold;
+    color: #b94a48
+}
+
+.required-field::before {
+
+    content: '*';
+}
+/*#### FORMATAÇÃO DO LABEL DE CAMPOS OBRIGATÓRIOS ####*/
+
+
+
+
+/*#### FORMATAÇÃO DA MENSAGEM DE ERRO ####*/
+.MessageBoxContainer {
+    top: 20%;
+    padding: 10px;
+    /*height: 300px;*/
+}
+
+.MessageBoxMiddle {
+
+    padding-bottom:30px;
+}
+
+.MessageBoxMiddle pre {
+
+    height: 195px;
+}
+
+.MessageBoxMiddle > pre > .MessageBoxButtonSection {
+
+    position: absolute;
+    top: 88%;
+}
+
+.bootbox-body > pre {
+
+    height: 230px;
+}
+/*#### FORMATAÇÃO DA MENSAGEM DE ERRO ####*/
+
+
+
+
+/*#### HOVER DA TABELA DE SERVIÇOS DA TELA DE PRÉ-CADASTRO ####*/
+.tabela-item-pre-cadastro:hover{
+    background-color:#ecf3f8
+}
+/*#### HOVER DA TABELA DE SERVIÇOS DA TELA DE PRÉ-CADASTRO ####*/
+
+
+/*#### ITEM INATIVO DA TABELA DE SERVIÇOS DA TELA DE PRÉ-CADASTRO ####*/
+ .item-inativo h4, .item-inativo {
+    text-decoration: line-through;
+}
+/*#### ITEM INATIVO DA TABELA DE SERVIÇOS DA TELA DE PRÉ-CADASTRO ####*/
+
+
+/*#### BADGE DO CONTADOR DE SENHAS DA TELA DE PRÉ-CADASTRO ####*/
+.tabela-item-pre-cadastro .badge {
+    font-size: 14px !important;
+}
+/*#### BADGE DO CONTADOR DE SENHAS DA TELA DE PRÉ-CADASTRO ####*/
+
+
+/*#### TÍTULO DOS BLOCOS DA TELA DE PRÉ-CADASTRO ####*/
+#form-pre-cadastro legend {
+    font-size: 18px;
+}
+/*#### TÍTULO DOS BLOCOS DA TELA DE PRÉ-CADASTRO ####*/
+
+
+/*#### CRONÔMETRO DA TELA DE PRÉ-CADASTRO ####*/
+#TimerCountdown {
+
+    position: relative;
+    margin: -6px 6px 6px 6px;
+    padding: 4px 8px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #4F80C1;
+    color: #FFF;
+    border-radius: 4px;
+    float: right;
+}
+/*#### CRONÔMETRO DA TELA DE PRÉ-CADASTRO ####*/
+
+
+
+/*#### TEXTO DO RADIO DO PRIMEIRO PASSO DA TELA DE ATENDIMENTO ####*/
+#AtendimentosDisponiveis span {
+
+    font-size: 1.2em;
+    padding-bottom: 7px;
+}
+/*#### TEXTO DO RADIO DO PRIMEIRO PASSO DA TELA DE ATENDIMENTO ####*/
+
+
+/*#### MARGEM DA ÁREA DE RESPOSTA DO ATENDIMENTO ####*/
+.resposta {
+
+    margin-bottom: 15px;
+}
+/*#### MARGEM DA ÁREA DE RESPOSTA DO ATENDIMENTO ####*/
+
+
+/*#### TEXTO DA PERGUNTA NO FORMULÁRIO DE ATENDIMENTO ####*/
+.resposta-pergunta {
+
+    font-weight: bold;
+}
+/*#### TEXTO DA PERGUNTA NO FORMULÁRIO DE ATENDIMENTO ####*/
+
+
+
+/*#### ÁREA DE IMPRESSÃO DA FICHA DE ATENDIMENTO - PDF ####*/
+.AreaImpressaoFicha {
+
+    width: 100%;
+    min-height: 400px;
+    border: none;
+}
+/*#### ÁREA DE IMPRESSÃO DA FICHA DE ATENDIMENTO - PDF ####*/
+
+
+/*#### ÁREA DO TEXTO DO GRÁFICO DE PERCENTUAL ####*/
+.easy-pie-title {
+
+    width: 170px;
+    height: 25px;
+    margin: 5px 6px 0;
+    padding-top: 11px;
+    font-size: 11px;
+}
+/*#### ÁREA DO TEXTO DO GRÁFICO DE PERCENTUAL ####*/
+
