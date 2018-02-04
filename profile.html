@@ -58,42 +58,42 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="Usua_Nome" class="control-label">Nome</label>
-											<input name="Usua_Nome" id="Usua_Nome" type="text" class="form-control" placeholder="Nome" required data-msg="Preencha o nome" />
+											<label for="usua_nome" class="control-label">Nome</label>
+											<input name="usua_nome" id="usua_nome" type="text" class="form-control" placeholder="Nome" required data-msg="Preencha o nome" />
 											<input name="alterar_perfil" id="alterar_perfil" type="hidden" />
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="Usua_Email" class="control-label">E-mail</label>
-											<input name="Usua_Email" id="Usua_Email" type="email" class="form-control" placeholder="E-mail" required data-msg="Preencha o E-mail" data-rule-email="true" data-msg-email="Digite um e-mail válido"/>
+											<label for="usua_email" class="control-label">E-mail</label>
+											<input name="usua_email" id="usua_email" type="email" class="form-control" placeholder="E-mail" required data-msg="Preencha o E-mail" data-rule-email="true" data-msg-email="Digite um e-mail válido"/>
 										</div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-md-4">
 										<div class="form-group">
-											<label for="Usua_Login" class="control-label">Login</label>
-											<input name="Usua_Login" id="Usua_Login" type="text" class="form-control" placeholder="Login" required data-msg="Preencha o login" onkeyup="MaskLogin(this)" />
+											<label for="usua_login" class="control-label">Login</label>
+											<input name="usua_login" id="usua_login" type="text" class="form-control" placeholder="Login" required data-msg="Preencha o login" onkeyup="MaskLogin(this)" />
 											<input type="hidden" id="login_antigo" name="login_antigo" />
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
-											<label for="Usua_Senha" class="control-label">Senha</label>
-											<input name="Usua_Senha" id="Usua_Senha" type="password" class="form-control" data-msg="Preencha a senha"  />
+											<label for="usua_senha" class="control-label">Senha</label>
+											<input name="usua_senha" id="usua_senha" type="password" class="form-control" data-msg="Preencha a senha"  />
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label for="repetir_senha" class="control-label">Repita a senha</label>
-											<input name="repetir_senha" id="repetir_senha" type="password" class="form-control" data-rule-equalTo="#Usua_Senha" data-msg-equalTo="As senhas devem ser iguais"  />
+											<input name="repetir_senha" id="repetir_senha" type="password" class="form-control" data-rule-equalTo="#usua_senha" data-msg-equalTo="As senhas devem ser iguais"  />
 										</div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-md-4">
-										<div id="Radio_Usua_Status" class="form-group"></div>
+										<div id="radio_usua_status" class="form-group"></div>
 									</div>
 								</div>
 							</div>
@@ -154,7 +154,7 @@
 		$("#"+IdElementForm).trigger('reset');
 
 		//TROCA O LABEL DA SENHA SE A AÇÃO FOR ALTERAR UM CADASTRO
-		$('label[for=Usua_Senha]').text('Nova senha (em branco para não alterar)');
+		$('label[for=usua_senha]').text('Nova senha (em branco para não alterar)');
 
 		//ATRIBIU VALOR NA OPÇÃO DE ALTERAR_PERFIL COMO OK
 		$("#"+IdElementForm+" #alterar_perfil").val('OK');
@@ -168,7 +168,7 @@
 		if(action=='selecionar') {
 
 			//LIMPA OS DADOS DA SENHA E REPETIR AO CARREGAR UM CADASTRO
-			$('#Usua_Senha, #repetir_senha').val('');
+			$('#usua_senha, #repetir_senha').val('');
 
 			//ATRIBIU VALOR NA OPÇÃO DE ALTERAR_PERFIL COMO OK
 			$("#"+IdElementForm+" #alterar_perfil").val('OK');
@@ -192,7 +192,7 @@
 		/*### DEFINIÇÕES GERAIS DO MÓDULO ###*/
 		var ModuleDefs = {
 			"Name":"Usuarios", //IDENTIFICADOR INTERNO DO MÓDULO
-			"Prefix":"Usua_", //PREFIXO DOS CAMPOS DO MÓDULO (USADOS NA TABELA DO BANCO DE DADOS)
+			"Prefix":"usua_", //PREFIXO DOS CAMPOS DO MÓDULO (USADOS NA TABELA DO BANCO DE DADOS)
 			"Title":"Meu perfil", //TÍTULO DO MÓDULO
 			"Entity":"Usuario", //ENTIDADE DO MÓDULO
 			"Table":"Usuarios", //NOME DA TABELA NO BANCO DE DADOS

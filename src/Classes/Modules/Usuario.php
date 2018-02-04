@@ -43,13 +43,6 @@ class Usuario extends \Database\Crud {
 
 		$ModuleDefs = json_decode($ModuleDefs);
 
-		if($ModuleDefs->Name=="ParceiroUsuario") {
-
-			$ModuleDefs->Table = "Usuarios";
-			$ModuleDefs->Prefix = "Usua_";
-		}
-
-
 		$this->ModuleDefs = $ModuleDefs;
 		return $this->ModuleDefs;
 	}
