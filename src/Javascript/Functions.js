@@ -946,12 +946,12 @@ function AlertMsg(action, type, jqXHR, ErrorMsg, CustomMsg) {
 		'alterar':'fa fa-thumbs-up bounce animated',
 		'excluir':'fa fa-thumbs-up bounce animated',
 		'logout':'fa fa-sign-out bounce animated',
-		'erro':'<i class="fa fa-exclamation-triangle swing animated"></i>',
+		'erro':'fa fa-exclamation-triangle swing animated',
 		'copiar_para_evento':'fa fa-thumbs-up bounce animated',
 		'excluir_selecionados':'fa fa-thumbs-up bounce animated',
 		'alterar_permissoes':'fa fa-thumbs-up bounce animated',
 		'alterar_parceiros':'fa fa-thumbs-up bounce animated',
-		'transferir_usuarios':'<i class="fa fa-exclamation-triangle swing animated"></i>',
+		'transferir_usuarios':'fa fa-exclamation-triangle swing animated',
 	};
 	/*#### ÍCONES PADRÃO PARA MENSAGENS SMARTBOX APÓS AS AÇÕES ####*/
 
@@ -1017,7 +1017,7 @@ function AlertMsg(action, type, jqXHR, ErrorMsg, CustomMsg) {
 
 				/*#### EXIBE MENSAGEM DE AVISO DO ERRO ####*/
 				var dialog = bootbox.dialog({
-					title: icone_aviso['erro'] +' '+ mensagem_aviso['erro'],
+					title: '<i class="'+icone_aviso['erro']+'"></i> '+ mensagem_aviso['erro'],
 					message: returnErrorMsg,
 					buttons: {
 					    ok: {

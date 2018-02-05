@@ -259,50 +259,6 @@ class Crud {
 
 		$SQLSelectWhere = "WHERE ".$this->ModuleDefs->Prefix.$PrimaryKeyName." = ".$PrimaryKeyValue." AND ".$this->ModuleDefs->Prefix."Delete = 0";
 
-		/*### ADICIONA CONDIÇÕES WHERE QUANDO HÁ SPECIALPERMISSIONS ###*/
-		if($this->SpecialPermissions<>"") {
-
-			//EXTRAI A PERMISSÃO ESPECIAL DE RESTRIÇÃO DE ACESSO POR PARCEIRO
-			$Parceiros = json_decode($this->SpecialPermissions)->parceiros;
-			// print_r($Parceiros);
-
-
-			/*### SE EXISTIR RESTRIÇÃO POR PARCEIRO, ADICIONA NA SQL A RESTRIÇÃO ###*/
-			if(count($Parceiros)>0)
-				{
-					foreach ($Parceiros as $key => $idParceiro) {
-
-						$SQLINParceiros .= $idParceiro.", ";
-
-					}
-
-					//ARRAY COM AS TABELAS QUE POSSUEM RESTRIÇÃO DE PERMISSÃO DE PARCEIROS
-					$RestrictedTables = $this->TokenClass->getClaim("Data")->DefaultConfig->TabelasRestricaoParceiros;
-					// print_r($RestrictedTables);
-
-
-					/*### SE EXISTIR TABELAS COM RESTRIÇÃO DE PARCEIROS, ADICIONA NAS CONSULTAS A RESTRIÇÃO ###*/
-					if(count($RestrictedTables)>0) {
-
-						$ModuleDefsTable = $this->ModuleDefs->Table;
-
-						foreach ($RestrictedTables as $key => $RestrictedTablesObject) {
-
-							if($RestrictedTablesObject->$ModuleDefsTable) {
-
-								//ADICIONA AS CONDIÇÕES WHERE
-								$SQLSelectWhere .= " AND TBL.".$RestrictedTablesObject->$ModuleDefsTable." IN (".substr($SQLINParceiros,0,-2).") ";
-							}
-						}
-					}
-					/*### SE EXISTIR TABELAS COM RESTRIÇÃO DE PARCEIROS, ADICIONA NAS CONSULTAS A RESTRIÇÃO ###*/
-
-				}
-			/*### SE EXISTIR RESTRIÇÃO POR PARCEIRO, ADICIONA NA SQL A RESTRIÇÃO ###*/
-
-		}
-		/*### ADICIONA CONDIÇÕES WHERE QUANDO HÁ SPECIALPERMISSIONS ###*/
-
 		$this->SQLSelectWhere = $SQLSelectWhere;
 		return $this->SQLSelectWhere;
 	}

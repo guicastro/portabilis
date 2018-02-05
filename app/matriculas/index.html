@@ -137,65 +137,73 @@
 									<div class="col-md-10">
 										<div class="form-group">
 											<label for="cursos_curs_id" class="control-label">Curso</label>
-											<select name="cursos_curs_id" id="cursos_curs_id" style="width:100%" class="select2" required data-msg="Escolha o curso"></select>
+											<select name="cursos_curs_id" id="cursos_curs_id" style="width:100%" class="select2" required data-msg="Escolha o curso" data-status="NaoAtribuir"></select>
+										</div>
+									</div>
+									<div class="col-md-10">
+										<div class="form-group">
+											<label for="curs_nome" class="control-label">Curso</label>
+											<input name="curs_nome" id="curs_nome" type="text" class="form-control" readonly data-status="NaoAtribuir" />
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label for="curs_valor_matricula" class="control-label">Valor da matrícula</label>
-											<input name="curs_valor_matricula" id="curs_valor_matricula" type="text" class="form-control" readonly />
+											<input name="curs_valor_matricula" id="curs_valor_matricula" type="text" class="form-control" readonly data-status="NaoAtribuir" />
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label for="curs_valor_mensalidade" class="control-label">Valor da mensalidade</label>
-											<input name="curs_valor_mensalidade" id="curs_valor_mensalidade" type="text" class="form-control" readonly />
+											<input name="curs_valor_mensalidade" id="curs_valor_mensalidade" type="text" class="form-control" readonly data-status="NaoAtribuir" />
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label for="curs_duracao" class="control-label">Duração do curso (meses)</label>
-											<input name="curs_duracao" id="curs_duracao" type="text" class="form-control" readonly />
+											<input name="curs_duracao" id="curs_duracao" type="text" class="form-control" readonly data-status="NaoAtribuir" />
 										</div>
 									</div>
 								</div>
 								<legend>Dados do aluno</legend>
 								<div class="row">
-									<div class="col-md-8">
-										<div class="form-group">
-											<label for="pesq_aluno" class="control-label">Pesquisar aluno</label>
-											<input name="pesq_aluno" id="pesq_aluno" type="text" class="form-control" placeholder="Digite o CPF ou Nome para pesquisar" />
+									<div id="linha_pesq_aluno">
+										<div class="col-md-8">
+											<div class="form-group">
+												<label for="pesq_aluno" class="control-label">Pesquisar aluno</label>
+												<input name="pesq_aluno" id="pesq_aluno" type="text" class="form-control" placeholder="Digite o CPF ou Nome para pesquisar" />
+											</div>
 										</div>
-									</div>
-									<div class="col-md-1">
-										<div style="float: left; padding-top: 23px;">
-											<a id="btn-trocar-pessoa" href="javascript:void(0);" class="btn btn-default btn-sm" title="Pesquisar aluno"><i class="fa fa-search fa-lg"></i></a>
+										<div class="col-md-1">
+											<div style="float: left; padding-top: 23px;">
+												<a id="btn-pesquisa-aluno" href="javascript:void(0);" class="btn btn-default btn-sm" title="Pesquisar aluno"><i class="fa fa-search fa-lg"></i></a>
+											</div>
 										</div>
 									</div>
 
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="alun_nome" class="control-label">Nome</label>
-											<input name="alun_nome" id="alun_nome" type="text" class="form-control" readonly />
-											<input type="hidden" name="alunos_alun_id" id="alunos_alun_id" required data-msg="Escolha o aluno">
+											<input name="alun_nome" id="alun_nome" type="text" class="form-control" readonly data-status="NaoAtribuir" />
+											<input type="hidden" name="alunos_alun_id" id="alunos_alun_id" required data-msg="Escolha o aluno" data-status="NaoAtribuir">
 										</div>
 									</div>
 									<div class="col-md-2">
 										<div class="form-group">
 											<label for="alun_cpf" class="control-label">CPF</label>
-											<input name="alun_cpf" id="alun_cpf" type="tel" class="form-control" readonly />
+											<input name="alun_cpf" id="alun_cpf" type="tel" class="form-control" readonly data-status="NaoAtribuir" />
 										</div>
 									</div>
 									<div class="col-md-2">
 										<div class="form-group">
 											<label for="alun_rg" class="control-label">RG</label>
-											<input name="alun_rg" id="alun_rg" type="text" class="form-control" readonly />
+											<input name="alun_rg" id="alun_rg" type="text" class="form-control" readonly data-status="NaoAtribuir" />
 										</div>
 									</div>
 									<div class="col-md-2">
 										<div class="form-group">
 											<label for="alun_dtnascimento" class="control-label">Nascimento</label>
-											<input type="text" name="alun_dtnascimento" id="alun_dtnascimento" class="form-control" readonly />
+											<input type="text" name="alun_dtnascimento" id="alun_dtnascimento" class="form-control" readonly data-status="NaoAtribuir" />
 										</div>
 									</div>
 								</div>
@@ -216,7 +224,7 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label for="matr_status_pgto" class="control-label">Matrícula paga?</label>
-											<input name="matr_status_pgto" id="matr_status_pgto" type="text" class="form-control" value="PAGAMENTO PENDENTE" readonly />
+											<input name="matr_status_pgto" id="matr_status_pgto" type="text" class="form-control" value="PAGAMENTO PENDENTE" readonly data-status="NaoAtribuir" />
 										</div>
 									</div>
 								</div>
@@ -274,6 +282,20 @@
 	 * });
 	 */
 
+	 //TODO: FALTA CRIAR A PARTE DE CANCELAMENTO DE MATRÍCULA E O MÓDULO FINANCEIRO
+
+	/*### DEFINIÇÕES GERAIS DO MÓDULO DE CURSO ###*/
+	var $ModuleDefsCurso = {
+		"Name":"Curso", //IDENTIFICADOR INTERNO DO MÓDULO (REFERÊNCIA PARA PERMISSÃO DE ACESSO)
+		"Prefix":"curs_", //PREFIXO DOS CAMPOS DO MÓDULO (USADOS NA TABELA DO BANCO DE DADOS)
+		"Title":"Cadastro de Cursos", //TÍTULO DO MÓDULO
+		"Entity":"Curso", //ENTIDADE DO MÓDULO (REFERÊNCIA PARA CLASSE)
+		"Table":"Cursos", //NOME DA TABELA NO BANCO DE DADOS
+		"EntitySingle":"Curso", //ENTIDADE DO MÓDULO (SINGULAR)
+		"EntityMultiple":"Cursos" //ENTIDADE DO MÓDULO (PLURAL)
+	};
+	/*### DEFINIÇÕES GERAIS DO MÓDULO DE CURSO ###*/
+
 	/*### FUNÇÃO QUE RESETA O FORMULÁRIO QUANDO CLICA NOS BOTÕES DE AÇÃO ###*/
 	//action = ação do formulário (novo, inserir, alterar, excluir, etc)
 	//IdElementForm = ID do elemento FORM dos cadastros principais
@@ -283,23 +305,268 @@
 		$("#"+IdElementForm).trigger('reset');
 
 		//RESETA CAMPOS CAMPOS ESPECIAIS
-		$("#"+IdElementForm+" :input[id=matr_cpf_antigo]").val('');
-		$("#"+IdElementForm+" :input[id=matr_endereco_uf]").val('').select2().trigger('change');
-		$("#"+IdElementForm+" :input[id=matr_estado_civil]").val('').select2().trigger('change');
+		$("#"+IdElementForm+" :input[id=cursos_curs_id]").val('').select2().trigger('change');
+		$("#"+IdElementForm+" :input[id=matr_status]").val('').select2().trigger('change');
 
 		if(action=='novo') {
 
-			$("#"+IdElementForm+" :input[id=matr_endereco_cidade]").val('IÇARA');
-			$("#"+IdElementForm+" :input[id=matr_endereco_uf]").val('SC').select2().trigger('change');
+			$("#"+IdElementForm+" #cursos_curs_id").closest('.form-group').show();
+
+			$("#"+IdElementForm+" #linha_pesq_aluno").show();
+
+			$("#"+IdElementForm+" input[name=alun_nome]").closest('.form-group').hide();
+			$("#"+IdElementForm+" input[name=alun_cpf]").closest('.form-group').hide();
+			$("#"+IdElementForm+" input[name=alun_rg]").closest('.form-group').hide();
+			$("#"+IdElementForm+" input[name=alun_dtnascimento]").closest('.form-group').hide();
+
+			$("#"+IdElementForm+" input[name=curs_nome]").closest('.form-group').hide();
+			$("#"+IdElementForm+" input[name=curs_valor_matricula]").closest('.form-group').hide();
+			$("#"+IdElementForm+" input[name=curs_valor_mensalidade]").closest('.form-group').hide();
+			$("#"+IdElementForm+" input[name=curs_duracao]").closest('.form-group').hide();
 		}
-
-
 	}
 	/*### FUNÇÃO QUE RESETA O FORMULÁRIO QUANDO CLICA NOS BOTÕES DE AÇÃO ###*/
 
 
 	/*### FUNÇÃO PARA EXECUTAR AÇÕES ADICIONAIS AO ACTIONFORM ###*/
 	function AdditionalActionForm(IdElementForm, action, data, textStatus, jqXHR, DataTable, ModuleDefs, IdModalElement) {
+
+		console.log("\nAdditionalActionForm");
+		console.log(IdElementForm);
+		console.log(action);
+		console.log(data);
+		console.log(data.Options);
+		console.log(ModuleDefs);
+		console.log(data.origem);
+		console.log(DataTable);
+
+
+
+		/*### AÇÕES QUANDO RETORNA A BUSCA DE MATRÍCULA EXISTENTE ###*/
+		if((action=="selecionar")&&(ModuleDefs.Entity=="Matricula")) {
+
+			//ESCONDE O CAMPO DE CURSO
+			$("#"+IdElementForm+" #cursos_curs_id").closest('.form-group').hide();
+
+			//ATRIBUI O CURSO DA MATRÍCULA
+			$("#"+IdElementForm+" :input[id=cursos_curs_id]").val(data[0].curs_id);
+
+			//ATRIBUI O ALUNO DA MATRÍCULA
+			$("#"+IdElementForm+" :input[id=alunos_alun_id]").val(data[0].alun_id);
+
+			//ESCONDE A LINHA DE PESQUISA DE ALUNO
+			$("#"+IdElementForm+" #linha_pesq_aluno").hide();
+
+			/*### PREENCHE OS DADOS DO ALUNO ###*/
+			$("#"+IdElementForm+" input[name=alun_nome]").val(data[0].alun_nome);
+			$("#"+IdElementForm+" input[name=alun_cpf]").val(data[0].alun_cpf);
+			$("#"+IdElementForm+" input[name=alun_rg]").val(data[0].alun_rg);
+			$("#"+IdElementForm+" input[name=alun_dtnascimento]").val(data[0].alun_dtnascimento);
+			$("#"+IdElementForm+" input[name=alunos_alun_id]").val(data[0].alun_id);
+			/*### PREENCHE OS DADOS DO ALUNO ###*/
+
+			/*### MOSTRA OS CAMPOS DO ALUNO ###*/
+			$("#"+IdElementForm+" input[name=alun_nome]").closest('.form-group').show();
+			$("#"+IdElementForm+" input[name=alun_cpf]").closest('.form-group').show();
+			$("#"+IdElementForm+" input[name=alun_rg]").closest('.form-group').show();
+			$("#"+IdElementForm+" input[name=alun_dtnascimento]").closest('.form-group').show();
+			/*### MOSTRA OS CAMPOS DO ALUNO ###*/
+
+
+
+			/*### PREENCHE OS DADOS DO CURSO ###*/
+			$("#"+IdElementForm+" input[name=curs_nome]").val(data[0].curs_nome + ' - ' + data[0].curs_ch + 'h ' + ' - ' + data[0].tabedinavalo_descricao);
+			$("#"+IdElementForm+" input[name=curs_valor_matricula]").val(data[0].curs_valor_matricula);
+			$("#"+IdElementForm+" input[name=curs_valor_mensalidade]").val(data[0].curs_valor_mensalidade);
+			$("#"+IdElementForm+" input[name=curs_duracao]").val(data[0].curs_duracao);
+			/*### PREENCHE OS DADOS DO CURSO ###*/
+
+			/*### MOSTRAS OS CAMPOS COM OS DADOS DO CURSO ###*/
+			$("#"+IdElementForm+" input[name=curs_nome]").closest('.form-group').show();
+			$("#"+IdElementForm+" input[name=curs_valor_matricula]").closest('.form-group').show();
+			$("#"+IdElementForm+" input[name=curs_valor_mensalidade]").closest('.form-group').show();
+			$("#"+IdElementForm+" input[name=curs_duracao]").closest('.form-group').show();
+			/*### MOSTRAS OS CAMPOS COM OS DADOS DO CURSO ###*/
+
+
+		}
+		/*### AÇÕES QUANDO RETORNA A BUSCA DE MATRÍCULA EXISTENTE ###*/
+
+
+		/*### AÇÕES QUANDO É UM NOVO CADASTRO DE MATRÍCULA ###*/
+		if((action=="novo")&&(ModuleDefs.Entity=="Matricula")) {
+
+			/*### AÇÕES QUANDO ESCOLHE UM CURSO (onChange) ###*/
+			$("#"+IdElementForm+" #cursos_curs_id").on('change', function(event) {
+
+				var id_reg = $(this).val();
+
+				if(id_reg>0) {
+
+					//CRIA O formData
+					var formData = new FormData();
+
+					//ADICIONA O ORIGEM
+					formData.append('origem','matricula');
+
+					//LIMPA OS DADOS DO ALUNO
+					LimpaCurso(IdElementForm);
+
+					//PREENCHE O FORMULÁRIO DE PESSOAS
+					ActionForm('selecionar', formData, id_reg, '', DataTable, IdElementForm, $ModuleDefsCurso, IdModalElement);
+				}
+			});
+			/*### AÇÕES QUANDO ESCOLHE UM CURSO (onChange) ###*/
+		}
+		/*### AÇÕES QUANDO É UM NOVO CADASTRO DE MATRÍCULA ###*/
+
+
+
+		/*### AÇÕES QUANDO RETORNA A BUSCA DE ALUNOS PARA NOVA MATRÍCULA ###*/
+		if((action=="selecionar")&&(data.origem=="matricula")&&(ModuleDefs.Entity=="Aluno")) {
+
+			if(data.Options["TotalItens"]>1) {
+
+				console.log("mais de um");
+
+
+				/*#### EXIBE CAIXA DE DIÁLOGO PARA ESCOLHER O ALUNO ####*/
+				var dialog = bootbox.dialog({
+					title: 'Selecionar aluno',
+					message: '<div class="row"><div class="col-xs-12">Sua pesquisa retornou mais de um aluno, por favor, escolha o aluno na lista abaixo: <br></div>\
+								<br/>\
+								<div class="col-xs-12">\
+									<div id="ResultadoAlunos"></div>\
+									<div id="msg-escolher" class="bg-danger">Escolha um aluno</div>\
+								</div></div>',
+					buttons: {
+					    cancel: {
+					        label: "Cancelar",
+					        className: 'btn-primary',
+					    },
+					    ok: {
+					        label: "Escolher",
+					        className: 'btn-success',
+					        callback: function(){
+					        	if($('input[name=res_pesq_alun_id]:checked').val()>0) {
+
+					        		var id_aluno = $('input[name=res_pesq_alun_id]:checked').val();
+
+									$("#"+IdElementForm+" #alunos_alun_id").val();
+
+									$("#"+IdElementForm+" input[name=alun_nome]").val($('#txt_alun_nome_'+id_aluno).html());
+									$("#"+IdElementForm+" input[name=alun_cpf]").val($('#txt_alun_cpf_'+id_aluno).html());
+									$("#"+IdElementForm+" input[name=alun_rg]").val($('#txt_alun_rg_'+id_aluno).html());
+									$("#"+IdElementForm+" input[name=alun_dtnascimento]").val($('#txt_alun_dtnascimento_'+id_aluno).html());
+									$("#"+IdElementForm+" input[name=alunos_alun_id]").val(id_aluno);
+
+									$("#"+IdElementForm+" input[name=alun_nome]").closest('.form-group').slideDown();
+									$("#"+IdElementForm+" input[name=alun_cpf]").closest('.form-group').slideDown();
+									$("#"+IdElementForm+" input[name=alun_rg]").closest('.form-group').slideDown();
+									$("#"+IdElementForm+" input[name=alun_dtnascimento]").closest('.form-group').slideDown();
+
+
+					        	} else {
+					        		$('#msg-escolher').fadeIn();
+					        		return false;
+					        	}
+					        }
+					    }
+					}
+				});
+				/*#### EXIBE CAIXA DE DIÁLOGO PARA ESCOLHER O ALUNO ####*/
+
+				$("#ResultadoAlunos").html('');
+
+				$('#msg-escolher').hide();
+
+				var tabela = $('<table class="table table-striped table-hover">\
+									<thead>\
+										<tr>\
+											<th>&nbsp</th>\
+											<th>Nome</th>\
+											<th>CPF</th>\
+											<th>RG</th>\
+											<th>Nascimento</th>\
+										</tr>\
+									</thead>\
+									<tbody>\
+									</tbody>\
+								</table>');
+
+				$.each(data, function(key, DataObject ) {
+
+					if(DataObject) {
+
+						console.log(DataObject);
+						console.log(typeof DataObject);
+						console.log(DataObject.hasOwnProperty('alun_id'));
+
+						if(DataObject.hasOwnProperty('alun_id')==true) {
+
+							tabela.find('tbody').append('<tr>\
+															<td><label class="radio radio-inline" style="margin-top:0px;"><input type="radio" name="res_pesq_alun_id" id="res_pesq_alun_id_'+DataObject.alun_id+'" value="'+DataObject.alun_id+'" class="radiobox style-2" /><span class="lbl"></span></label></td>\
+															<td><span id="txt_alun_nome_'+DataObject.alun_id+'">'+DataObject.alun_nome+'</span></td>\
+															<td><span id="txt_alun_cpf_'+DataObject.alun_id+'">'+DataObject.alun_cpf+'</span></td>\
+															<td><span id="txt_alun_rg_'+DataObject.alun_id+'">'+DataObject.alun_rg+'</span></td>\
+															<td><span id="txt_alun_dtnascimento_'+DataObject.alun_id+'">'+DataObject.alun_dtnascimento+'</span></td>\
+														</tr>');
+						}
+					}
+				});
+
+				$("#ResultadoAlunos").html(tabela);
+			}
+
+
+
+			else if(data.Options["TotalItens"]==1) {
+
+				$("#"+IdElementForm+" input[name=alun_nome]").val(data[0].alun_nome);
+				$("#"+IdElementForm+" input[name=alun_cpf]").val(data[0].alun_cpf);
+				$("#"+IdElementForm+" input[name=alun_rg]").val(data[0].alun_rg);
+				$("#"+IdElementForm+" input[name=alun_dtnascimento]").val(data[0].alun_dtnascimento);
+				$("#"+IdElementForm+" input[name=alunos_alun_id]").val(data[0].alun_id);
+
+				$("#"+IdElementForm+" input[name=alun_nome]").closest('.form-group').slideDown();
+				$("#"+IdElementForm+" input[name=alun_cpf]").closest('.form-group').slideDown();
+				$("#"+IdElementForm+" input[name=alun_rg]").closest('.form-group').slideDown();
+				$("#"+IdElementForm+" input[name=alun_dtnascimento]").closest('.form-group').slideDown();
+			}
+			else {
+
+				$("#"+IdElementForm+" input[name=alun_nome]").val('');
+				$("#"+IdElementForm+" input[name=alun_cpf]").val('');
+				$("#"+IdElementForm+" input[name=alun_rg]").val('');
+				$("#"+IdElementForm+" input[name=alun_dtnascimento]").val('');
+				$("#"+IdElementForm+" input[name=alunos_alun_id]").val('');
+
+				$("#"+IdElementForm+" input[name=alun_nome]").closest('.form-group').slideUp();
+				$("#"+IdElementForm+" input[name=alun_cpf]").closest('.form-group').slideUp();
+				$("#"+IdElementForm+" input[name=alun_rg]").closest('.form-group').slideUp();
+				$("#"+IdElementForm+" input[name=alun_dtnascimento]").closest('.form-group').slideUp();
+
+				AlertMsg('erro', 'error', '', '', 'Não foram localizados alunos com os termos pesquisados, tente novamente ou realize um cadastro de novo aluno.');
+			}
+		}
+		/*### AÇÕES QUANDO RETORNA A BUSCA DE ALUNOS PARA NOVA MATRÍCULA ###*/
+
+
+
+		/*### AÇÕES QUANDO RETORNA DA ESCOLHA DO CURSO ###*/
+		if((action=="selecionar")&&(data.origem=="matricula")&&(ModuleDefs.Entity=="Curso")) {
+
+			// $("#"+IdElementForm+" :input[id=cursos_curs_id]").val(data[0].curs_id).select2().trigger('change');
+
+			$("#"+IdElementForm+" input[name=curs_valor_matricula]").val(data[0].curs_valor_matricula);
+			$("#"+IdElementForm+" input[name=curs_valor_mensalidade]").val(data[0].curs_valor_mensalidade);
+			$("#"+IdElementForm+" input[name=curs_duracao]").val(data[0].curs_duracao);
+
+			$("#"+IdElementForm+" input[name=curs_valor_matricula]").closest('.form-group').slideDown();
+			$("#"+IdElementForm+" input[name=curs_valor_mensalidade]").closest('.form-group').slideDown();
+			$("#"+IdElementForm+" input[name=curs_duracao]").closest('.form-group').slideDown();
+		}
+		/*### AÇÕES QUANDO RETORNA DA ESCOLHA DO CURSO ###*/
 
 	}
 	/*### FUNÇÃO PARA EXECUTAR AÇÕES ADICIONAIS AO ACTIONFORM ###*/
@@ -327,10 +594,24 @@
 			"Title":"Cadastro de Matrículas", //TÍTULO DO MÓDULO
 			"Entity":"Matricula", //ENTIDADE DO MÓDULO (REFERÊNCIA PARA CLASSE)
 			"Table":"Matriculas", //NOME DA TABELA NO BANCO DE DADOS
-			"EntitySingle":"Matricula", //ENTIDADE DO MÓDULO (SINGULAR)
-			"EntityMultiple":"Matriculas" //ENTIDADE DO MÓDULO (PLURAL)
+			"EntitySingle":"Matrícula", //ENTIDADE DO MÓDULO (SINGULAR)
+			"EntityMultiple":"Matrículas" //ENTIDADE DO MÓDULO (PLURAL)
 		};
 		/*### DEFINIÇÕES GERAIS DO MÓDULO ###*/
+
+
+		/*### DEFINIÇÕES GERAIS DO MÓDULO DE ALUNOS ###*/
+		var ModuleDefsAluno = {
+			"Name":"Aluno", //IDENTIFICADOR INTERNO DO MÓDULO (REFERÊNCIA PARA PERMISSÃO DE ACESSO)
+			"Prefix":"alun_", //PREFIXO DOS CAMPOS DO MÓDULO (USADOS NA TABELA DO BANCO DE DADOS)
+			"Title":"Cadastro de Alunos", //TÍTULO DO MÓDULO
+			"Entity":"Aluno", //ENTIDADE DO MÓDULO (REFERÊNCIA PARA CLASSE)
+			"Table":"Alunos", //NOME DA TABELA NO BANCO DE DADOS
+			"EntitySingle":"Aluno", //ENTIDADE DO MÓDULO (SINGULAR)
+			"EntityMultiple":"Alunos" //ENTIDADE DO MÓDULO (PLURAL)
+		};
+		/*### DEFINIÇÕES GERAIS DO MÓDULO DE ALUNOS ###*/
+
 
 
 		//CHAMA A FUNÇÃO QUE SETA OS DADOS BÁSICOS DO MÓDULO E ENTIDADE
@@ -345,7 +626,7 @@
 			{ "name":"ID","data":"DT_RowId", "primary_key":"id", "DataType":"int", "width":"4%", "orderable":false, "minSearchValue":1, "width":"6%", "responsive": { "class":"expand" }, "DT_Filter": { "hasFilter": true, "type":"input" },  },
 			{ "name":"curso", "data":"cursos_curs_id", "DataType":"int", "visible":false, "otherTable":{ "Table":"cursos", "Alias":"Cursos", "Prefix":"curs_", "Join":"INNER", "FieldKey":"cursos_curs_id", "FieldKeyOtherTable":"curs_id", "View":"curs_id"} },
 			{ "name":"Ano", "data":"ano", "width":"12%", "DT_Filter": { "hasFilter": true, "type":"input" }, },
-			{ "name":"Curso", "data":"curso_nome", "width":"22%", "DT_Filter": { "hasFilter": true, "type":"input", "searchOperator":"LIKE" }, "otherTable":{ "View":"CAST(cursos.curs_nome as varchar)||' - '||CAST(cursos.curs_ch as varchar)||'h - '"} },
+			{ "name":"Curso", "data":"curso_nome", "width":"22%", "DT_Filter": { "hasFilter": true, "type":"input", "searchOperator":"LIKE" }, "otherTable":{ "View":"CAST(cursos.curs_nome as varchar)||' - '||CAST(cursos.curs_ch as varchar)||'h'"} },
 			{ "name":"Período", "data":"periodo_nome", "width":"12%", "DT_Filter": { "hasFilter": true, "type":"input" }, "otherTable":{"Alias":"Periodos", "OtherJoin":"INNER JOIN TabelasDinamicasValores Periodos ON Periodos.TabeDinaValo_Codigo = CAST(cursos.curs_periodo AS VARCHAR) AND Periodos.TabeDinaValo_Tabela = 'TURNOS' AND Periodos.TabeDinaValo_Delete = 0", "View":"TabeDinaValo_Descricao"} },
 			{ "name":"Aluno", "data":"aluno_nome", "width":"22%", "DT_Filter": { "hasFilter": true, "type":"input", "searchOperator":"LIKE" }, "otherTable":{ "Table":"alunos", "Alias":"alunos", "Prefix":"alun_", "Join":"INNER", "FieldKey":"alunos_alun_id", "FieldKeyOtherTable":"alun_id", "View":"alun_nome"} },
 			{ "name":"Status", "data":"status_nome", "width":"12%", "DT_Filter": { "hasFilter": true, "type":"input" }, "otherTable":{ "DynamicTable":"STATUS_MATRICULAS", "Join":"INNER", "FieldKey":"status", "FieldKeyOtherTable":"codigo", "View":"descricao"} },
@@ -424,6 +705,41 @@
 		/*### ATIVA A VALIDAÇÃO DO FORMULÁRIO ###*/
 
 
+
+
+
+
+		/*### AÇÕES QUANDO REALIZA A BUSCA DE UM ALUNO ###*/
+		$("#"+IdElementForm+" #btn-pesquisa-aluno").on('click', function(event) {
+
+			var searchKey = $("#"+IdElementForm+" #pesq_aluno").val();
+
+			if (searchKey.length<3) {
+
+				AlertMsg('erro', 'alert', '', '', 'Digite pelo menos três carateres para realizar a busca.');
+			}
+
+			else {
+
+				//CRIA O formData
+				var formData = new FormData();
+
+				//INFORMA A CHAVE DE PESQUISA
+				formData.append('serchKey',searchKey);
+
+				//ADICIONA O ORIGEM
+				formData.append('origem','matricula');
+
+				//LIMPA OS DADOS DO ALUNO
+				LimpaAluno(IdElementForm);
+
+				//PREENCHE O FORMULÁRIO DE PESSOAS
+				ActionForm('selecionar', formData, '', IdElementDataTable, DataTable, IdElementForm, ModuleDefsAluno, IdModalElement);
+			}
+		});
+		/*### AÇÕES QUANDO REALIZA A BUSCA DE UM ALUNO ###*/
+
+
 	};
 
 	// end pagefunction
@@ -450,7 +766,10 @@
 	// end destroy
 
 	// run pagefunction
-	pagefunction();
+
+	/*#### CARREGAR SCRIPTS ESPECÍFICOS ####*/
+	loadScript("src/Javascript/Functions.Matricula.js?asd", pagefunction);
+	/*#### CARREGAR SCRIPTS ESPECÍFICOS ####*/
 
 	// load related plugins
 

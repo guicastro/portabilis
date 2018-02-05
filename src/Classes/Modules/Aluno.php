@@ -32,9 +32,37 @@ class Aluno extends \Database\Crud {
 	/*### CONSTRUTOR, COM AS CHAMADAS OBRIGATÓRIAS (USANDO O MESMO CONSTRUTORA DA CRUD) ###*/
 
 
+	/*### MONTA O WHERE DO SELECT, COM AS CONDIÇÕES DE BUSCA ###*/
+	public function setSQLSelectWhere () {
+
+		/*### MODIFICA AS CONDIÇÕES DE PESQUISA SE A ORIGEM FOR A MATRÍCULA ###*/
+		if($this->Request["origem"]=="matricula") {
+
+			$nome = $this->AntiInjection->Prepare($this->Request["serchKey"]);
+
+			$cpf = $this->AntiInjection->Prepare($this->MaskValue->Cpf($this->Request["serchKey"],"remove"));
+
+			$SQLSelectWhere .= "WHERE (".$this->ModuleDefs->Prefix."nome LIKE '%".$nome."%' OR lower(".$this->ModuleDefs->Prefix."nome) LIKE '%".strtolower($nome)."%' OR ".$this->ModuleDefs->Prefix."cpf = '".$cpf."') AND ".$this->ModuleDefs->Prefix."Delete = 0";
+		}
+		/*### MODIFICA AS CONDIÇÕES DE PESQUISA SE A ORIGEM FOR A MATRÍCULA ###*/
 
 
+		/*### SENÃO UTILIZA AS CONDIÇÕES PADRÃO PARA WHERE ###*/
+		else {
 
+			//USA O PrimaryKeyName SE TIVER SIDO DEFINIDO, SENÃO USA O PADRÃO id
+			$PrimaryKeyName = ($this->PrimaryKeyName<>"") ? $this->PrimaryKeyName : "id";
+
+			//ADICIONA ASPAS SIMPLES NO PrimaryKey SE PrimaryKeyName SE TIVER SIDO DEFINIDO, SENÃO USA O PADRÃO
+			$PrimaryKeyValue = ($this->PrimaryKeyName<>"") ? "'".$this->PrimaryKey."'" : $this->PrimaryKey;
+
+			$SQLSelectWhere = "WHERE ".$this->ModuleDefs->Prefix.$PrimaryKeyName." = ".$PrimaryKeyValue." AND ".$this->ModuleDefs->Prefix."Delete = 0";
+		}
+
+		$this->SQLSelectWhere = $SQLSelectWhere;
+		return $this->SQLSelectWhere;
+	}
+	/*### MONTA O WHERE DO SELECT, COM AS CONDIÇÕES DE BUSCA ###*/
 
 
 
@@ -52,6 +80,8 @@ class Aluno extends \Database\Crud {
 
 						if(is_numeric($key)) {
 
+							$TotalItens++;
+
 							$ResultSQLAction[$key]->alun_cpf = $this->MaskValue->Cpf($DataObject->alun_cpf,'add');
 							$ResultSQLAction[$key]->alun_reccreatedon = $this->MaskValue->Data($DataObject->alun_reccreatedon,'US2BR_TIME');
 							$ResultSQLAction[$key]->alun_recmodifiedon = $this->MaskValue->Data($DataObject->alun_recmodifiedon,'US2BR_TIME');
@@ -65,6 +95,14 @@ class Aluno extends \Database\Crud {
 						}
 
 					}
+				}
+
+				if($this->Request["origem"]=="matricula") {
+
+					$ResponseOptions = $this->ResponseOptions;
+					$ResponseOptions["ShowAlertMsg"] = false;
+					$ResponseOptions["TotalItens"] = $TotalItens;
+					$this->ResponseOptions = $ResponseOptions;
 				}
 
 				// if(count($ResultSQLAction)>1) $ResultSQLAction
@@ -151,8 +189,6 @@ class Aluno extends \Database\Crud {
 
 	}
 	/*### EXECUTA AÇÕES NECESSÁRIAS ANTES DE EXECUTAR A QUERY DA SQLAction ###*/
-
-
 
 
 

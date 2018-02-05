@@ -91,13 +91,9 @@ class CheckPermission {
 		if($this->Action=="selecionar") $ActionPermission = "gerenciar";
 		elseif($this->Action=="Grid") $ActionPermission = "gerenciar";
 		elseif($this->Action=="alterar_permissoes") $ActionPermission = "alterar";
-		elseif($this->Action=="copiar_para_evento") $ActionPermission = "alterar";
 		elseif($this->Action=="duplicar") $ActionPermission = "alterar";
-		elseif($this->Action=="alterar_parceiros") $ActionPermission = "alterar";
 		elseif($this->Action=="transferir_usuarios") $ActionPermission = "alterar";
 		elseif($this->Action=="excluir_selecionados") $ActionPermission = "excluir";
-		elseif($this->Action=="questionario") $ActionPermission = "alterar";
-		elseif($this->Action=="inserir-sem-senha") $ActionPermission = "inserir";
 		else $ActionPermission = $this->Action;
 
 		$this->SQLAction = "SELECT
@@ -147,45 +143,6 @@ class CheckPermission {
 
 		//RETORNA O OBJETO COM TODAS AS PERMISSÕES ESPECIAIS
 		$SpecialPermissions = $ExecuteSQLSpecialPermissions->fetchAll(\PDO::FETCH_OBJ);
-
-		if(count($SpecialPermissions)>0) {
-
-			foreach ($SpecialPermissions as $key => $SpecialPermissionObject) {
-
-				if($SpecialPermissionObject->permesp=="restringir_parceiro") {
-
-					//SQL PARA BUSCAR TODOS OS PARCEIROS DESTE USUÁRIO
-					$SQLParceiros = "SELECT DISTINCT
-													Parceiros_Parc_id
-												FROM
-													ParceirosUsuarios
-												WHERE
-													Usuarios_Usua_id = ".$this->TokenClass->getClaim("UserData")->Usua_id."
-													AND ParcUsua_Delete = 0";
-
-					//PERPARA E EXECUTA A QUERY PARA BUSCAR TODOS OS PARCEIROS DESTE USUÁRIO
-					$ExecuteSQLParceiros = $this->db->query($SQLParceiros);
-
-					//RETORNA O OBJETO COM TODOS OS PARCEIROS DESTE USUÁRIO
-					$Parceiros = $ExecuteSQLParceiros->fetchAll(\PDO::FETCH_OBJ);
-
-					if(count($Parceiros>0)) {
-
-						foreach ($Parceiros as $key => $ParceirosObject) {
-
-							$response["parceiros"][] = $ParceirosObject->parceiros_parc_id;
-						}
-					}
-
-				}
-			}
-
-			//ARMAZENA A RESPOSTA EM OBJETO
-			$this->SpecialPermissions = $response;
-
-			//RETORNA A RESPOSTA EM JSON
-			return json_encode($response);
-		}
 	}
 	/*### RETORNA O OBJETO DE DADOS CONFORME CADA PERMISSÃO ESPECIAL ###*/
 

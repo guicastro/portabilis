@@ -52,11 +52,18 @@ class Curso extends \Database\Crud {
 
 							$ResultSQLAction[$key]->curs_reccreatedon = $this->MaskValue->Data($DataObject->curs_reccreatedon,'US2BR_TIME');
 							$ResultSQLAction[$key]->curs_recmodifiedon = $this->MaskValue->Data($DataObject->curs_recmodifiedon,'US2BR_TIME');
-							$ResultSQLAction[$key]->curs_valor_matricula = $this->MaskValue->Moeda($ResultSQLAction[0]->curs_valor_matricula,'add');
-							$ResultSQLAction[$key]->curs_valor_mensalidade = $this->MaskValue->Moeda($ResultSQLAction[0]->curs_valor_mensalidade,'add');
+							$ResultSQLAction[$key]->curs_valor_matricula = $this->MaskValue->Moeda($DataObject->curs_valor_matricula,'add');
+							$ResultSQLAction[$key]->curs_valor_mensalidade = $this->MaskValue->Moeda($DataObject->curs_valor_mensalidade,'add');
 						}
 
 					}
+				}
+
+				if($this->Request["origem"]=="matricula") {
+
+					$ResponseOptions = $this->ResponseOptions;
+					$ResponseOptions["ShowAlertMsg"] = false;
+					$this->ResponseOptions = $ResponseOptions;
 				}
 
 				// if(count($ResultSQLAction)>1) $ResultSQLAction

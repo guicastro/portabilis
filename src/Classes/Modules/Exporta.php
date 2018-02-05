@@ -199,24 +199,6 @@ class Exporta extends \Database\Crud {
 			/*### FILTRO POR SERVIÇO ###*/
 
 
-
-
-
-			/*### VERIFICA SE HÁ RESTRIÇÃO DE PARCEIRO E APLICA NA CONDIÇÃO DA CONSULTA ###*/
-			$CheckPermission = $this->CheckPermission;
-			$Parceiros = $CheckPermission->ReturnSpecialPermissions();
-			$Parceiros = json_decode($Parceiros);
-			// print_r($Parceiros);
-			if($Parceiros<>"") {
-
-				foreach ($Parceiros->parceiros as $key => $idParceiro) {
-					$SQL_IN .= $idParceiro.", ";
-				}
-
-				$ConditionParceiroPerm = "AND ParceirosServicos.Parceiros_Parc_id IN (".substr($SQL_IN,0,-2).") ";
-			}
-			/*### VERIFICA SE HÁ RESTRIÇÃO DE PARCEIRO E APLICA NA CONDIÇÃO DA CONSULTA ###*/
-
 			//MONTA AS CONDIÇÕES WHERE DO SELECT
 			$SQLSelectWhere = "WHERE
 									Atendimentos.Aten_Delete = 0 "
