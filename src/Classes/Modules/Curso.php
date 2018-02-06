@@ -76,6 +76,34 @@ class Curso extends \Database\Crud {
 
 
 
+	/*### EXECUTA AÇÕES NECESSÁRIAS ANTES DE EXECUTAR A QUERY DA SQLAction ###*/
+	public function BeforeExecuteAction () {
+
+		$this->BeforeExecuteAction = true;
+
+		if($this->Action=="excluir") {
+
+			$SQLChecaMatricula = "SELECT
+										matr_id
+									FROM
+										matriculas
+									WHERE
+										cursos_curs_id = ".$this->Request["id_reg"]."
+										AND matr_delete = 0";
+			$ExecuteSQLChecaMatricula = $this->db->query($SQLChecaMatricula);
+			$ResultSQLChecaMatricula = $ExecuteSQLChecaMatricula->fetchAll(\PDO::FETCH_OBJ);
+			if($ResultSQLChecaMatricula[0]->matr_id > 0) {
+
+				$this->BeforeExecuteAction = false;
+				$this->ErrorBeforeExecuteAction = "<p>Não é possível excluir um curso que possui matrículas</p>";
+			} else {
+
+				$this->BeforeExecuteAction = true;
+			}
+		}
+	}
+	/*### EXECUTA AÇÕES NECESSÁRIAS ANTES DE EXECUTAR A QUERY DA SQLAction ###*/
+
 
 
 	/*### EXECUTA AS AÇÕES DE MÁSCARA DE VALORES NOS DADOS DE UPDATE OU INSERT ###*/

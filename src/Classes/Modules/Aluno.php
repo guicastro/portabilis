@@ -187,6 +187,28 @@ class Aluno extends \Database\Crud {
 				/*### VERIFICA SE O CPF DIGITADO JÁ EXISTE NO CADASTRO ###*/
 			}
 
+
+		if($this->Action=="excluir") {
+
+			$SQLChecaMatricula = "SELECT
+										matr_id
+									FROM
+										matriculas
+									WHERE
+										alunos_alun_id = ".$this->Request["id_reg"]."
+										AND matr_delete = 0";
+			$ExecuteSQLChecaMatricula = $this->db->query($SQLChecaMatricula);
+			$ResultSQLChecaMatricula = $ExecuteSQLChecaMatricula->fetchAll(\PDO::FETCH_OBJ);
+			if($ResultSQLChecaMatricula[0]->matr_id > 0) {
+
+				$this->BeforeExecuteAction = false;
+				$this->ErrorBeforeExecuteAction = "<p>Não é possível excluir um aluno que possui matrículas</p>";
+			} else {
+
+				$this->BeforeExecuteAction = true;
+			}
+		}
+
 	}
 	/*### EXECUTA AÇÕES NECESSÁRIAS ANTES DE EXECUTAR A QUERY DA SQLAction ###*/
 

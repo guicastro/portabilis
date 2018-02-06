@@ -25,8 +25,7 @@ class AppEnvironment {
 
 		$this->HttpReferer = $container['HttpReferer'];
 
-		if($this->HttpReferer=="multiacao.testesite.com.br") $this->Environment = "HML";
-		else $this->Environment = $container["ServerName"]." [".$this->HttpReferer."]";
+		$this->Environment = $container["ServerName"]." [".$this->HttpReferer."]";
 	}
 	/*### CONSTRUTOR, OBRIGATÓRIO DECLARAR O CONTAINER DO PIMPLE ###*/
 

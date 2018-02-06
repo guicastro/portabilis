@@ -142,6 +142,12 @@
 											<textarea name="curs_descricao" id="curs_descricao" class="form-control" rows="4" placeholder="Descrição do curso" /></textarea>
 										</div>
 									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="curs_legado" class="control-label">Código Legado</label>
+											<input name="curs_legado" id="curs_legado" type="text" class="form-control" placeholder="Código Legado" />
+										</div>
+									</div>
 								</div>
 								<legend>Dados da Execução</legend>
 								<div class="row">
@@ -298,8 +304,8 @@
 			{ "name":"ID","data":"DT_RowId", "primary_key":"id", "DataType":"int", "width":"4%", "orderable":false, "minSearchValue":1, "width":"6%", "responsive": { "class":"expand" }, "DT_Filter": { "hasFilter": true, "type":"input" },  },
 			{ "name":"Nome", "data":"nome", "width":"30%", "responsive": { "class":"expand" }, "DT_Filter": { "hasFilter": true, "type":"input", "searchOperator":"LIKE" },  },
 			{ "name":"Período", "data":"periodo_nome", "minSearchValue":2, "width":"20%", "responsive": { "hide":"phone" }, "DT_Filter": { "hasFilter": true, "type":"input" }, "otherTable":{ "DynamicTable":"TURNOS", "Join":"INNER", "FieldKey":"periodo", "FieldKeyOtherTable":"codigo", "View":"descricao"}  },
-			{ "name":"Mensalidade", "data":"valor_mensalidade", "width":"20%", "responsive": { "class":"expand" }, "DT_Filter": { "hasFilter": true, "type":"input", }, "mask": {"name":"Moeda", "View":"add", "Database":"remove" } },
-			{ "name":"Duração (meses)", "data":"duracao", "width":"15%", "responsive": { "class":"expand" }, "DT_Filter": { "hasFilter": true, "type":"input", },  },
+			{ "name":"Mensalidade", "data":"valor_mensalidade", "DataType":"int", "width":"20%", "responsive": { "class":"expand" }, "DT_Filter": { "hasFilter": true, "type":"input", }, "mask": {"name":"Moeda", "View":"add", "Database":"remove" } },
+			{ "name":"Duração (meses)", "data":"duracao", "DataType":"int", "width":"15%", "responsive": { "class":"expand" }, "DT_Filter": { "hasFilter": true, "type":"input", },  },
 			{ "name":"periodo", "data":"periodo", "minSearchValue":2, "visible":false, },
 		];
 		/*### DEFINIÇÕES DAS COLUNAS DO GRID (PRIMEIRA COLUNA É ZERO) ###*/

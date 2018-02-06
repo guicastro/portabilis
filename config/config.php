@@ -33,24 +33,12 @@ else
 
 
 ############################## BANCO DE DADOS ##############################
-if($container['HttpReferer']=="portabilis.testesite.com.br")
-	{
-		$container['DatabasePDODriver'] = "pgsql";
-		$container['DatabaseHost'] = "portabilishml.pgsql.dbaas.com.br";
-		$container['DatabaseCharset'] = "utf8";
-		$container['DatabaseName'] = "portabilis";
-		$container['DatabaseUser'] = "portabilis";
-		$container['DatabasePass'] = "Long673-Eye-";
-	}
-else
-	{
-		$container['DatabasePDODriver'] = "pgsql";
-		$container['DatabaseHost'] = "localhost";
-		$container['DatabaseCharset'] = "utf8";
-		$container['DatabaseName'] = "portabilis";
-		$container['DatabaseUser'] = "portabilis";
-		$container['DatabasePass'] = "Show7?wore??";
-	}
+$container['DatabasePDODriver'] = "pgsql";
+$container['DatabaseHost'] = "localhost";
+$container['DatabaseCharset'] = "utf8";
+$container['DatabaseName'] = "portabilis";
+$container['DatabaseUser'] = "portabilis";
+$container['DatabasePass'] = "Show7?wore??";
 ############################## BANCO DE DADOS ##############################
 
 ############################## TIMEZONE ##############################

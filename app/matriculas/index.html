@@ -164,6 +164,7 @@
 											<input name="curs_duracao" id="curs_duracao" type="text" class="form-control" readonly data-status="NaoAtribuir" />
 										</div>
 									</div>
+									<input type="hidden" name="curs_periodo" id="curs_periodo" data-status="NaoAtribuir">
 								</div>
 								<legend>Dados do aluno</legend>
 								<div class="row">
@@ -221,10 +222,22 @@
 											<select name="matr_status" id="matr_status" style="width:100%" class="select2" required data-msg="Escolha o status"></select>
 										</div>
 									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="matr_status_nome" class="control-label">Status da matrícula</label>
+											<input name="matr_status_nome" id="matr_status_nome" type="text" class="form-control" readonly />
+										</div>
+									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label for="matr_status_pgto" class="control-label">Matrícula paga?</label>
-											<input name="matr_status_pgto" id="matr_status_pgto" type="text" class="form-control" value="PAGAMENTO PENDENTE" readonly data-status="NaoAtribuir" />
+											<input name="matr_status_pgto" id="matr_status_pgto" type="text" class="form-control" readonly />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="matr_legado" class="control-label">Código Legado</label>
+											<input name="matr_legado" id="matr_legado" type="text" class="form-control" placeholder="Código Legado" />
 										</div>
 									</div>
 								</div>
@@ -233,7 +246,10 @@
 								<button id="btn-fechar" type="button" class="btn btn-labeled btn-default" data-dismiss="modal"><span class="btn-label"><i class="fa fa-times"></i></span>Cancelar</button>
 								<button id="btn-inserir" type="submit" class="btn btn-labeled btn-primary" data-id="inserir"><span class="btn-label"><i class="fa fa-check"></i></span>Inserir</button>
 								<button id="btn-alterar" type="submit" class="btn btn-labeled btn-success" data-id="alterar"><span class="btn-label"><i class="fa fa-check"></i></span>Alterar</button>
+								<button id="btn-pagar" type="button" class="btn btn-labeled btn-warning" data-id="pagar"><span class="btn-label"><i class="fa fa-dollar"></i></span>Pagar</button>
+								<button id="btn-cancelar" type="button" class="btn btn-labeled btn-danger" data-id="cancelar"><span class="btn-label"><i class="fa fa-ban"></i></span>Cancelar</button>
 							</div>
+							<div id="tblParcelas" style="display: none;"></div>
 						</form>
 						<!--#### FORM DE CADASTRO ####-->
 
@@ -308,11 +324,24 @@
 		$("#"+IdElementForm+" :input[id=cursos_curs_id]").val('').select2().trigger('change');
 		$("#"+IdElementForm+" :input[id=matr_status]").val('').select2().trigger('change');
 
+		//ESCONDE BOTÕES DE PAGAR E CANCELAR
+		$('#btn-pagar').hide();
+		$('#btn-cancelar').hide();
+
 		if(action=='novo') {
 
 			$("#"+IdElementForm+" #cursos_curs_id").closest('.form-group').show();
 
 			$("#"+IdElementForm+" #linha_pesq_aluno").show();
+
+			//MOSTRA CAMPO DE STATUS
+			$("#"+IdElementForm+" #matr_status").closest('.col-md-4').show();
+
+			//ESCONDE CAMPO DE MATRÍCULA PAGA
+			$("#"+IdElementForm+" #matr_status_pgto").closest('.form-group').hide();
+
+			//ESCONDE CAMPO DE NOME DE STATUS
+			$("#"+IdElementForm+" input[name=matr_status_nome]").closest('.form-group').hide();
 
 			$("#"+IdElementForm+" input[name=alun_nome]").closest('.form-group').hide();
 			$("#"+IdElementForm+" input[name=alun_cpf]").closest('.form-group').hide();
@@ -357,6 +386,19 @@
 			//ESCONDE A LINHA DE PESQUISA DE ALUNO
 			$("#"+IdElementForm+" #linha_pesq_aluno").hide();
 
+			//MOSTRA CAMPO DE MATRÍCULA PAGA
+			$("#"+IdElementForm+" input[name=matr_status_pgto]").closest('.form-group').show();
+
+			//ESCONDE CAMPO DE STATUS
+			$("#"+IdElementForm+" #matr_status").closest('.col-md-4').hide();
+
+			//MOSTRA CAMPO DE NOME DE STATUS
+			$("#"+IdElementForm+" input[name=matr_status_nome]").closest('.form-group').show();
+
+			//MOSTRA BOTÕES DE PAGAR E CANCELAR
+			$('#btn-pagar').show();
+			$('#btn-cancelar').show();
+
 			/*### PREENCHE OS DADOS DO ALUNO ###*/
 			$("#"+IdElementForm+" input[name=alun_nome]").val(data[0].alun_nome);
 			$("#"+IdElementForm+" input[name=alun_cpf]").val(data[0].alun_cpf);
@@ -388,7 +430,7 @@
 			$("#"+IdElementForm+" input[name=curs_duracao]").closest('.form-group').show();
 			/*### MOSTRAS OS CAMPOS COM OS DADOS DO CURSO ###*/
 
-
+			$("#tblParcelas").html(data[0].tbl_parcelas);
 		}
 		/*### AÇÕES QUANDO RETORNA A BUSCA DE MATRÍCULA EXISTENTE ###*/
 
@@ -426,8 +468,6 @@
 		if((action=="selecionar")&&(data.origem=="matricula")&&(ModuleDefs.Entity=="Aluno")) {
 
 			if(data.Options["TotalItens"]>1) {
-
-				console.log("mais de um");
 
 
 				/*#### EXIBE CAIXA DE DIÁLOGO PARA ESCOLHER O ALUNO ####*/
@@ -474,7 +514,6 @@
 					    }
 					}
 				});
-				/*#### EXIBE CAIXA DE DIÁLOGO PARA ESCOLHER O ALUNO ####*/
 
 				$("#ResultadoAlunos").html('');
 
@@ -516,6 +555,8 @@
 				});
 
 				$("#ResultadoAlunos").html(tabela);
+				/*#### EXIBE CAIXA DE DIÁLOGO PARA ESCOLHER O ALUNO ####*/
+
 			}
 
 
@@ -561,6 +602,7 @@
 			$("#"+IdElementForm+" input[name=curs_valor_matricula]").val(data[0].curs_valor_matricula);
 			$("#"+IdElementForm+" input[name=curs_valor_mensalidade]").val(data[0].curs_valor_mensalidade);
 			$("#"+IdElementForm+" input[name=curs_duracao]").val(data[0].curs_duracao);
+			$("#"+IdElementForm+" input[name=curs_periodo]").val(data[0].curs_periodo);
 
 			$("#"+IdElementForm+" input[name=curs_valor_matricula]").closest('.form-group').slideDown();
 			$("#"+IdElementForm+" input[name=curs_valor_mensalidade]").closest('.form-group').slideDown();
@@ -570,6 +612,7 @@
 
 	}
 	/*### FUNÇÃO PARA EXECUTAR AÇÕES ADICIONAIS AO ACTIONFORM ###*/
+
 
 
 	// pagefunction
@@ -625,16 +668,17 @@
 		var ColumnDefs = [
 			{ "name":"ID","data":"DT_RowId", "primary_key":"id", "DataType":"int", "width":"4%", "orderable":false, "minSearchValue":1, "width":"6%", "responsive": { "class":"expand" }, "DT_Filter": { "hasFilter": true, "type":"input" },  },
 			{ "name":"curso", "data":"cursos_curs_id", "DataType":"int", "visible":false, "otherTable":{ "Table":"cursos", "Alias":"Cursos", "Prefix":"curs_", "Join":"INNER", "FieldKey":"cursos_curs_id", "FieldKeyOtherTable":"curs_id", "View":"curs_id"} },
-			{ "name":"Ano", "data":"ano", "width":"12%", "DT_Filter": { "hasFilter": true, "type":"input" }, },
+			{ "name":"Ano", "data":"ano", "width":"8%", "DT_Filter": { "hasFilter": true, "type":"input" }, },
 			{ "name":"Curso", "data":"curso_nome", "width":"22%", "DT_Filter": { "hasFilter": true, "type":"input", "searchOperator":"LIKE" }, "otherTable":{ "View":"CAST(cursos.curs_nome as varchar)||' - '||CAST(cursos.curs_ch as varchar)||'h'"} },
 			{ "name":"Período", "data":"periodo_nome", "width":"12%", "DT_Filter": { "hasFilter": true, "type":"input" }, "otherTable":{"Alias":"Periodos", "OtherJoin":"INNER JOIN TabelasDinamicasValores Periodos ON Periodos.TabeDinaValo_Codigo = CAST(cursos.curs_periodo AS VARCHAR) AND Periodos.TabeDinaValo_Tabela = 'TURNOS' AND Periodos.TabeDinaValo_Delete = 0", "View":"TabeDinaValo_Descricao"} },
-			{ "name":"Aluno", "data":"aluno_nome", "width":"22%", "DT_Filter": { "hasFilter": true, "type":"input", "searchOperator":"LIKE" }, "otherTable":{ "Table":"alunos", "Alias":"alunos", "Prefix":"alun_", "Join":"INNER", "FieldKey":"alunos_alun_id", "FieldKeyOtherTable":"alun_id", "View":"alun_nome"} },
+			{ "name":"Aluno", "data":"aluno_nome", "width":"26%", "DT_Filter": { "hasFilter": true, "type":"input", "searchOperator":"LIKE" }, "otherTable":{ "Table":"alunos", "Alias":"alunos", "Prefix":"alun_", "Join":"INNER", "FieldKey":"alunos_alun_id", "FieldKeyOtherTable":"alun_id", "View":"alun_nome"} },
 			{ "name":"Status", "data":"status_nome", "width":"12%", "DT_Filter": { "hasFilter": true, "type":"input" }, "otherTable":{ "DynamicTable":"STATUS_MATRICULAS", "Join":"INNER", "FieldKey":"status", "FieldKeyOtherTable":"codigo", "View":"descricao"} },
 			{ "name":"Status Pgto", "data":"status_pgto_nome", "width":"12%", "DT_Filter": { "hasFilter": true, "type":"input" }, "otherTable":{ "DynamicTable":"STATUS_PAGAMENTOS", "Join":"INNER", "FieldKey":"paga", "FieldKeyOtherTable":"codigo", "View":"descricao"} },
 			{ "name":"aluno", "data":"alunos_alun_id", "DataType":"int", "noPrefix":true, "visible":false },
 			{ "name":"status", "data":"status", "DataType":"int", "visible":false },
 			{ "name":"status_pgto", "data":"paga", "DataType":"int", "visible":false },
 			{ "name":"cpf_aluno", "data":"aluno_cpf", "visible":false, "otherTable":{ "Alias":"alunos", "View":"alun_cpf"} },
+			{ "name":"actions", "data":"acoes", "width":"4%", "orderable":false, "searchable":false, "defaultContent":'<button type="button" data-id="alterar" title="Visualizar" class="btn btn-primary btn-xs"><i class="fa fa-search"></i></button>' },
 		];
 		/*### DEFINIÇÕES DAS COLUNAS DO GRID (PRIMEIRA COLUNA É ZERO) ###*/
 
@@ -740,6 +784,136 @@
 		/*### AÇÕES QUANDO REALIZA A BUSCA DE UM ALUNO ###*/
 
 
+
+
+
+		/*#### AÇÕES QUANDO CLICA NO BOTÃO PAGAR ####*/
+		$("#btn-pagar").on('click', function(event) {
+
+			/*#### EXIBE CAIXA DE DIÁLOGO PARA PAGAR A MATRÍCULA E/OU MENSALIDADE ####*/
+			var dialog = bootbox.dialog({
+				title: 'Pagar matrícula e mensalidades',
+				message: '<div class="row"><div class="col-xs-12">Marque abaixo os itens que deseja pagar: <br></div>\
+							<br/>\
+							<div class="col-xs-12">\
+								<form name="form-pagamento" id="form-pagamento">\
+									<div id="TabelaParcelas"></div>\
+								</form>\
+								<div id="msg-escolher" class="bg-danger">Escolha um item para realizar o pagamento</div>\
+							</div>\
+							<div class="col-xs-3">\
+								<label for="res_total_pagar" class="control-label">Total a pagar </label><input type="text" name="res_total_pagar" id="res_total_pagar" class="form-control" readonly />\
+							</div>\
+							<div class="col-xs-3">\
+								<label for="res_total_recebido" class="control-label">Total recebido </label><input type="text" name="res_total_recebido" id="res_total_recebido" class="form-control" onkeyup="MaskCurrency(this)" style="text-align: right;" />\
+							</div>\
+							<div class="col-xs-6">\
+								<label for="res_troco" class="control-label">Troco </label><br><span id="res_troco"></span>\
+							</div>\
+						</div>',
+				buttons: {
+				    cancel: {
+				        label: "Cancelar",
+				        className: 'btn-primary',
+				    },
+				    ok: {
+				        label: "Pagar",
+				        className: 'btn-success',
+				        callback: function(){
+				        	console.log("ok");
+				        }
+				    }
+				}
+			});
+
+			$("#TabelaParcelas").html($("#tblParcelas").html());
+
+			var total_pagar = 0;
+
+			$("#TabelaParcelas").on('click', 'input[type=checkbox]', function(event) {
+
+				// console.log(total_pagar);
+				// console.log($(this).val());
+				// console.log($(this).data('value'));
+				// console.log(Number($(this).data('value')));
+
+				if($(this).prop('checked')==true) {
+
+					total_pagar += Number($(this).data('value'));
+				} else {
+
+					total_pagar -= Number($(this).data('value'));
+				}
+
+				$("#res_total_pagar").val(total_pagar);
+
+			});
+
+			$("#res_total_recebido").on('keyup', function(event) {
+
+				// console.log("keyup");
+				var valor = $(this).val();
+
+				valor = valor.replace(".","");
+				valor = valor.replace(",",".");
+
+				var troco = Number(valor) - Number($("#res_total_pagar").val());
+
+				var trocoFormat = troco;
+
+				// console.log("troco");
+				// console.log(troco);
+
+				if(Number(troco)<0) {
+
+					$("#res_troco").html("Valor insuficiente para realizar o pagamento");
+				}
+				else if(Number(troco)==0) {
+
+					$("#res_troco").html("R$ 0 (troco não necessário)");
+				}
+				else {
+
+					// console.log("troco cedulas");
+
+					var cedulasDisponiveis = [100,50,10,5,1,0.50,0.10,0.05,0.01];
+
+					var cedulasTroco = new Array();
+
+					var texto_cedulas = "";
+
+					for (x in cedulasDisponiveis) {
+
+						if (cedulasDisponiveis[x] > troco) continue;
+
+						var quantidadeCedula = parseInt(troco / cedulasDisponiveis[x]);
+						cedulasTroco.push([quantidadeCedula, cedulasDisponiveis[x]]);
+						troco = troco - (quantidadeCedula * cedulasDisponiveis[x]);
+
+						if(cedulasDisponiveis[x]>1) {
+
+							texto_cedulas += quantidadeCedula + " nota(s) de " + (cedulasDisponiveis[x]).formatMoney(2, ',', '.') + ", ";
+						}
+						else {
+
+							texto_cedulas += quantidadeCedula + " moeda(s) de " + (cedulasDisponiveis[x]).formatMoney(2, ',', '.') + ", ";
+						}
+					}
+
+					// console.log(cedulasTroco);
+					// console.log(texto_cedulas.slice(0,-2));
+
+					$("#res_troco").html("R$ " + (trocoFormat).formatMoney(2, ',', '.') + "<br>" + texto_cedulas.slice(0,-2));
+
+					//TODO: FINALIZAR PARTE DE PAGAMENTO
+				}
+
+			});
+			$('#msg-escolher').hide();
+			/*#### EXIBE CAIXA DE DIÁLOGO PARA PAGAR A MATRÍCULA E/OU MENSALIDADE ####*/
+
+		});
+		/*#### AÇÕES QUANDO CLICA NO BOTÃO PAGAR ####*/
 	};
 
 	// end pagefunction
