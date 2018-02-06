@@ -621,13 +621,13 @@
 
 
 		//ID DO ELEMENTO TABLE DO GRID
-		var IdElementDataTable = 'datatable_fixed_column';
+		var $IdElementDataTable = 'datatable_fixed_column';
 
 		//ID DO ELEMENTO FORM DE CADASTRO PRINCIPAL
 		var $IdElementForm = 'form-cadastro';
 
 		//ID DO ELEMENTO MODAL DE CADASTRO PRINCIPAL
-		var IdModalElement = 'modal-cadastro';
+		var $IdModalElement = 'modal-cadastro';
 
 
 		/*### DEFINIÇÕES GERAIS DO MÓDULO ###*/
@@ -641,6 +641,23 @@
 			"EntityMultiple":"Matrículas" //ENTIDADE DO MÓDULO (PLURAL)
 		};
 		/*### DEFINIÇÕES GERAIS DO MÓDULO ###*/
+
+
+
+
+		/*### DEFINIÇÕES GERAIS DO MÓDULO PARA PAGAMENTO DE MATRÍCULA ###*/
+		var $ModuleDefsFinanceiro = {
+			"Name":"Matricula", //IDENTIFICADOR INTERNO DO MÓDULO (REFERÊNCIA PARA PERMISSÃO DE ACESSO)
+			"Prefix":"fina_", //PREFIXO DOS CAMPOS DO MÓDULO (USADOS NA TABELA DO BANCO DE DADOS)
+			"Title":"Financeiro", //TÍTULO DO MÓDULO
+			"Entity":"Financeiro", //ENTIDADE DO MÓDULO (REFERÊNCIA PARA CLASSE)
+			"Table":"Financeiro", //NOME DA TABELA NO BANCO DE DADOS
+			"EntitySingle":"Financeiro", //ENTIDADE DO MÓDULO (SINGULAR)
+			"EntityMultiple":"Financeiro" //ENTIDADE DO MÓDULO (PLURAL)
+		};
+		/*### DEFINIÇÕES GERAIS DO MÓDULO PARA PAGAMENTO DE MATRÍCULA ###*/
+
+
 
 
 		/*### DEFINIÇÕES GERAIS DO MÓDULO DE ALUNOS ###*/
@@ -740,12 +757,12 @@
 
 
 		/*### CHAMA O GRID ###*/
-		var DataTable = GenerateDataTable(IdElementDataTable, '', $ModuleDefs, ColumnDefs, ColumnOrder, $IdElementForm, IdModalElement);
+		var $DataTable = GenerateDataTable($IdElementDataTable, '', $ModuleDefs, ColumnDefs, ColumnOrder, $IdElementForm, $IdModalElement);
 		/*### CHAMA O GRID ###*/
 
 
 		/*### ATIVA A VALIDAÇÃO DO FORMULÁRIO ###*/
-		FormValidation($IdElementForm, IdElementDataTable, DataTable, $ModuleDefs, IdModalElement)
+		FormValidation($IdElementForm, $IdElementDataTable, $DataTable, $ModuleDefs, $IdModalElement)
 		/*### ATIVA A VALIDAÇÃO DO FORMULÁRIO ###*/
 
 
@@ -778,7 +795,7 @@
 				LimpaAluno($IdElementForm);
 
 				//PREENCHE O FORMULÁRIO DE PESSOAS
-				ActionForm('selecionar', formData, '', IdElementDataTable, DataTable, $IdElementForm, ModuleDefsAluno, IdModalElement);
+				ActionForm('selecionar', formData, '', $IdElementDataTable, DataTable, $IdElementForm, ModuleDefsAluno, $IdModalElement);
 			}
 		});
 		/*### AÇÕES QUANDO REALIZA A BUSCA DE UM ALUNO ###*/
@@ -810,7 +827,9 @@
 							<div class="col-xs-6">\
 								<label for="res_troco" class="control-label">Troco </label><br><span id="res_troco"></span>\
 							</div>\
-							<div id="msg-pgto" class="bg-danger">Escolha um item e digite o total recebido para realizar o pagamento</div>\
+							<div class="col-xs-12">\
+								<div id="msg-pgto" class="bg-danger">Escolha um item e digite o total recebido para realizar o pagamento</div>\
+							</div>\
 							<input type="hidden" name="res_autoriza_pgto" id="res_autoriza_pgto" class="form-control" value="0" />\
 						</div>',
 				buttons: {
@@ -831,13 +850,13 @@
 				        		var id_reg = $("#id_reg").html();
 
 								//CRIA O formData
-								var formData = new FormData();
+								var formData = new FormData($("#form-pagamento")[0]);
 
 								//ADICIONA O ORIGEM
 								formData.append('origem','pagamento');
 
 								//PREENCHE O FORMULÁRIO DE PESSOAS
-								ActionForm('alterar', formData, id_reg, '', $DataTable, $IdElementForm, $ModuleDefsCurso, $IdModalElement);
+								ActionForm('alterar', formData, id_reg, '', $DataTable, $IdElementForm, $ModuleDefsFinanceiro, $IdModalElement);
 
 								//TODO: CONTINUAR O PROCESSO DE PAGAMENTO DA MATRÍCULA
 				        	}

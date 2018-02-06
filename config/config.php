@@ -41,12 +41,12 @@ $container['DatabaseName'] = "portabilis";
 $container['DatabaseUser'] = "portabilis";
 $container['DatabasePass'] = "Show7?wore??";
 
-$container['DatabasePDODriver'] = "pgsql";
-$container['DatabaseHost'] = "portabilis.postgresql.dbaas.com.br";
-$container['DatabaseCharset'] = "utf8";
-$container['DatabaseName'] = "portabilis";
-$container['DatabaseUser'] = "portabilis";
-$container['DatabasePass'] = "fM9nd39tFDon";
+// $container['DatabasePDODriver'] = "pgsql";
+// $container['DatabaseHost'] = "portabilis.postgresql.dbaas.com.br";
+// $container['DatabaseCharset'] = "utf8";
+// $container['DatabaseName'] = "portabilis";
+// $container['DatabaseUser'] = "portabilis";
+// $container['DatabasePass'] = "fM9nd39tFDon";
 ############################## BANCO DE DADOS ##############################
 
 ############################## TIMEZONE ##############################

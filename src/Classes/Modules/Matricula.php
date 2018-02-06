@@ -192,7 +192,7 @@ class Matricula extends \Database\Crud {
 
 								$tbl_parcelas[$key] .= '<tr>
 													<td>';
-								$tbl_parcelas[$key] .= ($ResultSQLParcelas[$key][0]->matr_paga==0) ? '<label class="checkbox checkbox-inline" style="margin-top:0px;"><input type="checkbox" name="parc_0" id="parc_0" value="0"  data-value="'.$ResultSQLParcelas[$key][0]->curs_valor_matricula.'" class="checkbox style-2" /><span></span></label>' : "&nbsp;";
+								$tbl_parcelas[$key] .= ($ResultSQLParcelas[$key][0]->matr_paga==0) ? '<label class="checkbox checkbox-inline" style="margin-top:0px;"><input type="checkbox" name="parc[0]" id="parc_0" value="0"  data-value="'.$ResultSQLParcelas[$key][0]->curs_valor_matricula.'" class="checkbox style-2" /><span></span></label>' : "&nbsp;";
 								$tbl_parcelas[$key] .= '</td>';
 								$tbl_parcelas[$key] .= '<td>Taxa de Matrícula</td>
 													<td>'.$this->MaskValue->Data($ResultSQLParcelas[$key][0]->matr_reccreatedon, 'US2BR').'</td>
@@ -204,7 +204,7 @@ class Matricula extends \Database\Crud {
 
 									$tbl_parcelas[$key] .= '<tr>
 														<td>';
-									$tbl_parcelas[$key] .= ($DataObject->fina_status==0) ? '<label class="checkbox checkbox-inline" style="margin-top:0px;"><input type="checkbox" name="parc_'.$DataObject->fina_parcela.'" id="parc_'.$DataObject->fina_parcela.'" value="'.$DataObject->fina_id.'" data-value="'.$DataObject->fina_valor.'" class="checkbox style-2" /><span></span></label>' : "&nbsp;";
+									$tbl_parcelas[$key] .= ($DataObject->fina_status==0) ? '<label class="checkbox checkbox-inline" style="margin-top:0px;"><input type="checkbox" name="parc['.$DataObject->fina_parcela.']" id="parc_'.$DataObject->fina_parcela.'" value="'.$DataObject->fina_id.'" data-value="'.$DataObject->fina_valor.'" class="checkbox style-2" /><span></span></label>' : "&nbsp;";
 									$tbl_parcelas[$key] .= '</td>
 														<td>'.$DataObject->fina_parcela.'</td>
 														<td>'.$this->MaskValue->Data($DataObject->fina_vencimento, 'US2BR').'</td>

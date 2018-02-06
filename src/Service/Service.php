@@ -235,6 +235,15 @@ $container['Matricula'] = function($c) {
 /*### INSTANCIA A CLASSE DO CADASTRO DE CURSOS ###*/
 
 
+/*### INSTANCIA A CLASSE DO CADASTRO DE CURSOS ###*/
+//c = container do Pimple
+$container['Financeiro'] = function($c) {
+
+	return new \Modules\Financeiro($c);
+};
+/*### INSTANCIA A CLASSE DO CADASTRO DE CURSOS ###*/
+
+
 
 /*### INSTANCIA A CLASSE DO CADASTRO DE USUÁRIOS ###*/
 //c = container do Pimple
