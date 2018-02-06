@@ -2,7 +2,6 @@
 /nbproject/
 .htaccess
 php.ini
-composer.lock
 .DS_Store
 components/
 tmp/

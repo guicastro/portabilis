@@ -21,7 +21,8 @@
         "zendframework/zend-barcode": "v2.4",
         "phpoffice/phpword": "^0.13.0",
         "zendframework/zend-servicemanager": "v2.5",
-        "phpoffice/phpexcel": "^1.8"
+        "phpoffice/phpexcel": "^1.8",
+        "csanquer/pdo-service-provider": "~1.1dev"
     },
     "autoload": {
         "psr-4":{
