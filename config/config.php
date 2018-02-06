@@ -42,11 +42,11 @@ $container['DatabaseUser'] = "portabilis";
 $container['DatabasePass'] = "Show7?wore??";
 
 $container['DatabasePDODriver'] = "pgsql";
-$container['DatabaseHost'] = "baasu.db.elephantsql.com";
+$container['DatabaseHost'] = "portabilis.postgresql.dbaas.com.br";
 $container['DatabaseCharset'] = "utf8";
-$container['DatabaseName'] = "uccscfsr";
-$container['DatabaseUser'] = "uccscfsr";
-$container['DatabasePass'] = "C1j4QN7qrEX_rJR3KjEjGDH2eofbsqIs";
+$container['DatabaseName'] = "portabilis";
+$container['DatabaseUser'] = "portabilis";
+$container['DatabasePass'] = "fM9nd39tFDon";
 ############################## BANCO DE DADOS ##############################
 
 ############################## TIMEZONE ##############################
