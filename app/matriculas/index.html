@@ -243,13 +243,14 @@
 								</div>
 							</div>
 							<div class="modal-footer">
-								<button id="btn-fechar" type="button" class="btn btn-labeled btn-default" data-dismiss="modal"><span class="btn-label"><i class="fa fa-times"></i></span>Cancelar</button>
+								<button id="btn-fechar" type="button" class="btn btn-labeled btn-default" data-dismiss="modal"><span class="btn-label"><i class="fa fa-times"></i></span>Fechar</button>
 								<button id="btn-inserir" type="submit" class="btn btn-labeled btn-primary" data-id="inserir"><span class="btn-label"><i class="fa fa-check"></i></span>Inserir</button>
 								<button id="btn-alterar" type="submit" class="btn btn-labeled btn-success" data-id="alterar"><span class="btn-label"><i class="fa fa-check"></i></span>Alterar</button>
 								<button id="btn-pagar" type="button" class="btn btn-labeled btn-warning" data-id="pagar"><span class="btn-label"><i class="fa fa-dollar"></i></span>Pagar</button>
-								<button id="btn-cancelar" type="button" class="btn btn-labeled btn-danger" data-id="cancelar"><span class="btn-label"><i class="fa fa-ban"></i></span>Cancelar</button>
+								<button id="btn-cancelar" type="button" class="btn btn-labeled btn-danger" data-id="cancelar"><span class="btn-label"><i class="fa fa-ban"></i></span>Cancelar Matrícula</button>
 							</div>
 							<div id="tblParcelas" style="display: none;"></div>
+							<div id="txtCancelamento" style="display: none;"></div>
 						</form>
 						<!--#### FORM DE CADASTRO ####-->
 
@@ -343,6 +344,9 @@
 			//ESCONDE CAMPO DE NOME DE STATUS
 			$("#"+IdElementForm+" input[name=matr_status_nome]").closest('.form-group').hide();
 
+			//TORNA O CAMPO DE ANO LETIVO EDITÁVEL
+			$("#"+IdElementForm+" input[name=matr_ano]").prop('readonly',false);
+
 			$("#"+IdElementForm+" input[name=alun_nome]").closest('.form-group').hide();
 			$("#"+IdElementForm+" input[name=alun_cpf]").closest('.form-group').hide();
 			$("#"+IdElementForm+" input[name=alun_rg]").closest('.form-group').hide();
@@ -395,9 +399,16 @@
 			//MOSTRA CAMPO DE NOME DE STATUS
 			$("#"+IdElementForm+" input[name=matr_status_nome]").closest('.form-group').show();
 
-			//MOSTRA BOTÕES DE PAGAR E CANCELAR
-			$('#btn-pagar').show();
-			$('#btn-cancelar').show();
+			//TORNA O CAMPO DE ANO LETIVO READ-ONLY
+			$("#"+IdElementForm+" input[name=matr_ano]").prop('readonly',true);
+
+			/*### MOSTRA BOTÕES DE PAGAR E CANCELAR ###*/
+			if(data[0].matr_status==1) {
+				
+				$('#btn-pagar').show();
+				$('#btn-cancelar').show();
+			}
+			/*### MOSTRA BOTÕES DE PAGAR E CANCELAR ###*/
 
 			/*### PREENCHE OS DADOS DO ALUNO ###*/
 			$("#"+IdElementForm+" input[name=alun_nome]").val(data[0].alun_nome);
@@ -431,6 +442,7 @@
 			/*### MOSTRAS OS CAMPOS COM OS DADOS DO CURSO ###*/
 
 			$("#tblParcelas").html(data[0].tbl_parcelas);
+			$("#txtCancelamento").html(data[0].TextoCancelamento);
 		}
 		/*### AÇÕES QUANDO RETORNA A BUSCA DE MATRÍCULA EXISTENTE ###*/
 
@@ -909,6 +921,50 @@
 
 		});
 		/*#### AÇÕES QUANDO CLICA NO BOTÃO PAGAR ####*/
+
+
+
+
+
+
+
+
+
+
+		/*#### AÇÕES QUANDO CLICA NO BOTÃO CANCELAR MATRÍCULA ####*/
+		$("#btn-cancelar").on('click', function(event) {
+
+			/*#### EXIBE CAIXA DE DIÁLOGO PARA CANCELAR MATRÍCULA ####*/
+			var dialog = bootbox.dialog({
+				title: 'Cancelar matrícula',
+				message: '<div class="row"><div class="col-xs-12">Confirme abaixo os dados: <br>\
+							<div id="TextoCancelamento"></div>\
+						</div>',
+				buttons: {
+				    cancel: {
+				        label: "Fechar",
+				        className: 'btn-primary',
+				    },
+				    ok: {
+				        label: "Confirmar cancelamento",
+				        className: 'btn-success',
+				        callback: function(){
+
+				        	console.log("cancelado");
+				        }
+				    }
+				}
+			});
+			/*#### EXIBE CAIXA DE DIÁLOGO PARA CANCELAR MATRÍCULA ####*/
+
+			$("#TextoCancelamento").html($("#txtCancelamento").html());
+
+		});
+		/*#### AÇÕES QUANDO CLICA NO BOTÃO CANCELAR MATRÍCULA ####*/
+
+
+
+
 	};
 
 	// end pagefunction

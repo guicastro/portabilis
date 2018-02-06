@@ -459,6 +459,8 @@ class Crud {
 
 
 
+
+
 	/*### MONTA O SQL DAS CONDIÇÕES DO UPDATE, UTILIZANDO O PrimaryKey COMO REFERÊNCIA ###*/
 	public function setSQLUpdateWhere () {
 

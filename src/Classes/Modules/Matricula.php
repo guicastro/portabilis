@@ -178,6 +178,12 @@ class Matricula extends \Database\Crud {
 							$ResultSQLParcelas[$key] = $ExecuteSQLParcelas[$key]->fetchAll(\PDO::FETCH_OBJ);
 							if(count($ResultSQLParcelas[$key])>0) {
 
+								if($ResultSQLParcelas[$key]->fina_status==0) {
+
+									$ParcelasRestantes[$key]++;
+									$ValorMulta[$key] += ($ResultSQLParcelas[$key]->fina_valor*0.01);
+								}
+
 								$tbl_parcelas[$key] = '<table class="table table-striped table-hover">
 														<thead>
 															<tr>
@@ -192,7 +198,7 @@ class Matricula extends \Database\Crud {
 
 								$tbl_parcelas[$key] .= '<tr>
 													<td>';
-								$tbl_parcelas[$key] .= ($ResultSQLParcelas[$key][0]->matr_paga==0) ? '<label class="checkbox checkbox-inline" style="margin-top:0px;"><input type="checkbox" name="parc[0]" id="parc_0" value="0"  data-value="'.$ResultSQLParcelas[$key][0]->curs_valor_matricula.'" class="checkbox style-2" /><span></span></label>' : "&nbsp;";
+								$tbl_parcelas[$key] .= ($ResultSQLParcelas[$key][0]->matr_paga==0) ? '<label class="checkbox checkbox-inline" style="margin-top:0px;"><input type="checkbox" name="parc[0]" id="parc_0" value="1"  data-value="'.$ResultSQLParcelas[$key][0]->curs_valor_matricula.'" class="checkbox style-2" /><span></span></label>' : "&nbsp;";
 								$tbl_parcelas[$key] .= '</td>';
 								$tbl_parcelas[$key] .= '<td>Taxa de Matrícula</td>
 													<td>'.$this->MaskValue->Data($ResultSQLParcelas[$key][0]->matr_reccreatedon, 'US2BR').'</td>
@@ -218,6 +224,16 @@ class Matricula extends \Database\Crud {
 							}
 
 							$ResultSQLAction[$key]->tbl_parcelas = $tbl_parcelas[$key];
+							$ResultSQLAction[$key]->ParcelasRestantes = $ParcelasRestantes[$key];
+							$ResultSQLAction[$key]->ValorMulta = $ValorMulta[$key];
+							$ResultSQLAction[$key]->DataCancelamento = substr($this->Date["NowBR"],0,10);
+							
+							$ResultSQLAction[$key]->TextoCancelamento = '<br/>O cancelamento será em <span id="canc_data">'.$ResultSQLAction[$key]->DataCancelamento.'<span>
+																			<br/>Existem <span id="canc_parc_rest" style="font-weight:bold">'.$ResultSQLAction[$key]->ParcelasRestantes.'</span> parcela(s) restante(s) de <span id="canc_parc_valor" style="font-weight:bold">R$ '..'</span> resultando em uma multa por cancelamento de <span id="canc_multa" style="font-weight:bold"> R$'.number_format($ResultSQLAction[$key]->ValorMulta,2,'.',',').'</span> (1% por mês não cumprido)
+																			<br/><br/>Confirma o cancelamento?';
+
+							//TODO: CONTINUAR REDIGINDO O TEXTO DE CANCELAMENTO
+
 						}
 					}
 				}

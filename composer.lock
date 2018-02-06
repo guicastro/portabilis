@@ -100,7 +100,7 @@
                 "service provider",
                 "silex"
             ],
-            "time": "2018-01-03 09:49:51"
+            "time": "2018-01-03T09:49:51+00:00"
         },
         {
             "name": "defuse/php-encryption",

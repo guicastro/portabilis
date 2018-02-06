@@ -1128,7 +1128,7 @@ function ActionForm(action, formData, id_reg, IdElementDataTable, DataTable, IdE
 							$('#'+IdElementForm+' #id-reg').show();
 							$('#'+IdElementForm+' #id_reg').html(id_reg);
 							var txt_reg = "<strong>Criação:</strong> <br> "+data[0][ModuleDefs.Prefix+"reccreatedon"]+ " - "+data[0][ModuleDefs.Prefix+"reccreatedbyname"];
-							txt_reg += data[0][ModuleDefs.Prefix+"recmodifiedon"]!=null ? "<br><br><strong>Última atualização:</strong> <br> "+data[0][ModuleDefs.Prefix+"recmodifiedon"]+ " - "+data[0][ModuleDefs.Prefix+"RecModifiedbyName"] : "";
+							txt_reg += data[0][ModuleDefs.Prefix+"recmodifiedon"]!=null ? "<br><br><strong>Última atualização:</strong> <br> "+data[0][ModuleDefs.Prefix+"recmodifiedon"]+ " - "+data[0][ModuleDefs.Prefix+"recmodifiedbyname"] : "";
 							$('#'+IdElementForm+' #txt_id_reg').attr("data-content", txt_reg);
 							/*### ALIMENTA O POPOVER DE ID E HISTÓRICO DE REGISTRO ###*/
 
