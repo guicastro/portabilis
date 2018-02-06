@@ -1,21 +1,5 @@
 <?php
 
-$dbopts = parse_url(getenv('DATABASE_URL'));
-$app->register(new Csanquer\Silex\PdoServiceProvider\Provider\PDOServiceProvider('pdo'),
-               array(
-                'pdo.server' => array(
-                   'driver'   => 'pgsql',
-                   'user' => $dbopts["user"],
-                   'password' => $dbopts["pass"],
-                   'host' => $dbopts["host"],
-                   'port' => $dbopts["port"],
-                   'dbname' => ltrim($dbopts["path"],'/')
-                   )
-               )
-);
-
-print_r($app);
-
 use Pimple\Container;
 
 $container = new Container();
@@ -56,6 +40,13 @@ $container['DatabaseCharset'] = "utf8";
 $container['DatabaseName'] = "portabilis";
 $container['DatabaseUser'] = "portabilis";
 $container['DatabasePass'] = "Show7?wore??";
+
+$container['DatabasePDODriver'] = "pgsql";
+$container['DatabaseHost'] = "baasu.db.elephantsql.com";
+$container['DatabaseCharset'] = "utf8";
+$container['DatabaseName'] = "uccscfsr";
+$container['DatabaseUser'] = "uccscfsr";
+$container['DatabasePass'] = "C1j4QN7qrEX_rJR3KjEjGDH2eofbsqIs";
 ############################## BANCO DE DADOS ##############################
 
 ############################## TIMEZONE ##############################
