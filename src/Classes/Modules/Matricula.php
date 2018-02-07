@@ -159,7 +159,7 @@ class Matricula extends \Database\Crud {
 														status_pgto_matr.tabedinavalo_descricao AS status_pgto_matr,
 														status_pgto_parc.tabedinavalo_descricao AS status_pgto_parc,
 														financeiro.fina_id,
-														financeiro.fina_parcela,
+														CAST(financeiro.fina_parcela AS int) AS fina_parcela,
 														financeiro.fina_vencimento,
 														financeiro.fina_dt_pagto,
 														financeiro.fina_valor,
@@ -183,7 +183,7 @@ class Matricula extends \Database\Crud {
 													WHERE
 														matriculas_matr_id = ".$ResultSQLAction[$key]->matr_id."
 													ORDER BY
-														fina_parcela";
+														CAST(financeiro.fina_parcela AS int)";
 							$ExecuteSQLParcelas[$key] = $this->db->query($SQLParcelas[$key]);
 							$ResultSQLParcelas[$key] = $ExecuteSQLParcelas[$key]->fetchAll(\PDO::FETCH_OBJ);
 							if(count($ResultSQLParcelas[$key])>0) {
@@ -331,7 +331,7 @@ class Matricula extends \Database\Crud {
 
 					for ($i=1; $i <= $ResultSQLDadosCurso[0]->curs_duracao; $i++) {
 
-						$SQLParcelas .= "(".$this->PrimaryKey.", ".$i.", ".$ResultSQLDadosCurso[0]->curs_valor_mensalidade.", '".$ResultSQLDadosCurso[0]->ano_atual."-".str_pad($ParcelaInicial,2,0,STR_PAD_LEFT)."-10', ".$this->TokenClass->getClaim("UserData")->Usua_id.", '".$this->Date["NowUS"]."'), ";
+						$SQLParcelas .= "(".$this->PrimaryKey.", ".$i.", ".$ResultSQLDadosCurso[0]->curs_valor_mensalidade.", '".$AnoInicial."-".str_pad($ParcelaInicial,2,0,STR_PAD_LEFT)."-10', ".$this->TokenClass->getClaim("UserData")->Usua_id.", '".$this->Date["NowUS"]."'), ";
 						$ParcelaInicial++;
 						if($ParcelaInicial=="12") {
 

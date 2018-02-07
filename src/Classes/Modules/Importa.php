@@ -96,6 +96,13 @@ class Importa extends \Database\Crud {
 		    		foreach ($data as $KeyHeader => $HeaderName) {
 
 
+
+
+
+
+
+
+
 				    	/*### VALIDAÇÃO DO LAYOUT 1 - ALUNOS ###*/
 						if($this->Request["layout"]==1) {
 
@@ -107,6 +114,14 @@ class Importa extends \Database\Crud {
 			    			if(($KeyHeader==5)&&($HeaderName=="birthday")) $CheckLayout++;
 						}
 				    	/*### VALIDAÇÃO DO LAYOUT 1 - ALUNOS ###*/
+
+
+
+
+
+
+
+
 
 
 
@@ -124,6 +139,11 @@ class Importa extends \Database\Crud {
 
 
 
+
+
+
+
+
 				    	/*### VALIDAÇÃO DO LAYOUT 3 - MATRÍCULAS ###*/
 						elseif($this->Request["layout"]==3) {
 
@@ -133,6 +153,11 @@ class Importa extends \Database\Crud {
 			    			if(($KeyHeader==3)&&($HeaderName=="year")) $CheckLayout++;
 						}
 				    	/*### VALIDAÇÃO DO LAYOUT 3 - MATRÍCULAS ###*/
+
+
+
+
+
 
 
 		    		}
@@ -170,11 +195,27 @@ class Importa extends \Database\Crud {
 				    while (($data = fgetcsv($handle, 1000, $this->Request["separador"])) !== FALSE) {
 
 				    	$LineNumber++;
+				    	// print_r($data);
 
 				    	if($LineNumber==1) $Header = $data;
 				    	else {
 				    		$DataLine++;
 				    		foreach ($data as $key => $value) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 				    			/*### TRATAMENTO DE DADOS PARA LAYOUT 1 - ALUNOS ###*/
 				    			if($this->Request["layout"]==1) {
@@ -212,12 +253,20 @@ class Importa extends \Database\Crud {
 
 											$DataETL[$DataLine]["alun_cpf"] = $cpf;
 										}
+										else {
+
+											$DataETLUpdate[$DataLine]["alun_id"] = $ResultSQLAction[0]->alun_id;
+										}
 				    				}
-				    				elseif($Header[$key]=="id") $DataETL[$DataLine]["alun_legado"] = $value;
+				    				elseif($Header[$key]=="id") {
+
+				    					$DataETL[$DataLine]["alun_legado"] = $value;
+										$DataETLUpdate[$DataLine]["alun_legado"] = $value;
+				    				}
 				    				elseif($Header[$key]=="name") {
 
-				    					$nome = str_replace("sr.","",str_replace("sra.","",str_replace("srta.","",mb_strtolower($value))));
-				    					$DataETL[$DataLine]["alun_nome"] = mb_strtoupper($nome);
+				    					$nome = str_replace("sr.","",str_replace("sra.","",str_replace("srta.","",str_replace("dr.","",str_replace("dra.","",mb_strtolower($value))))));
+				    					$DataETL[$DataLine]["alun_nome"] = trim(mb_strtoupper($nome));
 				    				}
 				    				elseif($Header[$key]=="rg") $DataETL[$DataLine]["alun_rg"] = str_replace(".","",str_replace(",","",str_replace("-","",$value)));
 				    				elseif($Header[$key]=="phone") {
@@ -238,6 +287,19 @@ class Importa extends \Database\Crud {
 				    				$DataETL[$DataLine]["alun_delete"] = 0;
 				    			}
 				    			/*### TRATAMENTO DE DADOS PARA LAYOUT 1 - ALUNOS ###*/
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -281,6 +343,17 @@ class Importa extends \Database\Crud {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 				    			/*### TRATAMENTO DE DADOS PARA LAYOUT 3 - MATRÍCULAS ###*/
 				    			elseif($this->Request["layout"]==3) {
 
@@ -308,7 +381,7 @@ class Importa extends \Database\Crud {
 
 											if($ResultSQLAction[0]->alun_id>0) {
 
-												$DataETL[$DataLine]["alunos_alun_id"] = $$ResultSQLAction[0]->alun_id;
+												$DataETL[$DataLine]["alunos_alun_id"] = $ResultSQLAction[0]->alun_id;
 											}
 				    					}
 				    				}
@@ -338,6 +411,7 @@ class Importa extends \Database\Crud {
 											if($ResultSQLAction[0]->curs_id>0) {
 
 												$DataETL[$DataLine]["cursos_curs_id"] = $ResultSQLAction[0]->curs_id;
+												$DataETL[$DataLine]["curs_periodo"] = $ResultSQLAction[0]->curs_periodo;
 											}
 				    					}
 				    				}
@@ -353,43 +427,46 @@ class Importa extends \Database\Crud {
 
 
 
+
+
+
+
 				    		}
 
-
-				    		/*### REMOVE ALUNOS JÁ EXISTENTES NO BANCO DE DADOS ###*/
-			    			if($this->Request["layout"]==1) {
-
-			   					foreach ($DataETL as $key => $Request) {
-
-			   						if($Request["alunos_alun_id"]=="") unset($DataETL[$key]);
-			   						if($Request["cursos_curs_id"]=="") unset($DataETL[$key]);
-			   					}
-			   				}
-				    		/*### REMOVE ALUNOS JÁ EXISTENTES NO BANCO DE DADOS ###*/
-
-
-
-
-				    		/*### REMOVE AS MATRÍCULAS SEM CURSO E/OU ALUNO ###*/
-			    			elseif($this->Request["layout"]==3) {
-
-			   					foreach ($DataETL as $key => $Request) {
-
-			   						// if($Request["alun_cpf"]=="") unset($DataETL[$key]);
-			   					}
-			   				}
-				    		/*### REMOVE AS MATRÍCULAS SEM CURSO E/OU ALUNO ###*/
+			    			// print_r($DataETL[$DataLine]);
 
 				    	}
 
 				    }
 
-				    print_r($Header);
-				    print_r($DataETL);
 
-				    //REVALIDAR IMPORTAÇÃO DE ALUNOS
-				    //REVALIDAR IMPORTAÇÃO DE CURSOS
-				    //FINALIZAR IMPORTAÇÃO DE MATRÍCULAS
+		    		/*### REMOVE ALUNOS JÁ EXISTENTES NO BANCO DE DADOS ###*/
+	    			if($this->Request["layout"]==1) {
+
+	   					foreach ($DataETL as $key => $Request) {
+
+	   						if($Request["alun_cpf"]=="") unset($DataETL[$key]);
+	   					}
+	   				}
+		    		/*### REMOVE ALUNOS JÁ EXISTENTES NO BANCO DE DADOS ###*/
+
+
+
+
+		    		/*### REMOVE AS MATRÍCULAS SEM CURSO E/OU ALUNO ###*/
+	    			elseif($this->Request["layout"]==3) {
+
+	   					foreach ($DataETL as $key => $Request) {
+
+	   						if(($Request["alunos_alun_id"]=="")||($Request["cursos_curs_id"]=="")) unset($DataETL[$key]);
+	   					}
+	   				}
+		    		/*### REMOVE AS MATRÍCULAS SEM CURSO E/OU ALUNO ###*/
+
+
+				    // print_r($Header);
+				    // print_r($DataETL);
+				    // print_r($DataETLUpdate);
 
 
 					// print_r($ModuleDefsLayouts[$this->Request["layout"]]);
@@ -403,7 +480,7 @@ class Importa extends \Database\Crud {
 
 			   		foreach ($DataETL as $key => $Request) {
 
-		   				print_r($Request);
+		   				// print_r($Request);
 						$ActionForm = $this->Container[$ModuleDefsLayouts[$this->Request["layout"]]->Entity];
 						$ActionForm->setModuleDefs(json_encode($ModuleDefsLayouts[$this->Request["layout"]]));
 						$ActionForm->setRequest($Request);
@@ -427,11 +504,44 @@ class Importa extends \Database\Crud {
 			   		// print_r($Result);
 			   		// var_dump($Result);
 
+
+			   		if($this->Request["atualizar_legado"]==1) {
+
+				   		if(count($DataETLUpdate)>0) {
+
+				   			foreach ($DataETLUpdate as $key => $Request) {
+
+				   				// print_r($Request);
+								$ActionForm = $this->Container[$ModuleDefsLayouts[$this->Request["layout"]]->Entity];
+								$ActionForm->setModuleDefs(json_encode($ModuleDefsLayouts[$this->Request["layout"]]));
+								$ActionForm->setRequest($Request);
+								$ActionForm->setAction('alterar');
+								$ActionForm->setPrimaryKey($Request["alun_id"]);
+								$ActionForm->setSQLDescribeEntity();
+								$ActionForm->ExecuteDescribeEntity();
+								$ActionForm->setSQLUpdateTable();
+								$ActionForm->setSQLUpdateSet();
+								$ActionForm->setSQLUpdateWhere();
+								$ActionForm->BuildSqlAction();
+								$ActionForm->BeforeExecuteAction();
+								$Result = $ActionForm->ExecuteAction();
+								$ActionForm->AfterExecuteAction();
+
+								if($Result==true) {
+
+									$this->ExecuteAction = true;
+									$TotalImport++;
+								}
+				   			}
+				   		}
+					    // print_r($DataETLUpdate);
+			   		}
+
 				   	if($TotalImport>0) {
 
 				   		$ResponseOptions = $this->ResponseOptions;
 				   		$ResponseOptions["ImportResult"] = "OK";
-				   		$ResponseOptions["CustomMsg"] = "Foram importados um total de ".$TotalImport." registros de ".$LayoutTitle[$this->Request["layout"]];
+				   		$ResponseOptions["CustomMsg"] = "Foram importados/atualizados um total de ".$TotalImport." registros de ".$LayoutTitle[$this->Request["layout"]];
 				   		$this->ResponseOptions = $ResponseOptions;
 				   	}
 				   	else {

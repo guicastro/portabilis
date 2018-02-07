@@ -1423,7 +1423,8 @@ function ActionForm(action, formData, id_reg, IdElementDataTable, DataTable, IdE
 									/*#### SE A ACTION FOR SELECIONAR O OBJETO FOR VAZIO, RETORNA ERRO ####*/
 									if((action=="selecionar")
 										&&(typeof data[0]=='undefined')
-										&&(data.origem!='importar')) {
+										&&(data.origem!='pre-cadastro')
+										&&(data.origem!='atendimento-trocar-pessoa')) {
 
 										//EXIBE A MENSAGEM DE ERRO
 										AlertMsg('vazio', 'error', '', '', '');
