@@ -306,7 +306,7 @@
 			{ "name":"Período", "data":"periodo_nome", "minSearchValue":2, "width":"20%", "responsive": { "hide":"phone" }, "DT_Filter": { "hasFilter": true, "type":"input" }, "otherTable":{ "DynamicTable":"TURNOS", "Join":"INNER", "FieldKey":"periodo", "FieldKeyOtherTable":"codigo", "View":"descricao"}  },
 			{ "name":"Mensalidade", "data":"valor_mensalidade", "DataType":"int", "width":"20%", "responsive": { "class":"expand" }, "DT_Filter": { "hasFilter": true, "type":"input", }, "mask": {"name":"Moeda", "View":"add", "Database":"remove" } },
 			{ "name":"Duração (meses)", "data":"duracao", "DataType":"int", "width":"15%", "responsive": { "class":"expand" }, "DT_Filter": { "hasFilter": true, "type":"input", },  },
-			{ "name":"periodo", "data":"periodo", "minSearchValue":2, "visible":false, },
+			{ "name":"periodo", "data":"periodo", "DataType":"int", "minSearchValue":2, "visible":false, },
 		];
 		/*### DEFINIÇÕES DAS COLUNAS DO GRID (PRIMEIRA COLUNA É ZERO) ###*/
 

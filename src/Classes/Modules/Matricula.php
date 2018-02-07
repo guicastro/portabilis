@@ -37,7 +37,14 @@ class Matricula extends \Database\Crud {
 	/*### MONTA O INÍCIO DO SELECT, COM AS COLUNAS QUE SERÃO RETORNADAS ###*/
 	public function setSQLSelectFields () {
 
-		$this->SQLSelectFields = "SELECT TBL.*, alunos.*, cursos.*, periodos.*, status.tabedinavalo_descricao AS status_nome, status_pgto.tabedinavalo_descricao AS status_pgto_nome "
+		$this->SQLSelectFields = "SELECT
+									TBL.*,
+									alunos.*,
+									cursos.*,
+									periodos.*,
+									status.tabedinavalo_descricao AS status_nome,
+									status_pgto.tabedinavalo_descricao AS status_pgto_nome,
+									DATE_TRUNC('MONTH', CURRENT_TIMESTAMP::date) + INTERVAL '1 MONTH - 1 DAY' AS ULTIMO_DIA_MES "
 								.", (SELECT Usua_Nome FROM Usuarios WHERE Usua_id = TBL.".$this->ModuleDefs->Prefix."RecCreatedby) as ".$this->ModuleDefs->Prefix."RecCreatedbyName"
 								.", (SELECT Usua_Nome FROM Usuarios WHERE Usua_id = TBL.".$this->ModuleDefs->Prefix."RecModifiedby) as ".$this->ModuleDefs->Prefix."RecModifiedbyName ";
 		return $this->SQLSelectFields;
@@ -140,18 +147,21 @@ class Matricula extends \Database\Crud {
 							$ResultSQLAction[$key]->alun_celular = $this->MaskValue->Telefone($DataObject->alun_celular,'add');
 							$ResultSQLAction[$key]->alun_telefone = $this->MaskValue->Telefone($DataObject->alun_telefone,'add');
 
-							$ResultSQLAction[$key]->matr_status_nome = $ResultSQLAction[$key]->status_nome;
-							$ResultSQLAction[$key]->matr_status_pgto = $ResultSQLAction[$key]->status_pgto_nome;
+							$ResultSQLAction[$key]->matr_status_nome = ($DataObject->matr_status==0) ? $DataObject->status_nome. " (cancelada em ".$this->MaskValue->Data($DataObject->matr_dt_cancelamento,'US2BR').")" : $DataObject->status_nome;
+							$ResultSQLAction[$key]->matr_status_pgto = $DataObject->status_pgto_nome;
 
 							$SQLParcelas[$key] = "SELECT
 														matriculas.matr_reccreatedon,
 														matriculas.matr_paga,
+														matriculas.matr_dt_cancelamento,
+														matriculas.matr_dt_pagto,
 														cursos.curs_valor_matricula,
 														status_pgto_matr.tabedinavalo_descricao AS status_pgto_matr,
 														status_pgto_parc.tabedinavalo_descricao AS status_pgto_parc,
 														financeiro.fina_id,
 														financeiro.fina_parcela,
 														financeiro.fina_vencimento,
+														financeiro.fina_dt_pagto,
 														financeiro.fina_valor,
 														financeiro.fina_status
 													FROM
@@ -178,12 +188,6 @@ class Matricula extends \Database\Crud {
 							$ResultSQLParcelas[$key] = $ExecuteSQLParcelas[$key]->fetchAll(\PDO::FETCH_OBJ);
 							if(count($ResultSQLParcelas[$key])>0) {
 
-								if($ResultSQLParcelas[$key]->fina_status==0) {
-
-									$ParcelasRestantes[$key]++;
-									$ValorMulta[$key] += ($ResultSQLParcelas[$key]->fina_valor*0.01);
-								}
-
 								$tbl_parcelas[$key] = '<table class="table table-striped table-hover">
 														<thead>
 															<tr>
@@ -202,11 +206,23 @@ class Matricula extends \Database\Crud {
 								$tbl_parcelas[$key] .= '</td>';
 								$tbl_parcelas[$key] .= '<td>Taxa de Matrícula</td>
 													<td>'.$this->MaskValue->Data($ResultSQLParcelas[$key][0]->matr_reccreatedon, 'US2BR').'</td>
-													<td>'.$this->MaskValue->Moeda($ResultSQLParcelas[$key][0]->curs_valor_matricula, 'add').'</td>
-													<td>'.$ResultSQLParcelas[$key][0]->status_pgto_matr.'</td>
+													<td>'.$this->MaskValue->Moeda($ResultSQLParcelas[$key][0]->curs_valor_matricula, 'add').'</td>';
+								$tbl_parcelas[$key] .= '<td>';
+								$tbl_parcelas[$key] .= ($ResultSQLParcelas[$key][0]->matr_paga==1) ? $ResultSQLParcelas[$key][0]->status_pgto_matr." EM ".$this->MaskValue->Data($ResultSQLParcelas[$key][0]->matr_dt_pagto, 'US2BR') : $ResultSQLParcelas[$key][0]->status_pgto_matr;
+								$tbl_parcelas[$key] .= '</td>
 												</tr>';
 
 								foreach ($ResultSQLParcelas[$key] as $keyP => $DataObject) {
+
+
+									if($DataObject->fina_status==0) {
+
+										$ParcelasRestantes[$key]++;
+										$ValorMulta[$key] += ($DataObject->fina_valor*0.01);
+									}
+
+									$ValorParcela[$key] = $DataObject->fina_valor;
+
 
 									$tbl_parcelas[$key] .= '<tr>
 														<td>';
@@ -214,8 +230,10 @@ class Matricula extends \Database\Crud {
 									$tbl_parcelas[$key] .= '</td>
 														<td>'.$DataObject->fina_parcela.'</td>
 														<td>'.$this->MaskValue->Data($DataObject->fina_vencimento, 'US2BR').'</td>
-														<td>'.$this->MaskValue->Moeda($DataObject->fina_valor, 'add').'</td>
-														<td>'.$DataObject->status_pgto_parc.'</td>
+														<td>'.$this->MaskValue->Moeda($DataObject->fina_valor, 'add').'</td>';
+									$tbl_parcelas[$key] .= '<td>';
+									$tbl_parcelas[$key] .= ($DataObject->fina_status==1) ? $DataObject->status_pgto_parc." EM ".$this->MaskValue->Data($DataObject->fina_dt_pagto, 'US2BR') : $DataObject->status_pgto_parc;
+									$tbl_parcelas[$key] .= '</td>
 													</tr>';
 								}
 
@@ -226,13 +244,14 @@ class Matricula extends \Database\Crud {
 							$ResultSQLAction[$key]->tbl_parcelas = $tbl_parcelas[$key];
 							$ResultSQLAction[$key]->ParcelasRestantes = $ParcelasRestantes[$key];
 							$ResultSQLAction[$key]->ValorMulta = $ValorMulta[$key];
+							$ResultSQLAction[$key]->ValorParcela = $ValorParcela[$key];
 							$ResultSQLAction[$key]->DataCancelamento = substr($this->Date["NowBR"],0,10);
-							
-							$ResultSQLAction[$key]->TextoCancelamento = '<br/>O cancelamento será em <span id="canc_data">'.$ResultSQLAction[$key]->DataCancelamento.'<span>
-																			<br/>Existem <span id="canc_parc_rest" style="font-weight:bold">'.$ResultSQLAction[$key]->ParcelasRestantes.'</span> parcela(s) restante(s) de <span id="canc_parc_valor" style="font-weight:bold">R$ '..'</span> resultando em uma multa por cancelamento de <span id="canc_multa" style="font-weight:bold"> R$'.number_format($ResultSQLAction[$key]->ValorMulta,2,'.',',').'</span> (1% por mês não cumprido)
-																			<br/><br/>Confirma o cancelamento?';
 
-							//TODO: CONTINUAR REDIGINDO O TEXTO DE CANCELAMENTO
+							$ResultSQLAction[$key]->TextoCancelamento = '<br/>O cancelamento será em <span id="canc_data">'.$ResultSQLAction[$key]->DataCancelamento.'<span>
+																			<br/>Existem <span id="canc_parc_rest" style="font-weight:bold">'.$ResultSQLAction[$key]->ParcelasRestantes.'</span> parcela(s) restante(s) de <span id="canc_parc_valor" style="font-weight:bold">R$ '.number_format($ResultSQLAction[$key]->ValorParcela,2,',','.').'</span> resultando em uma multa por cancelamento de <span id="canc_multa" style="font-weight:bold"> R$'.number_format($ResultSQLAction[$key]->ValorMulta,2,',','.').'</span> (1% por mês não cumprido)
+																			<br/><br/><h5>Confirma o cancelamento?</h5>
+																			<br/><i>O aluno poderá frequentar as aulas até dia <strong>'.$this->MaskValue->Data($ResultSQLAction[$key]->ultimo_dia_mes,'US2BR').'</strong></i>';
+
 
 						}
 					}
@@ -247,10 +266,26 @@ class Matricula extends \Database\Crud {
 
 
 
+	/*### EXECUTA AS AÇÕES DE MÁSCARA DE VALORES NOS DADOS DE UPDATE OU INSERT ###*/
+	public function MaskInsertUpdateValues () {
+
+		if($this->Request["origem"]=="cancelamento") {
+
+			$Request = $this->Request;
+
+			$Request["matr_dt_cancelamento"] = $this->Date["NowUS"];
+
+			$this->Request = $Request;
+		}
+	}
+	/*### EXECUTA AS AÇÕES DE MÁSCARA DE VALORES NOS DADOS DE UPDATE OU INSERT ###*/
+
+
 
 	/*### EXECUTA AÇÕES DEPOIS DO MÉTODO ExecuteAction ###*/
 	public function AfterExecuteAction () {
 
+		/*### AÇÕES APÓS INSERIR A MATRÍCULAS ###*/
 		if(($this->Action=="inserir")&&($this->ExecuteAction==true)) {
 
 			if($this->Request["matr_status"]==1) {
@@ -283,7 +318,7 @@ class Matricula extends \Database\Crud {
 
 					//SE A DURAÇÃO DO CURSO FOR <= QUE O NÚMERO DE MESES RESTANTES ATÉ O FINAL DO ANO LETIVO,
 					//ENTÃO O VENCIMENTO DAS PARCELAS INICIA A PARTIR NO DIA 10 DO MÊS CORRENTE,
-					//SENÃO O VENCIMENTO DAS PARCELAS É A PARTIR DO DIA 10 DE JANEIRO DO MÊS CORRENTE
+					//SENÃO O VENCIMENTO DAS PARCELAS É A PARTIR DO DIA 10 DE JANEIRO DO ANO CORRENTE
 					$ParcelaInicial = ($ResultSQLDadosCurso[0]->curs_duracao<=$ResultSQLDadosCurso[0]->meses_final_ano) ? $ResultSQLDadosCurso[0]->mes_atual : 1;
 					$AnoInicial = $ResultSQLDadosCurso[0]->ano_atual;
 
@@ -311,6 +346,28 @@ class Matricula extends \Database\Crud {
 				/*### AÇÕES DE INSERÇÃO DAS PARCELAS FINANCEIRAS DE MENSALIDADE ###*/
 			}
 		}
+		/*### AÇÕES APÓS INSERIR A MATRÍCULAS ###*/
+
+
+
+
+		/*### AÇÕES APÓS O CANCELAMENTO DE MATRÍCULA ###*/
+		if(($this->Request["origem"]=="cancelamento")&&($this->ExecuteAction==true)) {
+
+				$SQLCancelaParcela = "UPDATE
+										financeiro
+									SET
+										fina_status = 2,
+										fina_recmodifiedon = '".$this->Date["NowUS"]."',
+										fina_recmodifiedby = ".$this->TokenClass->getClaim("UserData")->Usua_id."
+									WHERE
+										matriculas_matr_id = ".$this->PrimaryKey."
+										AND fina_status = 0";
+				$ExecuteSQLCancelaParcela = $this->db->query($SQLCancelaParcela);
+				$ResultSQLCancelaParcela = $ExecuteSQLCancelaParcela->fetchAll(\PDO::FETCH_OBJ);
+		}
+		/*### AÇÕES APÓS O CANCELAMENTO DE MATRÍCULA ###*/
+
 
 	}
 	/*### EXECUTA AÇÕES DEPOIS DO MÉTODO ExecuteAction ###*/

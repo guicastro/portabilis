@@ -1,7 +1,7 @@
 <!--#####################################################
 |														|
 | Arquivo principal da estrutura do layout com o topo,	|
-| menus, e estrutura do layout
+| menus, e estrutura do layout							|
 |														|
 | Data de criação: 03/02/2018							|
 | Autor: Guilherme Moreira de Castro					|
@@ -22,7 +22,7 @@
 		<!-- #CSS Links -->
 		<!-- Basic Styles -->
 		<link rel="stylesheet" type="text/css" media="screen" href="lib/smartadmin/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="vendor/fortawesome/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="lib/font-awesome-4.7.0/css/font-awesome.min.css">
 
 		<!-- SmartAdmin Styles : Caution! DO NOT change the order -->
 		<link rel="stylesheet" type="text/css" media="screen" href="lib/smartadmin/css/smartadmin-production-plugins.min.css">
@@ -357,15 +357,7 @@
 					</li>
 
 					<li class="">
-						<a href="app/financeiro/" title="Financeiro"><i class="fa fa-lg fa-fw fa-dollar"></i> <span class="menu-item-parent">Financeiro</span></a>
-					</li>
-
-					<li class="">
-						<a href="app/exportar/" title="Exportar dados"><i class="fa fa-lg fa-fw fa-share-square-o"></i> <span class="menu-item-parent">Exportar dados</span></a>
-					</li>
-
-					<li class="">
-						<a href="app/relatorios/" title="Relatórios"><i class="fa fa-lg fa-fw fa-file-text-o"></i> <span class="menu-item-parent">Relatórios</span></a>
+						<a href="app/importar/" title="Importar dados"><i class="fa fa-lg fa-fw fa-upload"></i> <span class="menu-item-parent">Importar dados</span></a>
 					</li>
 
 					<li class="">
@@ -383,9 +375,9 @@
 							<li class="">
 								<a href="app/usuarios/" title="Usuários"><i class="fa fa-lg fa-fw fa-user"></i> <span class="menu-item-parent">Usuários</span></a>
 							</li>
-							<li class="">
+							<!--<li class="">
 								<a href="#" title="Teste" id="teste" target="_blank"><i class="fa fa-lg fa-fw fa-lightbulb-o"></i> <span class="menu-item-parent">Teste</span></a>
-							</li>
+							</li>-->
 						</ul>
 					</li>
 
@@ -513,8 +505,8 @@
 		<script src="lib/smartadmin/js/plugin/jquery-validate/jquery.validate.min.js"></script>
 
 		<!-- JQUERY SELECT2 INPUT -->
-		<script src="vendor/select2/select2/dist/js/select2.min.js"></script>
-		<script src="vendor/select2/select2/dist/js/i18n/pt-BR.js"></script>
+		<script src="lib/select2/dist/js/select2.min.js"></script>
+		<script src="lib/select2/dist/js/i18n/pt-BR.js"></script>
 
 		<!-- browser msie issue fix -->
 		<script src="lib/smartadmin/js/plugin/msie-fix/jquery.mb.browser.min.js"></script>

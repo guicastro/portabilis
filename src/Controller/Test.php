@@ -25,9 +25,15 @@ require_once("../../config/config.php");
 require_once("../Service/Service.php");
 
 
-$MaskValue = $container['MaskValue'];
+$telefone = "+55-- (sds";
 
-var_dump($MaskValue->ValidarCPF('00706944194','validate'));
+echo substr($telefone,0,3);
+echo "<br>";
+echo substr($telefone,3);
+
+// $MaskValue = $container['MaskValue'];
+
+// var_dump($MaskValue->ValidarCPF('00706944194','validate'));
 
 // // Creating the new document...
 // $phpWord = new \PhpOffice\PhpWord\PhpWord();

@@ -65,7 +65,7 @@ class Financeiro extends \Database\Crud {
 
 
 		foreach ($this->Request["parc"] as $parcela => $id_parcela) {
-			
+
 			$ParcUpdate .= $id_parcela.", ";
 		}
 
@@ -89,6 +89,7 @@ class Financeiro extends \Database\Crud {
 											matriculas
 										SET
 											matr_paga = 1,
+											matr_dt_pagto = '".$this->Date["NowUS"]."',
 											matr_RecModifiedon = '".$this->Date["NowUS"]."',
 											matr_RecModifiedby = '".$this->TokenClass->getClaim("UserData")->Usua_id."'
 										WHERE

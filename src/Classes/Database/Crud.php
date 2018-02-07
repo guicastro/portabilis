@@ -53,6 +53,7 @@ class Crud {
 	protected $TokenClass;
 	protected $Token;
 	protected $CheckPermission;
+	protected $DataObject;
 
 
 	/*### CONSTRUTOR, COM AS CHAMADAS OBRIGATÓRIAS ###*/
@@ -549,6 +550,26 @@ class Crud {
 
 
 
+	/*### RETORNA O RESULTADO DO ExecuteAction ###*/
+	public function getExecuteAction () {
+
+		return $this->ExecuteAction;
+	}
+	/*### RETORNA O RESULTADO DO ExecuteAction ###*/
+
+
+
+
+	/*### RETORNA O RESULTADO DO DataObject ###*/
+	public function getDataObject () {
+
+		return $this->DataObject;
+	}
+	/*### RETORNA O RESULTADO DO DataObject ###*/
+
+
+
+
 
 
 	/*### EXECUTA A QUERY DA SQLAction ###*/
@@ -579,6 +600,11 @@ class Crud {
 
 					//ARMAZENA O OBJETO PDO NA ResultSQLAction
 					$this->setResultSQLAction($ResultSQLAction);
+
+					//ARMAZE O OBJETO DE DADOS
+					$this->DataObject = $ResultSQLAction;
+
+					//Retorna o ResultSQLAction
 					return $this->ResultSQLAction;
 				}
 				/*### SE A ACTION FOR SELECIONAR|LOGIN|GRID OU SE A CHAMADA DE UMA TABELA DINÂMICA ###*/

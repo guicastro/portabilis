@@ -301,39 +301,6 @@ if($_REQUEST['Route']=="ExecutePHPFunction") {
 
 
 
-/*#### ROTA: CÓDIGO DE BARRAS ####*/
-if($_REQUEST['Route']=="Barcode") {
-
-	$Barcode = $container["BarCodeGenerator"];
-	$Barcode->setType($_REQUEST['Type']);
-	$Barcode->setValue($_REQUEST['Value']);
-	$Barcode->setReturn($_REQUEST['Return']);
-	$Barcode->GenerateBarcode();
-	$Barcode->ReturnBarcode();
-
-	// echo "<pre>"; print_r($DynamicTable); "</pre>";
-}
-/*#### ROTA: CÓDIGO DE BARRAS ####*/
-
-
-
-
-
-
-/*#### ROTA: GERAÇÃO DE PDF ####*/
-if($_REQUEST['Route']=="PDF") {
-
-	$PDF = $container["PDF"];
-	$PDF->setType($_REQUEST['Type']);
-	$PDF->setHeader($_REQUEST['Header']);
-	$PDF->setFooter($_REQUEST['Footer']);
-	$PDF->setContent($_REQUEST['Content']);
-	$PDF->GeneratePDF();
-
-	// echo "<pre>"; print_r($DynamicTable); "</pre>";
-}
-/*#### ROTA: GERAÇÃO DE PDF ####*/
-
 
 
 

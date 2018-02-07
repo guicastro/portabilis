@@ -16,7 +16,7 @@
 
 namespace Modules;
 
-/*### CLASSE DO CADASTRO DE PESSOA (HERDA CRUD) ###*/
+/*### CLASSE DO CADASTRO DE ALUNO (HERDA CRUD) ###*/
 class Aluno extends \Database\Crud {
 
 	protected $DynamicTable;
@@ -215,4 +215,4 @@ class Aluno extends \Database\Crud {
 
 
 }
-/*### CLASSE DO CADASTRO DE PESSOA (HERDA CRUD) ###*/
+/*### CLASSE DO CADASTRO DE ALUNO (HERDA CRUD) ###*/

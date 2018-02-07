@@ -38,12 +38,12 @@
 				</div>
 				<div class="col-md-4">
 					<div class="form-group">
-						<select id="filtro_status" style="width:100%" class="select2 filtro-grid" data-id='7'></select>
+						<select id="filtro_status" style="width:100%" class="select2 filtro-grid" data-id='9'></select>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<div class="form-group">
-						<select id="filtro_status_pgto" style="width:100%" class="select2 filtro-grid" data-id='7'></select>
+						<select id="filtro_status_pgto" style="width:100%" class="select2 filtro-grid" data-id='10'></select>
 					</div>
 				</div>
 			</div>
@@ -222,7 +222,7 @@
 											<select name="matr_status" id="matr_status" style="width:100%" class="select2" required data-msg="Escolha o status"></select>
 										</div>
 									</div>
-									<div class="col-md-3">
+									<div class="col-md-4">
 										<div class="form-group">
 											<label for="matr_status_nome" class="control-label">Status da matrícula</label>
 											<input name="matr_status_nome" id="matr_status_nome" type="text" class="form-control" readonly />
@@ -364,16 +364,14 @@
 	/*### FUNÇÃO PARA EXECUTAR AÇÕES ADICIONAIS AO ACTIONFORM ###*/
 	function AdditionalActionForm(IdElementForm, action, data, textStatus, jqXHR, DataTable, ModuleDefs, IdModalElement) {
 
-		console.log("\nAdditionalActionForm");
-		console.log(IdElementForm);
-		console.log(action);
-		console.log(data);
-		console.log(data.Options);
-		console.log(ModuleDefs);
-		console.log(data.origem);
-		console.log(DataTable);
-
-
+		// console.log("\nAdditionalActionForm");
+		// console.log(IdElementForm);
+		// console.log(action);
+		// console.log(data);
+		// console.log(data.Options);
+		// console.log(ModuleDefs);
+		// console.log(data.origem);
+		// console.log(DataTable);
 
 		/*### AÇÕES QUANDO RETORNA A BUSCA DE MATRÍCULA EXISTENTE ###*/
 		if((action=="selecionar")&&(ModuleDefs.Entity=="Matricula")) {
@@ -402,13 +400,14 @@
 			//TORNA O CAMPO DE ANO LETIVO READ-ONLY
 			$("#"+IdElementForm+" input[name=matr_ano]").prop('readonly',true);
 
-			/*### MOSTRA BOTÕES DE PAGAR E CANCELAR ###*/
+			//MOSTRA O BOTÃO DE PAGAR
+			$('#btn-pagar').show();
+
+			/*### MOSTRA BOTÕES DE CANCELAR ###*/
 			if(data[0].matr_status==1) {
-				
-				$('#btn-pagar').show();
 				$('#btn-cancelar').show();
 			}
-			/*### MOSTRA BOTÕES DE PAGAR E CANCELAR ###*/
+			/*### MOSTRA BOTÕES DE CANCELAR ###*/
 
 			/*### PREENCHE OS DADOS DO ALUNO ###*/
 			$("#"+IdElementForm+" input[name=alun_nome]").val(data[0].alun_nome);
@@ -704,7 +703,7 @@
 			{ "name":"Status", "data":"status_nome", "width":"12%", "DT_Filter": { "hasFilter": true, "type":"input" }, "otherTable":{ "DynamicTable":"STATUS_MATRICULAS", "Join":"INNER", "FieldKey":"status", "FieldKeyOtherTable":"codigo", "View":"descricao"} },
 			{ "name":"Status Pgto", "data":"status_pgto_nome", "width":"12%", "DT_Filter": { "hasFilter": true, "type":"input" }, "otherTable":{ "DynamicTable":"STATUS_PAGAMENTOS", "Join":"INNER", "FieldKey":"paga", "FieldKeyOtherTable":"codigo", "View":"descricao"} },
 			{ "name":"aluno", "data":"alunos_alun_id", "DataType":"int", "noPrefix":true, "visible":false },
-			{ "name":"status", "data":"status", "DataType":"int", "visible":false },
+			{ "name":"status", "data":"status", "DataType":"int", "visible":false, "startFilter":" = 1" },
 			{ "name":"status_pgto", "data":"paga", "DataType":"int", "visible":false },
 			{ "name":"cpf_aluno", "data":"aluno_cpf", "visible":false, "otherTable":{ "Alias":"alunos", "View":"alun_cpf"} },
 			{ "name":"actions", "data":"acoes", "width":"4%", "orderable":false, "searchable":false, "defaultContent":'<button type="button" data-id="alterar" title="Visualizar" class="btn btn-primary btn-xs"><i class="fa fa-search"></i></button>' },
@@ -757,7 +756,7 @@
 		SetSelectFromDynamicTable('matr_status',status,'Status da Matrícula','','');
 
 		//POPULA O SELECT2 DO FILTRO COM OS STATUS
-		SetSelectFromDynamicTable('filtro_status',status,'Status das Matrículas','Todos os status','');
+		SetSelectFromDynamicTable('filtro_status',status,'Status das Matrículas','Todos os status','1');
 
 		//ARMAZENA O STATUS DE PAGAMENTO
 		var status_pgto = GetDynamicTable('STATUS_PAGAMENTOS','Descricao','ASC','');
@@ -766,19 +765,13 @@
 		SetSelectFromDynamicTable('filtro_status_pgto',status_pgto,'Matrícula paga?','Todos os status','');
 
 
-
-
 		/*### CHAMA O GRID ###*/
 		var $DataTable = GenerateDataTable($IdElementDataTable, '', $ModuleDefs, ColumnDefs, ColumnOrder, $IdElementForm, $IdModalElement);
 		/*### CHAMA O GRID ###*/
 
-
 		/*### ATIVA A VALIDAÇÃO DO FORMULÁRIO ###*/
 		FormValidation($IdElementForm, $IdElementDataTable, $DataTable, $ModuleDefs, $IdModalElement)
 		/*### ATIVA A VALIDAÇÃO DO FORMULÁRIO ###*/
-
-
-
 
 
 
@@ -807,7 +800,7 @@
 				LimpaAluno($IdElementForm);
 
 				//PREENCHE O FORMULÁRIO DE PESSOAS
-				ActionForm('selecionar', formData, '', $IdElementDataTable, DataTable, $IdElementForm, ModuleDefsAluno, $IdModalElement);
+				ActionForm('selecionar', formData, '', $IdElementDataTable, $DataTable, $IdElementForm, ModuleDefsAluno, $IdModalElement);
 			}
 		});
 		/*### AÇÕES QUANDO REALIZA A BUSCA DE UM ALUNO ###*/
@@ -856,8 +849,6 @@
 
 				        	if($("#res_autoriza_pgto").val()==1) {
 
-				        		console.log("ok");
-
 				        		//OBTÉM O ID DA MATRÍCULA
 				        		var id_reg = $("#id_reg").html();
 
@@ -869,8 +860,6 @@
 
 								//PREENCHE O FORMULÁRIO DE PESSOAS
 								ActionForm('alterar', formData, id_reg, '', $DataTable, $IdElementForm, $ModuleDefsFinanceiro, $IdModalElement);
-
-								//TODO: CONTINUAR O PROCESSO DE PAGAMENTO DA MATRÍCULA
 				        	}
 					        else {
 
@@ -950,7 +939,20 @@
 				        className: 'btn-success',
 				        callback: function(){
 
-				        	console.log("cancelado");
+			        		//OBTÉM O ID DA MATRÍCULA
+			        		var id_reg = $("#id_reg").html();
+
+							//CRIA O formData
+							var formData = new FormData();
+
+							//ADICIONA O ORIGEM
+							formData.append('origem','cancelamento');
+
+							//ADICIONA O NOVO STATUS
+							formData.append('matr_status',0);
+
+							//PREENCHE O FORMULÁRIO DE PESSOAS
+							ActionForm('alterar', formData, id_reg, '', $DataTable, $IdElementForm, $ModuleDefs, $IdModalElement);
 				        }
 				    }
 				}

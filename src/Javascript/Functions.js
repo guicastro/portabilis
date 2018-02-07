@@ -112,7 +112,7 @@ function GenerateDataTable(IdElementDataTable, Source, ModuleDefs, ColumnDefs, C
 	//				FieldKey: campo na tabela primária que faz o relacionamento
 	//				FieldKeyOtherTable: campo relacionado na outra tabela
 	//				View: nome do campo que será exibido no GRID
-	//AdditionalConditions = condições adicionais no WHERE daquele campo, por exemplo um filtro permanente (preender apenas com a condição e valor)
+	//AdditionalConditions = condições adicionais no WHERE daquele campo, por exemplo um filtro permanente (preencer apenas com a condição e valor)
 	/*### CONFIGURAÇÕES DO ColumnDefs ###*/
 
 
@@ -410,7 +410,7 @@ function GenerateDataTable(IdElementDataTable, Source, ModuleDefs, ColumnDefs, C
         if(Permission!=false) {
         	AlertMsg('DataTable','error', settings.jqXHR, message);
         }
-    });
+    }).on( 'draw', function (oSettings) { });
 	/*#### GRID DE DADOS ####*/
 
 
@@ -1398,8 +1398,7 @@ function ActionForm(action, formData, id_reg, IdElementDataTable, DataTable, IdE
 									/*#### SE A ACTION FOR SELECIONAR O OBJETO FOR VAZIO, RETORNA ERRO ####*/
 									if((action=="selecionar")
 										&&(typeof data[0]=='undefined')
-										&&(data.origem!='pre-cadastro')
-										&&(data.origem!='atendimento-trocar-pessoa')) {
+										&&(data.origem!='importar')) {
 
 										//EXIBE A MENSAGEM DE ERRO
 										AlertMsg('vazio', 'error', '', '', '');
@@ -1424,8 +1423,7 @@ function ActionForm(action, formData, id_reg, IdElementDataTable, DataTable, IdE
 									/*#### SE A ACTION FOR SELECIONAR O OBJETO FOR VAZIO, RETORNA ERRO ####*/
 									if((action=="selecionar")
 										&&(typeof data[0]=='undefined')
-										&&(data.origem!='pre-cadastro')
-										&&(data.origem!='atendimento-trocar-pessoa')) {
+										&&(data.origem!='importar')) {
 
 										//EXIBE A MENSAGEM DE ERRO
 										AlertMsg('vazio', 'error', '', '', '');

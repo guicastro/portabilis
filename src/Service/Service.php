@@ -244,6 +244,15 @@ $container['Financeiro'] = function($c) {
 /*### INSTANCIA A CLASSE DO CADASTRO DE CURSOS ###*/
 
 
+/*### INSTANCIA A CLASSE DO CADASTRO DE CURSOS ###*/
+//c = container do Pimple
+$container['Importa'] = function($c) {
+
+	return new \Modules\Importa($c);
+};
+/*### INSTANCIA A CLASSE DO CADASTRO DE CURSOS ###*/
+
+
 
 /*### INSTANCIA A CLASSE DO CADASTRO DE USUÁRIOS ###*/
 //c = container do Pimple
@@ -275,25 +284,6 @@ $container['Perfil'] = function($c) {
 
 
 
-/*### INSTANCIA A CLASSE DE IMPRESSÃO ###*/
-//c = container do Pimple
-$container['Imprime'] = function($c) {
-
-	return new \Modules\Imprime($c);
-};
-/*### INSTANCIA A CLASSE DE IMPRESSÃO ###*/
-
-
-
-/*### INSTANCIA A CLASSE DE EXPORTAÇÃO DE DADOS ###*/
-//c = container do Pimple
-$container['Exporta'] = function($c) {
-
-	return new \Modules\Exporta($c);
-};
-/*### INSTANCIA A CLASSE DE EXPORTAÇÃO DE DADOS ###*/
-
-
 /*### INSTANCIA A CLASSE DE TABELA DINÂMICA (CADASTRO) ###*/
 //c = container do Pimple
 $container['TabelaDinamica'] = function($c) {
@@ -301,25 +291,6 @@ $container['TabelaDinamica'] = function($c) {
 	return new \Modules\TabelaDinamica($c);
 };
 /*### INSTANCIA A CLASSE DE TABELA DINÂMICA (CADASTRO) ###*/
-
-
-
-/*### INSTANCIA A CLASSE DE RELATÓRIO (CADASTRO) ###*/
-//c = container do Pimple
-$container['Relatorio'] = function($c) {
-
-	return new \Modules\Relatorio($c);
-};
-/*### INSTANCIA A CLASSE DE RELATÓRIO (CADASTRO) ###*/
-
-
-/*### INSTANCIA A CLASSE DO PAINEL ONLINE ###*/
-//c = container do Pimple
-$container['Painel'] = function($c) {
-
-	return new \Modules\Painel($c);
-};
-/*### INSTANCIA A CLASSE DO PAINEL ONLINE ###*/
 
 
 /*############################ CLASSES DOS MÓDULOS ############################*/

@@ -206,6 +206,15 @@ class DataTablesGrid extends Crud {
 				}
 				/*### MONTA O AdditionalConditions (WHERE) QUANDO HOUVER ###*/
 
+
+
+				/*### MONTA O startFilter (WHERE) QUANDO HOUVER ###*/
+				if(($Column['startFilter']<>'')&&($this->ResponseDraw==1)) {
+
+					$startFilter .= " AND (".$FieldName[$key]." ".$Column['startFilter'].") ";
+				}
+				/*### MONTA O startFilter (WHERE) QUANDO HOUVER ###*/
+
 			}
 		/*### MONTA O SQL COM OS CAMPOS DO COLUMNSDEFS ###*/
 
@@ -297,16 +306,16 @@ class DataTablesGrid extends Crud {
 
 
 		//ADICIONA AS CONDIÇÕES WHERE (TODOS OS REGISTROS)
-		$SQLRecordsTotal .= " WHERE ".$this->ModuleDefs["Table"].".".$this->ModuleDefs["Prefix"]."Delete = 0".$AdditionalConditions;
+		$SQLRecordsTotal .= " WHERE ".$this->ModuleDefs["Table"].".".$this->ModuleDefs["Prefix"]."Delete = 0".$AdditionalConditions.$startFilter;
 
 		//ADICIONA AS CONDIÇÕES WHERE (REGISTROS FILTRADOS)
-		$SQLRecordsFiltered .= " WHERE ".$this->ModuleDefs["Table"].".".$this->ModuleDefs["Prefix"]."Delete = 0".$AdditionalConditions;
+		$SQLRecordsFiltered .= " WHERE ".$this->ModuleDefs["Table"].".".$this->ModuleDefs["Prefix"]."Delete = 0".$AdditionalConditions.$startFilter;
 
 		//ADICIONA AS CONDIÇÕES DE BUSCA DE DADOS DAS COLUNAS OU FILTROS (SQL REGISTROS FILTRADOS)
 		$SQLRecordsFiltered .= $SearchColumns;
 
 		//ADICIONA AS CONDIÇÕES WHERE (TOTALIZADOR REGISTROS FILTRADOS)
-		$SQLTotalRecordsFiltered .= " WHERE ".$this->ModuleDefs["Table"].".".$this->ModuleDefs["Prefix"]."Delete = 0".$AdditionalConditions;
+		$SQLTotalRecordsFiltered .= " WHERE ".$this->ModuleDefs["Table"].".".$this->ModuleDefs["Prefix"]."Delete = 0".$AdditionalConditions.$startFilter;
 
 		//ADICIONA AS CONDIÇÕES DE BUSCA DE DADOS DAS COLUNAS OU FILTROS (TOTALIZADOR REGISTROS FILTRADOS)
 		$SQLTotalRecordsFiltered .= $SearchColumns;

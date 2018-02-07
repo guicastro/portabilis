@@ -1,0 +1,290 @@
+<!-- Bread crumb is created dynamically -->
+<!-- row -->
+<!-- row -->
+<div class="row">
+	<!-- col -->
+	<!-- <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+		<h1 class="page-title txt-color-blueDark">
+
+			PAGE HEADER
+			<i class="fa-fw fa fa-home"></i>
+				Pessoas
+			<span>>
+				Cadastro de pessoas
+			</span>
+		</h1>
+	</div> -->
+	<!-- end col -->
+
+
+</div>
+<!-- end row -->
+
+
+	<!-- row -->
+
+	<div class="row">
+
+		<!-- a blank row to get started -->
+		<div class="col-sm-12">
+			<!-- your contents here -->
+
+			<!-- Widget ID (each widget will need unique ID)-->
+			<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1" data-widget-editbutton="false">
+				<!-- widget options:
+				usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+				data-widget-colorbutton="false"
+				data-widget-editbutton="false"
+				data-widget-togglebutton="false"
+				data-widget-deletebutton="false"
+				data-widget-fullscreenbutton="false"
+				data-widget-custombutton="false"
+				data-widget-collapsed="true"
+				data-widget-sortable="false"
+
+				-->
+				<header>
+					<span class="widget-icon"> <i class="fa fa-share-square-o"></i> </span>
+					<h2>Importar dados</h2>
+
+				</header>
+
+				<!-- widget div-->
+				<div>
+
+					<!-- widget edit box -->
+					<div class="jarviswidget-editbox">
+						<!-- This area used as dropdown edit box -->
+
+					</div>
+					<!-- end widget edit box -->
+
+					<!-- widget content -->
+					<div class="widget-body">
+
+						<form name="form-importar" id="form-importar" action="src/Controller/Controller.php" method="post" target="_blank" enctype="multipart/form-data">
+							<p>Escolha abaixo o layout e envie o arquivo</p>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="layout" class="control-label">Layout: </label>
+										<select id="layout" name="layout" class="select2 filtro"></select>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="arquivo" class="control-label">Arquivo: </label>
+										<input type="file" id="arquivo" name="arquivo"></select>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="separador" class="control-label">Separador de colunas</label>
+										<input name="separador" id="separador" type="text" class="form-control" placeholder="Separador de colunas" value="," />
+									</div>
+								</div>
+							</div>
+
+							<input type="hidden" name="Token" id="Token">
+							<input type="hidden" name="Route" id="Route" value="ActionForm">
+							<input type="hidden" name="action" id="action" value="selecionar">
+							<input type="hidden" name="origem" id="origem" value="importar">
+							<input type="hidden" name="ModuleDefs" id="ModuleDefs">
+
+							<div class="form-actions">
+								<div class="row">
+									<div class="col-md-12">
+										<button id="btn-exportar" type="submit" data-id="selecionar" class="btn btn-sm btn-labeled btn-primary"><span class="btn-label"><i class="fa fa-upload"></i></span>Importar dados</button>
+									</div>
+								</div>
+							</div>
+						</form>
+
+					</div>
+					<!-- end widget content -->
+
+				</div>
+				<!-- end widget div -->
+
+			</div>
+			<!-- end widget -->
+
+
+
+
+
+
+
+
+
+		</div>
+
+	</div>
+
+	<!-- end row -->
+
+
+<script type="text/javascript">
+
+	//HABILITA WIDGETS DESKTOP
+	setup_widgets_desktop();
+
+	//REALIZA O SETUP DA PÁGINA
+	pageSetUp();
+
+	/*
+	 * ALL PAGE RELATED SCRIPTS CAN GO BELOW HERE
+	 * eg alert("my home function");
+	 *
+	 * var pagefunction = function() {
+	 *   ...
+	 * }
+	 * loadScript("js/plugin/_PLUGIN_NAME_.js", pagefunction);
+	 *
+	 * TO LOAD A SCRIPT:
+	 * var pagefunction = function (){
+	 *  loadScript(".../plugin.js", run_after_loaded);
+	 * }
+	 *
+	 * OR you can load chain scripts by doing
+	 *
+	 * loadScript(".../plugin.js", function(){
+	 * 	 loadScript("../plugin.js", function(){
+	 * 	   ...
+	 *   })
+	 * });
+	 */
+
+
+
+	/*### FUNÇÃO QUE RESETA O FORMULÁRIO QUANDO CLICA NOS BOTÕES DE AÇÃO ###*/
+	//action = ação do formulário (novo, inserir, alterar, excluir, etc)
+	//IdElementForm = ID do elemento FORM dos cadastros principais
+	function ResetForm(action, IdElementForm) {
+
+		//RESETA O FORMULÁRIO (EXCETO SELECT2 E CAMPOS ESPECIAIS)
+		// $("#"+IdElementForm).trigger('reset');
+	}
+	/*### FUNÇÃO QUE RESETA O FORMULÁRIO QUANDO CLICA NOS BOTÕES DE AÇÃO ###*/
+
+
+	/*### FUNÇÃO PARA EXECUTAR AÇÕES ADICIONAIS AO ACTIONFORM ###*/
+	function AdditionalActionForm(IdElementForm, action, data, textStatus, jqXHR, DataTable, ModuleDefs, IdModalElement) {
+
+		console.log(IdElementForm);
+		console.log(action);
+		console.log(data);
+		console.log(textStatus);
+		console.log(jqXHR);
+		console.log(DataTable);
+		console.log(ModuleDefs);
+		console.log(IdModalElement);
+
+		if(data.Options["ImportResult"]=="OK") {
+
+			AlertMsg('inserir', 'alert', '', '', data.Options["CustomMsg"]);
+		}
+		else {
+
+			AlertMsg('erro', 'error', '', '', data.Options["CustomMsg"]);
+		}
+
+
+	}
+	/*### FUNÇÃO PARA EXECUTAR AÇÕES ADICIONAIS AO ACTIONFORM ###*/
+
+
+	// pagefunction
+
+	var pagefunction = function() {
+
+
+		//ID DO ELEMENTO TABLE DO GRID
+		var IdElementDataTable = 'datatable_fixed_column';
+
+		//ID DO ELEMENTO FORM DE CADASTRO PRINCIPAL
+		var IdElementForm = 'form-importar';
+
+		//ID DO ELEMENTO MODAL DE CADASTRO PRINCIPAL
+		var IdModalElement = 'modal-cadastro';
+
+
+		/*### DEFINIÇÕES GERAIS DO MÓDULO ###*/
+		var ModuleDefs = {
+			"Name":"Importa", //IDENTIFICADOR INTERNO DO MÓDULO (REFERÊNCIA PARA PERMISSÃO DE ACESSO)
+			"Prefix":"", //PREFIXO DOS CAMPOS DO MÓDULO (USADOS NA TABELA DO BANCO DE DADOS)
+			"Title":"Importar dados", //TÍTULO DO MÓDULO
+			"Entity":"Importa", //ENTIDADE DO MÓDULO (REFERÊNCIA PARA CLASSE)
+			"Table":"", //NOME DA TABELA NO BANCO DE DADOS
+			"EntitySingle":"", //ENTIDADE DO MÓDULO (SINGULAR)
+			"EntityMultiple":"" //ENTIDADE DO MÓDULO (PLURAL)
+		};
+		/*### DEFINIÇÕES GERAIS DO MÓDULO ###*/
+
+		//CHAMA A FUNÇÃO QUE SETA OS DADOS BÁSICOS DO MÓDULO E ENTIDADE
+		SetModuleEntity(ModuleDefs);
+
+		//MARCA OS CAMPOS DO FORMULÁRIO COMO OBRIGATÓRIOS
+		MarkRequiredFields (IdElementForm);
+
+
+		/*### ATIVA A VALIDAÇÃO DO FORMULÁRIO ###*/
+		FormValidation(IdElementForm, IdElementDataTable, '', ModuleDefs, IdModalElement);
+		/*### ATIVA A VALIDAÇÃO DO FORMULÁRIO ###*/
+
+
+		//ARMAZENA OS LAYOUTS EM OBJETO
+		var layouts = GetDynamicTable('LAYOUTS','Descricao','ASC','');
+
+		//POPULA O SELECT2 AUXILIAR COM OS LAYOUTS
+		SetSelectFromDynamicTable('layout',layouts,'Escolha um layout','','');
+
+
+		//HABILITA WIDGETS DESKTOP
+		setup_widgets_desktop();
+
+		//CHAMA AS FUNÇÕES PADRÃO DO SMARTADMIN
+		runAllForms();
+
+
+		$("#"+IdElementForm+" input[name=Token]").val(token);
+		$("#"+IdElementForm+" input[name=ModuleDefs]").val(JSON.stringify(ModuleDefs));
+
+	};
+
+	// end pagefunction
+
+	// destroy generated instances
+	// pagedestroy is called automatically before loading a new page
+	// only usable in AJAX version!
+
+	var pagedestroy = function(){
+
+		/*
+		Example below:
+
+		$("#calednar").fullCalendar( 'destroy' );
+		if (debugState){
+			root.console.log("✔ Calendar destroyed");
+		}
+
+		For common instances, such as Jarviswidgets, Google maps, and Datatables, are automatically destroyed through the app.js loadURL mechanic
+
+		*/
+	}
+
+	// end destroy
+
+	// run pagefunction
+	pagefunction();
+
+	// load related plugins
+
+
+
+</script>
